@@ -1,4 +1,13 @@
-package main
+// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
+//
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+//
+// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
+// project, and is therefore licensed under the following copyright:
+// Copyright 2013 The go-github AUTHORS. All rights reserved.
+
+package travis
 
 import (
 	"fmt"
