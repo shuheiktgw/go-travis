@@ -49,7 +49,7 @@ type ListBuildsResponse struct {
 // to the Travis CI get build endpoint.
 type GetBuildResponse struct {
 	Build Build `json:"build"`
-	// Jobs  []Job `json:"jobs"`
+	Jobs  []Job `json:"jobs"`
 }
 
 // BuildListOptions specifies the optional parameters to the
