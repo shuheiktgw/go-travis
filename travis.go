@@ -15,11 +15,14 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"net/url"
 	"reflect"
+	"strconv"
 
 	"github.com/google/go-querystring/query"
+	"github.com/oleiade/reflections"
 )
 
 const (
@@ -30,6 +33,8 @@ const (
 
 	TRAVIS_API_DEFAULT_URL string = "https://api.travis-ci.org/"
 	TRAVIS_API_PRO_URL     string = "https://api.travis-ci.com/"
+
+	TRAVIS_RESPONSE_PER_PAGE uint64 = 25
 )
 
 // A Client manages communication with the Travis CI API.
@@ -236,6 +241,41 @@ func urlWithOptions(s string, opt interface{}) (string, error) {
 	return u.String(), nil
 }
 
+type Paginator interface {
+	GetNextPage(interface{}) error
+}
+
 type ListOptions struct {
 	AfterNumber uint `url:"after_number,omitempty"`
+}
+
+// GetNextPage provided a collection of resources (Builds or Jobs),
+// will update the ListOptions to fetch the next resource page on next call.
+func (into *ListOptions) GetNextPage(from interface{}) error {
+	if reflect.TypeOf(from).Kind() != reflect.Slice {
+		return fmt.Errorf("provided interface{} does not represent a slice")
+	}
+
+	slice := reflect.ValueOf(from)
+	if slice.Len() == 0 {
+		return fmt.Errorf("provided interface{} is a zero sized slice")
+	}
+
+	lastElem := slice.Index(slice.Len() - 1).Interface()
+	has, _ := reflections.HasField(lastElem, "Number")
+	if !has {
+		return fmt.Errorf("last element of the provided slice does not have a Number attribute")
+	}
+
+	value, err := reflections.GetField(lastElem, "Number")
+	if err != nil {
+		return err
+	}
+
+	// We rely on travis sending us numbers representations here
+	// so no real need to check for errors
+	number, _ := strconv.ParseUint(value.(string), 10, 64)
+	into.AfterNumber = uint(math.Max(float64(number), 0))
+
+	return nil
 }

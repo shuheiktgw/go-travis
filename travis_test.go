@@ -126,3 +126,43 @@ func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
 		"Wrong Request Host header set",
 	)
 }
+
+func TestGetNextPage_with_non_slice_value_provided_errors(t *testing.T) {
+	opt := &BuildListOptions{}
+	err := opt.GetNextPage(struct{}{})
+	notOk(t, err)
+}
+
+func TestGetNextPage_with_empty_slice_value_provided_errors(t *testing.T) {
+	opt := &BuildListOptions{}
+	err := opt.GetNextPage([]string{})
+	notOk(t, err)
+}
+
+func TestGetNextPage_with_invalid_type_slice_provided_errors(t *testing.T) {
+	opt := &BuildListOptions{}
+	err := opt.GetNextPage([]string{"abc", "123"})
+	notOk(t, err)
+}
+
+func TestGetNextPage_with_valid_slice_and_positive_number_provided(t *testing.T) {
+	opt := &BuildListOptions{}
+	err := opt.GetNextPage([]Build{Build{Number: "27"}})
+	ok(t, err)
+	assert(
+		t,
+		opt.AfterNumber == 27,
+		"returned next page after_number is %d; expected %d", opt.AfterNumber, 27,
+	)
+}
+
+func TestGetNextPage_with_valid_slice_and_negative_number_provided(t *testing.T) {
+	opt := &BuildListOptions{}
+	err := opt.GetNextPage([]Build{Build{Number: "0"}})
+	ok(t, err)
+	assert(
+		t,
+		opt.AfterNumber == 0,
+		"returned next page after_number is %d; expected %d", opt.AfterNumber, 0,
+	)
+}
