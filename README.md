@@ -1,69 +1,130 @@
 # go-travis
 
-go-travis is a Go client library for accessing the [Travis CI API][].
+go-travis is a Go client library for accessing the [Travis CI API](http://docs.travis-ci.com/api/).
 
-**Documentation:** [![GoDoc](https://godoc.org/github.com/AbletonAppDev/go-travis/travis?status.svg)](https://godoc.org/github.com/AbletonAppDev/go-travis/travis)
-**Build Status:** [![Build Status](https://travis-ci.org/AbletonAppDev/go-travis.svg?branch=master)](https://travis-ci.org/AbletonAppDev/go-travis)
+**Documentation:** [![GoDoc](https://godoc.org/github.com/AbletonAppDev/go-travis/travis?status.svg)](https://godoc.org/github.com/AbletonAG/go-travis)
+
+**Build Status:** [![Build Status](https://travis-ci.org/AbletonAG/go-travis.svg?branch=master)](https://travis-ci.org/AbletonAG/go-travis)
 
 go-travis requires Go version 1.1 or greater.
 
-## Usage ##
+## Installation
+
+```bash
+$ go get github.com/AbletonAppDev/go-travis
+```
+
+## Usage
+
+Interaction with the Travis CI API is done through a `Client` instance.
 
 ```go
 import travis "github.com/AbletonAppDev/go-travis"
-```
 
-Construct a new Travis CI client, then use the various services on the client to
-access different parts of the Travis CI API.  For example, to list all
-builds for the authenticated user:
-
-```go
 client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
-builds, _, _, _, err := client.Builds.List(nil)
 ```
 
-*Nota*: The ``NewClient`` constructor function takes the Travis CI API target url as first argument. The library exposes two constants for you to select the endpoint you wish to use:
-  + ``TRAVIS_API_DEFAULT_URL``: the default api.travis-ci.org endpoint for the travis default plan.
-  + ``TRAVIS_API_PRO_URL``: the api.travis-ci.com endpoint for the travis pro plan.
+Constructing it with the ``NewClient`` helper requires two arguments:
+* The Travis CI API URL you wish to communicate with. Different Travis CI plans are accessed through different URLs. go-travis exposes constants for these URLs:
+  * ``TRAVIS_API_DEFAULT_URL``: default *api.travis-ci.org* endpoint for the free Travis "Open Source" plan.
+  * ``TRAVIS_API_PRO_URL``: the *api.travis-ci.com* endpoint for the paid Travis pro plans.
+* A Travis CI token with which to authenticate. If you wish to run requests unauthenticated, pass an empty string. It is possible at any time to authenticate the Client instance with a Travis token or a Github token. For more information see [Authentication]().
 
-Some API methods have optional parameters that can be passed.  For example,
-to list builds for the "MyGithubUser/chucknorris" repository:
+## Services
+
+The ``Client`` instance's ``Service`` attributes provide access to Travis CI API resources.
 
 ```go
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
-repos, _, err := client.Repositories.ListByRepository("MyGithubUser/chucknorris", nil)
+opt := &travis.BuildListOptions{EventType: "pull request"}
+builds, response, err := client.Builds.ListFromRepository("mygithubuser/mygithubrepo", opt)
+if err != nil {
+        log.Fatal(err)
+}
 ```
 
-Moreover, some API methods exposes an opt (generally of a Options suffixed type, like ListBuildsOptions) parameters that can be passed in order to add filters to the request. For example, to list builds of pull request only for repository "MyGithubUser/chucknorris":
+Service methods will often take an *Option* (sub-)type instance as input. These types, like ``BuildListOptions`` allow narrowing and filtering your requests.
+
+
+## Authentication
+
+The Client instance supports both authenticated and unauthenticated interaction with the Travis CI API. **Note** that both Pro and Enterprise plans will require almost all API calls to be authenticated.
+
+
+#### Unuathenticated
+
+It is possible to use the client unauthenticated. However some resources won't be accesible.
 
 ```go
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
-opt := &ListBuildsOptions{Slug: "MyGithubUser/chucknorris", EventType: "pull_request"}
-repos, _, err := client.Repositories.ListByRepository(opt)
+unauthClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+builds, _, _, resp, err := unauthClient.Builds.ListFromRepository("mygithubuser/myopensourceproject", nil)
+// Do something with your builds
+
+_, err := unauthClient.Jobs.Cancel(12345)
+if err != nil {
+        // This operation is unavailable in unauthenticated mode and will
+        // throw an error.
+}
 ```
 
-### Authentication ###
+#### Authenticated
 
-The go-travis client supports both authenticated and unauthenticated interactions with the Travis CI API.
+The Client instance supports authentication with both Travis token and Github token.
 
 ```go
-// Unauthenticated client
-unauthClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")  // Unauthenticated client
+authClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "mytravistoken")
+builds, _, _, resp, err := authClient.Builds.ListFromRepository("mygithubuser/myopensourceproject",
+nil)
+// Do something with your builds
 
-// Client authenticated with a Travis CI API access token
-authClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
-
-// Authenticate your client using a Github personal token
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
-access_token, _, err := client.Authentication.UsingGithubToken("mygithubtoken")  // Your client is now authenticated
+_, err := unauthClient.Jobs.Cancel(12345)
+// Your job is succesfully canceled
 ```
 
+However, authentication with a Github token will require and extra step (and request).
 
-## Roadmap ##
+```go
+authWithGithubClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+// authWithGithubClient.IsAuthenticated() will return false
+
+err := authWithGithubClient.Authentication.UsingGithubToken("mygithubtoken")
+if err != nil {
+        log.Fatal(err)
+}
+// authWithGithubClient.IsAuthenticated()  will return true
+
+builds, _, _, resp, err := authClient.Builds.ListFromRepository("mygithubuser/myopensourceproject",
+nil)
+// Do something with your builds
+```
+
+## Pagination
+
+The services support resource pagination through the `ListOption` type. Every services `Option` type implements the `ListOption` type.
+
+```go
+client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "mysuperdupertoken")
+opt := &travis.BuildListOptions{}
+
+for {
+        travisBuilds, _, _, _, err := tc.Builds.ListFromRepository(target, opt)
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        // Do something with the builds
+
+        opt.GetNextPage(travisBuilds)
+        if opt.AfterNumber <= 1 {  // Travis CI resources are one-indexed (not zero-indexed)
+                break
+        }
+}
+```
+
+## Roadmap
 
 This library is being initially developed for internal applications at
-[Ableton](http://ableton.com), so API methods will likely be implemented in the order that they are
-needed by that application. Eventually, we would like to cover the entire
+[Ableton](http://ableton.com). Therefore API methods are implemented in the order that they are
+needed by our applications. Eventually, we would like to cover the entire
 Travis API, so contributions are of course [always welcome][contributing].
 
 [contributing]: CONTRIBUTING.md
@@ -76,7 +137,7 @@ Travis API, so contributions are of course [always welcome][contributing].
 
 This library design is heavily inspired from the amazing Google's [go-github](https://github.com/google/go-github) library. Some pieces of code have been directly extracted from there too. Therefore any obvious similarities would not be adventitious.
 
-## License ##
+## License
 
 This library is distributed under the BSD-style license found in the [LICENSE](./LICENSE)
 file.
