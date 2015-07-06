@@ -43,15 +43,17 @@ type Build struct {
 // ListBuildsResponse represents the response of a call
 // to the Travis CI list builds endpoint.
 type ListBuildsResponse struct {
-	Builds []Build `json:"builds"`
-	Jobs   []Job   `json:"jobs"`
+	Builds  []Build  `json:"builds"`
+	Commits []Commit `json:"commits"`
+	Jobs    []Job    `json:"jobs"`
 }
 
 // GetBuildResponse represents the response of a call
 // to the Travis CI get build endpoint.
 type GetBuildResponse struct {
-	Build Build `json:"build"`
-	Jobs  []Job `json:"jobs"`
+	Build  Build  `json:"build"`
+	Commit Commit `json:"commit"`
+	Jobs   []Job  `json:"jobs"`
 }
 
 // BuildListOptions specifies the optional parameters to the
