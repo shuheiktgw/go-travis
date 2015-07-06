@@ -30,6 +30,7 @@ type Job struct {
 	CommitId      uint   `json:"commit_id,omitempty"`
 	LogId         uint   `json:"log_id,omitempty"`
 	Number        string `json:"number,omitempty"`
+	Config        Config `json:"config,omitempty"`
 	State         string `json:"state,omitempty"`
 	StartedAt     string `json:"started_at,omitempty"`
 	FinishedAt    string `json:"finished_at,omitempty"`
