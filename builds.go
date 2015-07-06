@@ -27,6 +27,7 @@ type Build struct {
 	Slug              string `json:"slug,omitempty"`
 	CommitId          uint   `json:"commit_id,omitempty"`
 	Number            string `json:"number,omitempty"`
+	Config            Config `json:"config,omitempty"`
 	PullRequest       bool   `json:"pull_request,omitempty"`
 	PullRequestTitle  string `json:"pull_request_title,omitempty"`
 	PullRequestNumber uint   `json:"pull_request_number,omitempty"`
@@ -49,7 +50,7 @@ type ListBuildsResponse struct {
 // to the Travis CI get build endpoint.
 type GetBuildResponse struct {
 	Build Build `json:"build"`
-	// Jobs  []Job `json:"jobs"`
+	Jobs  []Job `json:"jobs"`
 }
 
 // BuildListOptions specifies the optional parameters to the
