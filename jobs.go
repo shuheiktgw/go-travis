@@ -111,7 +111,7 @@ func (js *JobsService) Get(id uint) (*Job, *http.Response, error) {
 // ListByBuild retrieve a build jobs from its provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
-func (js *JobsService) ListByBuild(buildId uint) ([]Job, *http.Response, error) {
+func (js *JobsService) ListFromBuild(buildId uint) ([]Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", buildId), nil)
 	if err != nil {
 		return nil, nil, err

@@ -73,41 +73,41 @@ type BuildListOptions struct {
 func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
 	u, err := urlWithOptions("/builds", opt)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	req, err := bs.client.NewRequest("GET", u, nil, nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	var buildsResp ListBuildsResponse
 	resp, err := bs.client.Do(req, &buildsResp)
 	if err != nil {
-		return nil, resp, err
+		return nil, nil, nil, resp, err
 	}
 
-	return buildsResp.Builds, buidsResp.Jobs, buildsResp.Commits, resp, err
+	return buildsResp.Builds, buildsResp.Jobs, buildsResp.Commits, resp, err
 }
 
 // List a repository builds based on it's provided slug.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) ListByRepository(slug string, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
+func (bs *BuildsService) ListFromRepository(slug string, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/builds", slug), opt)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	req, err := bs.client.NewRequest("GET", u, nil, nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	var buildsResp ListBuildsResponse
 	resp, err := bs.client.Do(req, &buildsResp)
 	if err != nil {
-		return nil, resp, err
+		return nil, nil, nil, resp, err
 	}
 
 	return buildsResp.Builds, buildsResp.Jobs, buildsResp.Commits, resp, err
@@ -119,21 +119,21 @@ func (bs *BuildsService) ListByRepository(slug string, opt *BuildListOptions) ([
 func (bs *BuildsService) Get(id uint) (*Build, []Job, *Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", id), nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	req, err := bs.client.NewRequest("GET", u, nil, nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	var buildResp GetBuildResponse
 	resp, err := bs.client.Do(req, &buildResp)
 	if err != nil {
-		return nil, resp, err
+		return nil, nil, nil, resp, err
 	}
 
-	return &buildResp.Build, buildResp.Jobs, buildResp.Commit, resp, err
+	return &buildResp.Build, buildResp.Jobs, &buildResp.Commit, resp, err
 }
 
 // Cancel build with the provided id.

@@ -89,7 +89,7 @@ func (rs *RequestsService) Get(requestId uint) (*Request, *Commit, *http.Respons
 // List requests triggered (or not) by a repository's builds.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (rs *RequestsService) ListForRepository(slug string, opt *RequestsListOptions) ([]Request, []Commit, *http.Response, error) {
+func (rs *RequestsService) ListFromRepository(slug string, opt *RequestsListOptions) ([]Request, []Commit, *http.Response, error) {
 	if opt != nil {
 		opt.Slug = slug
 	} else {

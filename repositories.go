@@ -93,11 +93,11 @@ func (rs *RepositoriesService) Find(opt *RepositoryListOptions) ([]Repository, *
 	return reposResp.Repositories, resp, err
 }
 
-// Get fetches a repository based on the provided id.
+// GetBySlug fetches a repository based on the provided slug.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#repositories
-func (rs *RepositoriesService) Get(id uint) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%d", id), nil)
+func (rs *RepositoriesService) GetFromSlug(slug string) (*Repository, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%s", slug), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -116,11 +116,11 @@ func (rs *RepositoriesService) Get(id uint) (*Repository, *http.Response, error)
 	return &repoResp.Repository, resp, err
 }
 
-// GetBySlug fetches a repository based on the provided slug.
+// Get fetches a repository based on the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#repositories
-func (rs *RepositoriesService) GetBySlug(slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%s", slug), nil)
+func (rs *RepositoriesService) Get(id uint) (*Repository, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%d", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}

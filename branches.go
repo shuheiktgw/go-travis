@@ -50,8 +50,8 @@ type GetBranchResponse struct {
 // List the branches of a given repository.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BranchesService) List(repositorySlug string) ([]Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches", repositorySlug), nil)
+func (bs *BranchesService) ListFromRepository(slug string) ([]Branch, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches", slug), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -74,8 +74,8 @@ func (bs *BranchesService) List(repositorySlug string) ([]Branch, *http.Response
 // and it's id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BranchesService) Get(repositorySlug string, branchId uint) (*Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches/%d", repositorySlug, branchId), nil)
+func (bs *BranchesService) Get(repoSlug string, branchId uint) (*Branch, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches/%d", repoSlug, branchId), nil)
 	if err != nil {
 		return nil, nil, err
 	}

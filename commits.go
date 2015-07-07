@@ -39,7 +39,7 @@ type Commit struct {
 // Get fetches the commit that triggered a build based on the build id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (cs *CommitsService) GetForBuild(buildId uint) (*Commit, *http.Response, error) {
+func (cs *CommitsService) GetFromBuild(buildId uint) (*Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", buildId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -62,7 +62,7 @@ func (cs *CommitsService) GetForBuild(buildId uint) (*Commit, *http.Response, er
 // List last commits attached to a repository builds.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (cs *CommitsService) ListByRepository(repositorySlug string) ([]Commit, *http.Response, error) {
+func (cs *CommitsService) ListFromRepository(repositorySlug string) ([]Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%s/builds", repositorySlug), nil)
 	if err != nil {
 		return nil, nil, err
