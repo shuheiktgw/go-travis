@@ -70,7 +70,7 @@ type BuildListOptions struct {
 // List the builds for the authenticated user.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, *http.Response, error) {
+func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
 	u, err := urlWithOptions("/builds", opt)
 	if err != nil {
 		return nil, nil, err
@@ -87,13 +87,13 @@ func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, *http.Response, e
 		return nil, resp, err
 	}
 
-	return buildsResp.Builds, resp, err
+	return buildsResp.Builds, buidsResp.Jobs, buildsResp.Commits, resp, err
 }
 
 // List a repository builds based on it's provided slug.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) ListByRepository(slug string, opt *BuildListOptions) ([]Build, *http.Response, error) {
+func (bs *BuildsService) ListByRepository(slug string, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/builds", slug), opt)
 	if err != nil {
 		return nil, nil, err
@@ -110,13 +110,13 @@ func (bs *BuildsService) ListByRepository(slug string, opt *BuildListOptions) ([
 		return nil, resp, err
 	}
 
-	return buildsResp.Builds, resp, err
+	return buildsResp.Builds, buildsResp.Jobs, buildsResp.Commits, resp, err
 }
 
 // Get fetches a build based on the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Get(id uint) (*Build, *http.Response, error) {
+func (bs *BuildsService) Get(id uint) (*Build, []Job, *Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", id), nil)
 	if err != nil {
 		return nil, nil, err
@@ -133,7 +133,7 @@ func (bs *BuildsService) Get(id uint) (*Build, *http.Response, error) {
 		return nil, resp, err
 	}
 
-	return &buildResp.Build, resp, err
+	return &buildResp.Build, buildResp.Jobs, buildResp.Commit, resp, err
 }
 
 // Cancel build with the provided id.

@@ -19,7 +19,7 @@ builds for the authenticated user:
 
 ```go
 client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
-builds, _, err := client.Builds.List(nil)
+builds, _, _, _, err := client.Builds.List(nil)
 ```
 
 *Nota*: The ``NewClient`` constructor function takes the Travis CI API target url as first argument. The library exposes two constants for you to select the endpoint you wish to use:
