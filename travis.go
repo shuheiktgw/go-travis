@@ -60,6 +60,7 @@ type Client struct {
 	Logs           *LogsService
 	Commits        *CommitsService
 	Requests       *RequestsService
+	Users          *UsersService
 }
 
 // NewClient returns a new Travis API client.
@@ -89,6 +90,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Logs = &LogsService{client: c}
 	c.Commits = &CommitsService{client: c}
 	c.Requests = &RequestsService{client: c}
+	c.Users = &UsersService{client: c}
 
 	if travisToken != "" {
 		c.Authentication.UsingTravisToken(travisToken)
