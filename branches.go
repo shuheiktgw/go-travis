@@ -26,13 +26,13 @@ type Branch struct {
 	RepositoryId uint   `json:"repository_id,omitempty"`
 	CommitId     uint   `json:"commit_id,omitempty"`
 	Number       string `json:"number,omitempty"`
-	Config       Config `json:"config,omitempty"`
-	State        string `json:"state,omitempty"`
-	StartedAt    string `json:"started_at,omitempty"`
-	FinishedAt   string `json:"finished_at,omitempty"`
-	Duration     uint   `json:"duration,omitempty"`
-	JobIds       []uint `json:"job_ids,omitempty"`
-	PullRequest  bool   `json:"pull_request,omitempty"`
+	// Config       Config `json:"config,omitempty"`
+	State       string `json:"state,omitempty"`
+	StartedAt   string `json:"started_at,omitempty"`
+	FinishedAt  string `json:"finished_at,omitempty"`
+	Duration    uint   `json:"duration,omitempty"`
+	JobIds      []uint `json:"job_ids,omitempty"`
+	PullRequest bool   `json:"pull_request,omitempty"`
 }
 
 // ListBranchesResponse represents the response of a call

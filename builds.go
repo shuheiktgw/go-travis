@@ -22,12 +22,12 @@ type BuildsService struct {
 
 // Build represents a Travis CI build
 type Build struct {
-	Id                uint   `json:"id,omitempty"`
-	RepositoryId      uint   `json:"repository_id,omitempty"`
-	Slug              string `json:"slug,omitempty"`
-	CommitId          uint   `json:"commit_id,omitempty"`
-	Number            string `json:"number,omitempty"`
-	Config            Config `json:"config,omitempty"`
+	Id           uint   `json:"id,omitempty"`
+	RepositoryId uint   `json:"repository_id,omitempty"`
+	Slug         string `json:"slug,omitempty"`
+	CommitId     uint   `json:"commit_id,omitempty"`
+	Number       string `json:"number,omitempty"`
+	// Config            Config `json:"config,omitempty"`
 	PullRequest       bool   `json:"pull_request,omitempty"`
 	PullRequestTitle  string `json:"pull_request_title,omitempty"`
 	PullRequestNumber uint   `json:"pull_request_number,omitempty"`
@@ -43,9 +43,9 @@ type Build struct {
 // ListBuildsResponse represents the response of a call
 // to the Travis CI list builds endpoint.
 type ListBuildsResponse struct {
-	Builds  []Build  `json:"builds"`
-	Commits []Commit `json:"commits"`
-	Jobs    []Job    `json:"jobs"`
+	Builds  []Build  `json:"builds,omitempty"`
+	Commits []Commit `json:"commits,omitempty"`
+	Jobs    []Job    `json:"jobs,omitempty"`
 }
 
 // GetBuildResponse represents the response of a call
