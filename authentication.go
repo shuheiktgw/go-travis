@@ -10,6 +10,8 @@ import (
 	"net/http"
 )
 
+// BuildsService handles communication with the builds
+// related methods of the Travis CI API.
 type AuthenticationService struct {
 	client *Client
 }
@@ -19,7 +21,13 @@ type AccessTokenResponse struct {
 	Token AccessToken `json:"access_token"`
 }
 
+// UsingGithubToken will generate a Travis CI API authentication
+// token and call the UsingTravisToken method with it, leaving your
+// client authenticated and ready to use.
 func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessToken, *http.Response, error) {
+	if githubToken == "" {
+		return "", nil, fmt.Errorf("unable to authenticate client; empty github token provided")
+	}
 	var u string = "/auth/github"
 	var b map[string]string = map[string]string{"github_token": githubToken}
 
@@ -39,9 +47,11 @@ func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessTok
 	return atr.Token, resp, err
 }
 
+// UsingTravisToken will format and write provided
+// travisToken in the AuthenticationService client's headers.
 func (as *AuthenticationService) UsingTravisToken(travisToken string) error {
 	if travisToken == "" {
-		fmt.Errorf("unable to authenticate client; empty token provided")
+		return fmt.Errorf("unable to authenticate client; empty travis token provided")
 	}
 
 	as.client.Headers["Authorization"] = "token " + travisToken
