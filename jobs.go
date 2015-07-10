@@ -82,7 +82,7 @@ func (jfo *JobFindOptions) IsValid() bool {
 		}
 	}
 
-	return nonZeroValues == 1
+	return nonZeroValues == 0 || nonZeroValues == 1
 }
 
 // Get fetches job with the provided id.
@@ -137,7 +137,7 @@ func (js *JobsService) ListFromBuild(buildId uint) ([]Job, *http.Response, error
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
 func (js *JobsService) Find(opt *JobFindOptions) ([]Job, *http.Response, error) {
-	if !opt.IsValid() {
+	if opt != nil && !opt.IsValid() {
 		return nil, nil, fmt.Errorf(
 			"More than one value set in provided JobFindOptions instance",
 		)
