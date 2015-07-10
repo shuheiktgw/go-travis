@@ -1,9 +1,12 @@
 language: go
 go:
-- 1.3
-- tip
+  - 1.3
+  - tip
+
 script:
-- go test -v ./...
+  - go build
+  - go test -v
+  - go test -v -tags=integration -parallel 4
 
 notifications:
   slack:
