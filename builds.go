@@ -59,11 +59,12 @@ type GetBuildResponse struct {
 // BuildListOptions specifies the optional parameters to the
 // BuildsService.List method.
 type BuildListOptions struct {
+	ListOptions
+
 	Ids          []uint `url:"ids,omitempty"`
 	RepositoryId uint   `url:"repository_id,omitempty"`
 	Slug         string `url:"slug,omitempty"`
 	Number       string `url:"number,omitempty"`
-	AfterNumber  uint   `url:"after_number,omitempty"`
 	EventType    string `url:"event_type,omitempty"`
 }
 

@@ -55,6 +55,8 @@ type GetJobResponse struct {
 // of the below attribute. If you provide State or Queue, a
 // maximum of 250 jobs will be returned.
 type JobFindOptions struct {
+	ListOptions
+
 	// List of job ids
 	Ids []uint `url:"ids,omitempty"`
 

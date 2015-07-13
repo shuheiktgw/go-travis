@@ -235,3 +235,7 @@ func urlWithOptions(s string, opt interface{}) (string, error) {
 
 	return u.String(), nil
 }
+
+type ListOptions struct {
+	AfterNumber uint `url:"after_number,omitempty"`
+}
