@@ -40,13 +40,13 @@ type Job struct {
 	AnnotationIds []uint `json:"annotation_ids,omitempty"`
 }
 
-type FindJobsResponse struct {
+type findJobsResponse struct {
 	Jobs []Job `json:"jobs"`
 }
 
-// GetJobResponse represents the response of a call
+// getJobResponse represents the response of a call
 // to the Travis CI get build endpoint.
-type GetJobResponse struct {
+type getJobResponse struct {
 	Job Job `json:"job"`
 }
 
@@ -101,7 +101,7 @@ func (js *JobsService) Get(id uint) (*Job, *http.Response, error) {
 		return nil, nil, err
 	}
 
-	var jobResp GetJobResponse
+	var jobResp getJobResponse
 	resp, err := js.client.Do(req, &jobResp)
 	if err != nil {
 		return nil, resp, err
@@ -124,7 +124,7 @@ func (js *JobsService) ListFromBuild(buildId uint) ([]Job, *http.Response, error
 		return nil, nil, err
 	}
 
-	var buildResp GetBuildResponse
+	var buildResp getBuildResponse
 	resp, err := js.client.Do(req, &buildResp)
 	if err != nil {
 		return nil, resp, err
@@ -155,7 +155,7 @@ func (js *JobsService) Find(opt *JobFindOptions) ([]Job, *http.Response, error) 
 		return nil, nil, err
 	}
 
-	var jobsResp FindJobsResponse
+	var jobsResp findJobsResponse
 	resp, err := js.client.Do(req, &jobsResp)
 	if err != nil {
 		return nil, resp, err

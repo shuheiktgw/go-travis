@@ -17,7 +17,7 @@ type AuthenticationService struct {
 }
 
 type AccessToken string
-type AccessTokenResponse struct {
+type accessTokenResponse struct {
 	Token AccessToken `json:"access_token"`
 }
 
@@ -36,7 +36,7 @@ func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessTok
 		return "", nil, err
 	}
 
-	atr := &AccessTokenResponse{}
+	atr := &accessTokenResponse{}
 	resp, err := as.client.Do(req, atr)
 	if err != nil {
 		return "", nil, err

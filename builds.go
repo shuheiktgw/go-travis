@@ -40,17 +40,17 @@ type Build struct {
 	EventType         string `json:"event_type,omitempty"`
 }
 
-// ListBuildsResponse represents the response of a call
+// listBuildsResponse represents the response of a call
 // to the Travis CI list builds endpoint.
-type ListBuildsResponse struct {
+type listBuildsResponse struct {
 	Builds  []Build  `json:"builds,omitempty"`
 	Commits []Commit `json:"commits,omitempty"`
 	Jobs    []Job    `json:"jobs,omitempty"`
 }
 
-// GetBuildResponse represents the response of a call
+// getBuildResponse represents the response of a call
 // to the Travis CI get build endpoint.
-type GetBuildResponse struct {
+type getBuildResponse struct {
 	Build  Build  `json:"build"`
 	Commit Commit `json:"commit"`
 	Jobs   []Job  `json:"jobs"`
@@ -82,7 +82,7 @@ func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, []Job, []Commit, 
 		return nil, nil, nil, nil, err
 	}
 
-	var buildsResp ListBuildsResponse
+	var buildsResp listBuildsResponse
 	resp, err := bs.client.Do(req, &buildsResp)
 	if err != nil {
 		return nil, nil, nil, resp, err
@@ -105,7 +105,7 @@ func (bs *BuildsService) ListFromRepository(slug string, opt *BuildListOptions) 
 		return nil, nil, nil, nil, err
 	}
 
-	var buildsResp ListBuildsResponse
+	var buildsResp listBuildsResponse
 	resp, err := bs.client.Do(req, &buildsResp)
 	if err != nil {
 		return nil, nil, nil, resp, err
@@ -128,7 +128,7 @@ func (bs *BuildsService) Get(id uint) (*Build, []Job, *Commit, *http.Response, e
 		return nil, nil, nil, nil, err
 	}
 
-	var buildResp GetBuildResponse
+	var buildResp getBuildResponse
 	resp, err := bs.client.Do(req, &buildResp)
 	if err != nil {
 		return nil, nil, nil, resp, err

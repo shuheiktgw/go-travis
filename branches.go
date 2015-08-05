@@ -35,15 +35,15 @@ type Branch struct {
 	PullRequest bool   `json:"pull_request,omitempty"`
 }
 
-// ListBranchesResponse represents the response of a call
+// listBranchesResponse represents the response of a call
 // to the Travis CI list branches endpoint.
-type ListBranchesResponse struct {
+type listBranchesResponse struct {
 	Branches []Branch `json:"branches"`
 }
 
-// GetBranchResponse represents the response of a call
+// getBranchResponse represents the response of a call
 // to the Travis CI get branch endpoint.
-type GetBranchResponse struct {
+type getBranchResponse struct {
 	Branch *Branch `json:"branch"`
 }
 
@@ -61,7 +61,7 @@ func (bs *BranchesService) ListFromRepository(slug string) ([]Branch, *http.Resp
 		return nil, nil, err
 	}
 
-	var branchesResp ListBranchesResponse
+	var branchesResp listBranchesResponse
 	resp, err := bs.client.Do(req, &branchesResp)
 	if err != nil {
 		return nil, resp, err
@@ -85,7 +85,7 @@ func (bs *BranchesService) Get(repoSlug string, branchId uint) (*Branch, *http.R
 		return nil, nil, err
 	}
 
-	var branchResp GetBranchResponse
+	var branchResp getBranchResponse
 	resp, err := bs.client.Do(req, &branchResp)
 	if err != nil {
 		return nil, resp, err

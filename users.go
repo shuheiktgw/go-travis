@@ -33,7 +33,7 @@ type User struct {
 	CreatedAt     string `json:"created_at,omitempty"`
 }
 
-type GetUserResponse struct {
+type getUserResponse struct {
 	User User `json:"user"`
 }
 
@@ -52,7 +52,7 @@ func (us *UsersService) GetAuthenticated() (*User, *http.Response, error) {
 		return nil, nil, err
 	}
 
-	var userResp GetUserResponse
+	var userResp getUserResponse
 	resp, err := us.client.Do(req, &userResp)
 	if err != nil {
 		return nil, resp, err
@@ -75,7 +75,7 @@ func (us *UsersService) Get(userId uint) (*User, *http.Response, error) {
 		return nil, nil, err
 	}
 
-	var userResp GetUserResponse
+	var userResp getUserResponse
 	resp, err := us.client.Do(req, &userResp)
 	if err != nil {
 		return nil, resp, err

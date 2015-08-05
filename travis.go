@@ -158,7 +158,7 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	}
 	defer resp.Body.Close()
 
-	err = CheckResponse(resp)
+	err = checkResponse(resp)
 	if err != nil {
 		return resp, err
 	}
@@ -206,10 +206,10 @@ func (er *ErrorResponse) Error() string {
 	)
 }
 
-// CheckResponse checks the API response for errors; and returns them
+// checkResponse checks the API response for errors; and returns them
 // if present.
 // A Response is considered an error if it has a status code outside the 2XX range.
-func CheckResponse(r *http.Response) error {
+func checkResponse(r *http.Response) error {
 	if c := r.StatusCode; 200 <= c && c <= 299 {
 		return nil
 	}

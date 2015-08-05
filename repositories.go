@@ -56,15 +56,15 @@ type RepositoryListOptions struct {
 	Active bool `url:"active,omitempty"`
 }
 
-// ListRepositoriesResponse represents the response of a call
+// listRepositoriesResponse represents the response of a call
 // to the Travis CI list builds endpoint.
-type ListRepositoriesResponse struct {
+type listRepositoriesResponse struct {
 	Repositories []Repository `json:"repos"`
 }
 
-// GetRepositoryResponse represents the response of a call
+// getRepositoryResponse represents the response of a call
 // to the Travis CI get repository endpoint.
-type GetRepositoryResponse struct {
+type getRepositoryResponse struct {
 	Repository Repository `json:"repo"`
 }
 
@@ -84,7 +84,7 @@ func (rs *RepositoriesService) Find(opt *RepositoryListOptions) ([]Repository, *
 		return nil, nil, err
 	}
 
-	var reposResp ListRepositoriesResponse
+	var reposResp listRepositoriesResponse
 	resp, err := rs.client.Do(req, &reposResp)
 	if err != nil {
 		return nil, resp, err
@@ -107,7 +107,7 @@ func (rs *RepositoriesService) GetFromSlug(slug string) (*Repository, *http.Resp
 		return nil, nil, err
 	}
 
-	var repoResp GetRepositoryResponse
+	var repoResp getRepositoryResponse
 	resp, err := rs.client.Do(req, &repoResp)
 	if err != nil {
 		return nil, resp, err
@@ -130,7 +130,7 @@ func (rs *RepositoriesService) Get(id uint) (*Repository, *http.Response, error)
 		return nil, nil, err
 	}
 
-	var repoResp GetRepositoryResponse
+	var repoResp getRepositoryResponse
 	resp, err := rs.client.Do(req, &repoResp)
 	if err != nil {
 		return nil, resp, err

@@ -29,9 +29,9 @@ type Log struct {
 	Body  string `json:"body,omitempty"`
 }
 
-// GetLogResponse represents the response of a call
+// getLogResponse represents the response of a call
 // to the Travis CI get log endpoint.
-type GetLogResponse struct {
+type getLogResponse struct {
 	Log Log `json:"log,omitempty"`
 }
 
@@ -49,7 +49,7 @@ func (ls *LogsService) Get(logId uint) (*Log, *http.Response, error) {
 		return nil, nil, err
 	}
 
-	var logResp GetLogResponse
+	var logResp getLogResponse
 	resp, err := ls.client.Do(req, &logResp)
 	if err != nil {
 		return nil, resp, err

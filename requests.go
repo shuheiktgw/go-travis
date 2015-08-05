@@ -35,12 +35,12 @@ type Request struct {
 	Branch       string `json:"branch,omitempty"`
 }
 
-type ListRequestsResponse struct {
+type listRequestsResponse struct {
 	Requests []Request `json:"requests"`
 	Commits  []Commit  `json:"commits"`
 }
 
-type GetRequestResponse struct {
+type getRequestResponse struct {
 	Request Request `json:"request"`
 	Commit  Commit  `json:"commit"`
 }
@@ -77,7 +77,7 @@ func (rs *RequestsService) Get(requestId uint) (*Request, *Commit, *http.Respons
 		return nil, nil, nil, err
 	}
 
-	var reqResp GetRequestResponse
+	var reqResp getRequestResponse
 	resp, err := rs.client.Do(req, &reqResp)
 	if err != nil {
 		return nil, nil, resp, err
@@ -106,7 +106,7 @@ func (rs *RequestsService) ListFromRepository(slug string, opt *RequestsListOpti
 		return nil, nil, nil, err
 	}
 
-	var reqResp ListRequestsResponse
+	var reqResp listRequestsResponse
 	resp, err := rs.client.Do(req, &reqResp)
 	if err != nil {
 		return nil, nil, resp, err

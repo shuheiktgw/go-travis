@@ -50,7 +50,7 @@ func (cs *CommitsService) GetFromBuild(buildId uint) (*Commit, *http.Response, e
 		return nil, nil, err
 	}
 
-	var buildResp GetBuildResponse
+	var buildResp getBuildResponse
 	resp, err := cs.client.Do(req, &buildResp)
 	if err != nil {
 		return nil, resp, err
@@ -73,7 +73,7 @@ func (cs *CommitsService) ListFromRepository(repositorySlug string) ([]Commit, *
 		return nil, nil, err
 	}
 
-	var buildsResp ListBuildsResponse
+	var buildsResp listBuildsResponse
 	resp, err := cs.client.Do(req, &buildsResp)
 	if err != nil {
 		return nil, resp, err
