@@ -8,7 +8,7 @@
 package travis
 
 import (
-	"fmt"
+	"log"
 	"os"
 )
 
@@ -27,7 +27,7 @@ func init() {
 
 	integrationToken := os.Getenv("TRAVIS_API_AUTH_TOKEN")
 	if integrationToken == "" {
-		fmt.Println(
+		log.Fatal(
 			"TRAVIS_API_AUTH_TOKEN environment variable not set. ",
 			"Unable to authenticate the integration tests client. ",
 			"Some tests won't run!",
