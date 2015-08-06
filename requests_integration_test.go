@@ -12,14 +12,8 @@ import "testing"
 func TestRequestsService_ListFromRepository_without_options(t *testing.T) {
 	t.Parallel()
 
-	requests, _, _, err := integrationClient.Requests.ListFromRepository(integrationRepo, nil)
+	_, _, _, err := integrationClient.Requests.ListFromRepository(integrationRepo, nil)
 	ok(t, err)
-
-	assert(
-		t,
-		len(requests) > 0,
-		"Requests.List returned no requests",
-	)
 }
 
 // This test is commented on purpose as the Travis CI Api returns a 500 error code
@@ -42,6 +36,9 @@ func TestRequestsService_Get(t *testing.T) {
 	t.Parallel()
 
 	requests, _, _, err := integrationClient.Requests.ListFromRepository(integrationRepo, nil)
+	if requests == nil || len(requests) == 0 {
+		t.Skip("No requests found for the provided integration repo. skipping test")
+	}
 	requestId := requests[0].Id
 
 	request, _, _, err := integrationClient.Requests.Get(requestId)

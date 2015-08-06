@@ -12,14 +12,8 @@ import "testing"
 func TestBranchesService_ListFromRepository(t *testing.T) {
 	t.Parallel()
 
-	branches, _, err := integrationClient.Branches.ListFromRepository(integrationRepo)
+	_, _, err := integrationClient.Branches.ListFromRepository(integrationRepo)
 	ok(t, err)
-
-	assert(
-		t,
-		len(branches) > 0,
-		"Builds.ListFromRepository returned no branches",
-	)
 }
 
 // func TestBranchesService_Get(t *testing.T) {

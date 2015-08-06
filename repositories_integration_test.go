@@ -12,14 +12,8 @@ import "testing"
 func TestRepositoriesService_Find_without_options(t *testing.T) {
 	t.Parallel()
 
-	repositories, _, err := integrationClient.Repositories.Find(nil)
+	_, _, err := integrationClient.Repositories.Find(nil)
 	ok(t, err)
-
-	assert(
-		t,
-		len(repositories) > 0,
-		"Repositories.Find returned no repositories",
-	)
 }
 
 func TestRepositoriesService_Find_with_options(t *testing.T) {

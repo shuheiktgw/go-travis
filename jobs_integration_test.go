@@ -10,20 +10,8 @@ package travis
 import "testing"
 
 func TestJobsService_Find_without_options(t *testing.T) {
-	jobs, _, err := integrationClient.Jobs.Find(nil)
-	ok(t, err)
-
-	assert(
-		t,
-		jobs != nil,
-		"JobsService.Find returned nil",
-	)
-
-	assert(
-		t,
-		len(jobs) > 0,
-		"JobsService.Find returned no jobs",
-	)
+	_, _, err := integrationClient.Jobs.Find(nil)
+	ok(t, err) // As jobs could be nil, that's unfortunately the only assertion we can make
 }
 
 func TestJobsService_Find_with_options(t *testing.T) {
@@ -37,24 +25,14 @@ func TestJobsService_Find_with_options(t *testing.T) {
 	jobs, _, err := integrationClient.Jobs.Find(opt)
 	ok(t, err)
 
-	assert(
-		t,
-		jobs != nil,
-		"JobsService.Find returned nil",
-	)
-
-	assert(
-		t,
-		len(jobs) > 0,
-		"JobsService.Find returned no jobs",
-	)
-
-	for _, j := range jobs {
-		assert(
-			t,
-			j.Queue == jobQueue,
-			"JobsService.Find return a job with Queue %s; expected %s", j.Queue, jobQueue,
-		)
+	if jobs != nil {
+		for _, j := range jobs {
+			assert(
+				t,
+				j.Queue == jobQueue,
+				"JobsService.Find return a job with Queue %s; expected %s", j.Queue, jobQueue,
+			)
+		}
 	}
 }
 
@@ -66,23 +44,22 @@ func TestJobsService_ListFromBuild(t *testing.T) {
 	jobs, _, err := integrationClient.Jobs.ListFromBuild(buildId)
 	ok(t, err)
 
-	assert(
-		t,
-		jobs != nil,
-		"JobsService.ListFromBuild returned nil",
-	)
-
-	for _, j := range jobs {
-		assert(
-			t,
-			j.BuildId == buildId,
-			"JobsService.ListFromBuild return a job with BuildId %d; expected %d", j.BuildId, buildId,
-		)
+	if jobs != nil {
+		for _, j := range jobs {
+			assert(
+				t,
+				j.BuildId == buildId,
+				"JobsService.ListFromBuild return a job with BuildId %d; expected %d", j.BuildId, buildId,
+			)
+		}
 	}
 }
 
 func TestJobsService_Get(t *testing.T) {
 	jobs, _, err := integrationClient.Jobs.Find(nil)
+	if jobs == nil || len(jobs) == 0 {
+		t.Skip("No jobs found for the provided integration repo. skipping test")
+	}
 	jobId := jobs[0].Id
 
 	job, _, err := integrationClient.Jobs.Get(jobId)
