@@ -15,6 +15,10 @@ import (
 func TestUsersService_GetAuthenticated(t *testing.T) {
 	t.Parallel()
 
+	if auth := integrationClient.IsAuthenticated(); !auth {
+		t.Skip("test client is unauthenticated. skipping.")
+	}
+
 	user, _, err := integrationClient.Users.GetAuthenticated()
 	ok(t, err)
 
@@ -27,6 +31,10 @@ func TestUsersService_GetAuthenticated(t *testing.T) {
 
 func TestUsersService_Get(t *testing.T) {
 	t.Parallel()
+
+	if auth := integrationClient.IsAuthenticated(); !auth {
+		t.Skip("test client is unauthenticated. skipping.")
+	}
 
 	authenticatedUser, _, err := integrationClient.Users.GetAuthenticated()
 	userId := authenticatedUser.Id
@@ -49,6 +57,10 @@ func TestUsersService_Get(t *testing.T) {
 
 func TestUsersService_Sync(t *testing.T) {
 	t.Parallel()
+
+	if auth := integrationClient.IsAuthenticated(); !auth {
+		t.Skip("test client is unauthenticated. skipping.")
+	}
 
 	userNow, _, err := integrationClient.Users.GetAuthenticated()
 	_, err = integrationClient.Users.Sync()
