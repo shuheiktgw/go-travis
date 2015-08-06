@@ -16,7 +16,7 @@ var (
 	integrationClient *Client
 	integrationToken  string
 	integrationUrl    string = TRAVIS_API_DEFAULT_URL
-	integrationRepo   string = "AbletonAppDev/go-travis"
+	integrationRepo   string = "AbletonAG/go-travis"
 )
 
 func init() {
