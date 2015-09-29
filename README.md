@@ -16,12 +16,13 @@ $ go get github.com/AbletonAG/go-travis
 
 ## Usage
 
+
 Interaction with the Travis CI API is done through a `Client` instance.
 
 ```go
 import travis "github.com/AbletonAG/go-travis"
 
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
+client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "asuperdupertoken")
 ```
 
 Constructing it with the ``NewClient`` helper requires two arguments:
@@ -30,7 +31,24 @@ Constructing it with the ``NewClient`` helper requires two arguments:
   * ``TRAVIS_API_PRO_URL``: the *api.travis-ci.com* endpoint for the paid Travis pro plans.
 * A Travis CI token with which to authenticate. If you wish to run requests unauthenticated, pass an empty string. It is possible at any time to authenticate the Client instance with a Travis token or a Github token. For more information see [Authentication]().
 
-## Services
+### Dive
+
+```go
+import (
+    log
+    travis "github.com/AbletonAG/go-travis"
+)
+
+client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+builds, _, _, resp, err := client.Builds.ListFromRepository("AbletonAG/go-travis", nil)
+if err != nil {
+    log.Fatal(err)
+}
+
+// Now do something with the builds
+```
+
+### Services oriented design
 
 The ``Client`` instance's ``Service`` attributes provide access to Travis CI API resources.
 
@@ -45,7 +63,7 @@ if err != nil {
 Service methods will often take an *Option* (sub-)type instance as input. These types, like ``BuildListOptions`` allow narrowing and filtering your requests.
 
 
-## Authentication
+### Authentication
 
 The Client instance supports both authenticated and unauthenticated interaction with the Travis CI API. **Note** that both Pro and Enterprise plans will require almost all API calls to be authenticated.
 
@@ -97,7 +115,8 @@ nil)
 // Do something with your builds
 ```
 
-## Pagination
+
+### Pagination
 
 The services support resource pagination through the `ListOption` type. Every services `Option` type implements the `ListOption` type.
 
