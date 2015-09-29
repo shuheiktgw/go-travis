@@ -60,7 +60,21 @@ if err != nil {
 }
 ```
 
-Service methods will often take an *Option* (sub-)type instance as input. These types, like ``BuildListOptions`` allow narrowing and filtering your requests.
+**Non exhaustive list of implemented services**:
++ Authentication
++ Branches
++ Builds
++ Commits
++ Jobs
++ Logs
++ Repositories
++ Requests
++ Users
+
+(*For an up to date exhaustive list, please check out the documentation*)
+
+
+**Nota**: Service methods will often take an *Option* (sub-)type instance as input. These types, like ``BuildListOptions`` allow narrowing and filtering your requests.
 
 
 ### Authentication
