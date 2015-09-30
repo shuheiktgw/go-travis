@@ -10,6 +10,16 @@ import (
 	"testing"
 )
 
+func TestClient_NewDefaultClient(t *testing.T) {
+	c := NewDefaultClient("")
+
+	assert(
+		t,
+		c.BaseURL.String() == TRAVIS_API_DEFAULT_URL,
+		"Client.BaseURL = %s; expected %s", c.BaseURL.String(), TRAVIS_API_DEFAULT_URL,
+	)
+}
+
 func TestClient_NewRequest(t *testing.T) {
 	c := NewClient(TRAVIS_API_DEFAULT_URL, "")
 
