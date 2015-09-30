@@ -104,6 +104,13 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	return c
 }
 
+// NewDefaultClient returns a new Travis API client bound to the public travis API.
+// If travisToken is not provided, the client can be authenticated at any time,
+// using it's Authentication exposed service.
+func NewDefaultClient(travisToken string) *Client {
+	return NewClient(TRAVIS_API_DEFAULT_URL, travisToken)
+}
+
 // NewRequest creates an API request. A relative URL can be provided in urlStr,
 // in which case it is resolved relative to the BaseURL of the Client.
 // Relative URLs should always be specified without a preceding slash. If
