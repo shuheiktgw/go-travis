@@ -2,9 +2,9 @@
 
 go-travis is a Go client library for accessing the [Travis CI API](http://docs.travis-ci.com/api/).
 
-**Documentation:** [![GoDoc](https://godoc.org/github.com/AbletonAG/go-travis/travis?status.svg)](https://godoc.org/github.com/AbletonAG/go-travis)
+**Documentation:** [![GoDoc](https://godoc.org/github.com/Ableton/go-travis/travis?status.svg)](https://godoc.org/github.com/Ableton/go-travis)
 
-**Build Status:** [![Build Status](https://travis-ci.org/AbletonAG/go-travis.svg?branch=master)](https://travis-ci.org/AbletonAG/go-travis)
+**Build Status:** [![Build Status](https://travis-ci.org/Ableton/go-travis.svg?branch=master)](https://travis-ci.org/Ableton/go-travis)
 
 go-travis requires Go version 1.1 or greater.
 
@@ -13,11 +13,11 @@ go-travis requires Go version 1.1 or greater.
 ```go
 import (
     log
-    travis "github.com/AbletonAG/go-travis"
+    travis "github.com/Ableton/go-travis"
 )
 
 client := travis.NewDefaultClient("")
-builds, _, _, resp, err := client.Builds.ListFromRepository("AbletonAG/go-travis", nil)
+builds, _, _, resp, err := client.Builds.ListFromRepository("Ableton/go-travis", nil)
 if err != nil {
     log.Fatal(err)
 }
@@ -28,7 +28,7 @@ if err != nil {
 ## Installation
 
 ```bash
-$ go get github.com/AbletonAG/go-travis
+$ go get github.com/Ableton/go-travis
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ $ go get github.com/AbletonAG/go-travis
 Interaction with the Travis CI API is done through a `Client` instance.
 
 ```go
-import travis "github.com/AbletonAG/go-travis"
+import travis "github.com/Ableton/go-travis"
 
 client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "asuperdupertoken")
 ```
