@@ -5,7 +5,7 @@ Installation
 
 go-travis requires Go version 1.1 or greater.
 
-    $ go get github.com/AbletonAppDev/go-travis
+    $ go get github.com/Ableton/go-travis
 
 
 Usage
