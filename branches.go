@@ -93,3 +93,27 @@ func (bs *BranchesService) Get(repoSlug string, branchId uint) (*Branch, *http.R
 
 	return branchResp.Branch, resp, err
 }
+
+// Get fetches a branch based on the provided repository slug
+// and its name.
+//
+// Travis CI API docs: http://docs.travis-ci.com/api/#builds
+func (bs *BranchesService) GetFromSlug(repoSlug string, branchSlug string) (*Branch, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches/%v", repoSlug, branchSlug), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var branchResp getBranchResponse
+	resp, err := bs.client.Do(req, &branchResp)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return branchResp.Branch, resp, err
+}
