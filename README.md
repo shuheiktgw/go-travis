@@ -12,7 +12,7 @@ go-travis requires Go version 1.1 or greater.
 
 ```go
 import (
-    log
+    "log"
     travis "github.com/Ableton/go-travis"
 )
 
