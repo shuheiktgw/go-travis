@@ -164,6 +164,10 @@ Travis API, so contributions are of course [always welcome][contributing].
 
 ## Maintainers
 
+* [@mst-ableton](https://github.com/mst-ableton)
+
+## Maintainers-Emeritus
+
 * Theo Crevon <theo.crevon@ableton.com>
 
 ## Disclaimer
