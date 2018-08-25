@@ -25,12 +25,17 @@ func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessTok
 	}
 
 	b := map[string]string{"github_token": githubToken}
-	h := map[string]string{"Accept": V2_HEADER}
+	h := map[string]string{"Accept": mediaTypeV2}
 
 	req, err := as.client.NewRequest("POST", "/auth/github", b, h)
 	if err != nil {
 		return "", nil, err
 	}
+
+	// This is the only place you need to access Travis API v2.1
+	// See https://github.com/travis-ci/travis-ci/issues/9273
+	// FIXME Use API V3 once GitHub Token API is implemented
+	req.Header.Del("Travis-API-Version")
 
 	atr := &accessTokenResponse{}
 	resp, err := as.client.Do(req, atr)
