@@ -59,8 +59,8 @@ func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
 
 	assert(
 		t,
-		req.Header.Get("Accept") == mediaTypeV2,
-		"Wrong Request Accept header set",
+		req.Header.Get("Travis-API-Version") == apiVersion3,
+		"Wrong Request Travis-API-Version header set",
 	)
 
 	assert(
@@ -96,8 +96,8 @@ func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
 
 	assert(
 		t,
-		req.Header.Get("Accept") == mediaTypeV2,
-		"Wrong Request Accept header set",
+		req.Header.Get("Travis-API-Version") == apiVersion3,
+		"Wrong Request Travis-API-Version header set",
 	)
 
 	assert(
@@ -126,8 +126,8 @@ func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
 
 	assert(
 		t,
-		req.Header.Get("Accept") == mediaTypeV2,
-		"Wrong Request Accept header set",
+		req.Header.Get("Travis-API-Version") == apiVersion3,
+		"Wrong Request Travis-API-Version header set",
 	)
 
 	assert(
