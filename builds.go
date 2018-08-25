@@ -1,15 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -71,7 +63,7 @@ type BuildListOptions struct {
 // List the builds for the authenticated user.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
+func (bs *BuildsService) List(ctx context.Context, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
 	u, err := urlWithOptions("/builds", opt)
 	if err != nil {
 		return nil, nil, nil, nil, err
@@ -83,7 +75,7 @@ func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, []Job, []Commit, 
 	}
 
 	var buildsResp listBuildsResponse
-	resp, err := bs.client.Do(req, &buildsResp)
+	resp, err := bs.client.Do(ctx, req, &buildsResp)
 	if err != nil {
 		return nil, nil, nil, resp, err
 	}
@@ -94,7 +86,7 @@ func (bs *BuildsService) List(opt *BuildListOptions) ([]Build, []Job, []Commit, 
 // List a repository builds based on it's provided slug.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) ListFromRepository(slug string, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
+func (bs *BuildsService) ListFromRepository(ctx context.Context, slug string, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/builds", slug), opt)
 	if err != nil {
 		return nil, nil, nil, nil, err
@@ -106,7 +98,7 @@ func (bs *BuildsService) ListFromRepository(slug string, opt *BuildListOptions) 
 	}
 
 	var buildsResp listBuildsResponse
-	resp, err := bs.client.Do(req, &buildsResp)
+	resp, err := bs.client.Do(ctx, req, &buildsResp)
 	if err != nil {
 		return nil, nil, nil, resp, err
 	}
@@ -117,7 +109,7 @@ func (bs *BuildsService) ListFromRepository(slug string, opt *BuildListOptions) 
 // Get fetches a build based on the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Get(id uint) (*Build, []Job, *Commit, *http.Response, error) {
+func (bs *BuildsService) Get(ctx context.Context, id uint) (*Build, []Job, *Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", id), nil)
 	if err != nil {
 		return nil, nil, nil, nil, err
@@ -129,7 +121,7 @@ func (bs *BuildsService) Get(id uint) (*Build, []Job, *Commit, *http.Response, e
 	}
 
 	var buildResp getBuildResponse
-	resp, err := bs.client.Do(req, &buildResp)
+	resp, err := bs.client.Do(ctx, req, &buildResp)
 	if err != nil {
 		return nil, nil, nil, resp, err
 	}
@@ -140,7 +132,7 @@ func (bs *BuildsService) Get(id uint) (*Build, []Job, *Commit, *http.Response, e
 // Cancel build with the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Cancel(id uint) (*http.Response, error) {
+func (bs *BuildsService) Cancel(ctx context.Context, id uint) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d/cancel", id), nil)
 	if err != nil {
 		return nil, err
@@ -151,7 +143,7 @@ func (bs *BuildsService) Cancel(id uint) (*http.Response, error) {
 		return nil, err
 	}
 
-	resp, err := bs.client.Do(req, nil)
+	resp, err := bs.client.Do(ctx, req, nil)
 	if err != nil {
 		return resp, err
 	}
@@ -162,7 +154,7 @@ func (bs *BuildsService) Cancel(id uint) (*http.Response, error) {
 // Restart build with the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Restart(id uint) (*http.Response, error) {
+func (bs *BuildsService) Restart(ctx context.Context, id uint) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d/restart", id), nil)
 	if err != nil {
 		return nil, err
@@ -173,7 +165,7 @@ func (bs *BuildsService) Restart(id uint) (*http.Response, error) {
 		return nil, err
 	}
 
-	resp, err := bs.client.Do(req, nil)
+	resp, err := bs.client.Do(ctx, req, nil)
 	if err != nil {
 		return resp, err
 	}

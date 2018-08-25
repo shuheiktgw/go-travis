@@ -1,15 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -41,7 +33,7 @@ type getUserResponse struct {
 // This request always needs to be authenticated.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#users
-func (us *UsersService) GetAuthenticated() (*User, *http.Response, error) {
+func (us *UsersService) GetAuthenticated(ctx context.Context) (*User, *http.Response, error) {
 	u, err := urlWithOptions("/users/", nil)
 	if err != nil {
 		return nil, nil, err
@@ -53,7 +45,7 @@ func (us *UsersService) GetAuthenticated() (*User, *http.Response, error) {
 	}
 
 	var userResp getUserResponse
-	resp, err := us.client.Do(req, &userResp)
+	resp, err := us.client.Do(ctx, req, &userResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -64,7 +56,7 @@ func (us *UsersService) GetAuthenticated() (*User, *http.Response, error) {
 // Get fetches the user with the provided id from the Travis CI API.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#users
-func (us *UsersService) Get(userId uint) (*User, *http.Response, error) {
+func (us *UsersService) Get(ctx context.Context, userId uint) (*User, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/users/%d", userId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -76,7 +68,7 @@ func (us *UsersService) Get(userId uint) (*User, *http.Response, error) {
 	}
 
 	var userResp getUserResponse
-	resp, err := us.client.Do(req, &userResp)
+	resp, err := us.client.Do(ctx, req, &userResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -89,7 +81,7 @@ func (us *UsersService) Get(userId uint) (*User, *http.Response, error) {
 // This request always needs to be authenticated.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#users
-func (us *UsersService) Sync() (*http.Response, error) {
+func (us *UsersService) Sync(ctx context.Context) (*http.Response, error) {
 	u, err := urlWithOptions("/users/sync", nil)
 	if err != nil {
 		return nil, err
@@ -100,7 +92,7 @@ func (us *UsersService) Sync() (*http.Response, error) {
 		return nil, err
 	}
 
-	resp, err := us.client.Do(req, nil)
+	resp, err := us.client.Do(ctx, req, nil)
 	if err != nil {
 		return nil, err
 	}

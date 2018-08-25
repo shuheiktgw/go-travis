@@ -1,16 +1,8 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -38,7 +30,7 @@ type getLogResponse struct {
 // Get fetches a log based on the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#logs
-func (ls *LogsService) Get(logId uint) (*Log, *http.Response, error) {
+func (ls *LogsService) Get(ctx context.Context, logId uint) (*Log, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/logs/%d", logId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -50,7 +42,7 @@ func (ls *LogsService) Get(logId uint) (*Log, *http.Response, error) {
 	}
 
 	var logResp getLogResponse
-	resp, err := ls.client.Do(req, &logResp)
+	resp, err := ls.client.Do(ctx, req, &logResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -61,7 +53,7 @@ func (ls *LogsService) Get(logId uint) (*Log, *http.Response, error) {
 // Get a job's log based on it's provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#logs
-func (ls *LogsService) GetByJob(jobId uint) (*Log, *http.Response, error) {
+func (ls *LogsService) GetByJob(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/jobs/%d/log", jobId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -73,7 +65,7 @@ func (ls *LogsService) GetByJob(jobId uint) (*Log, *http.Response, error) {
 	}
 
 	var plainText bytes.Buffer
-	resp, err := ls.client.Do(req, &plainText)
+	resp, err := ls.client.Do(ctx, req, &plainText)
 	if err != nil {
 		return nil, resp, err
 	}

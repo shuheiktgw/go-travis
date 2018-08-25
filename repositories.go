@@ -1,15 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -72,8 +64,8 @@ type getRepositoryResponse struct {
 // If no options are provided, a list of repositories with recent
 // activity for the authenticated user is returned.
 //
-// Travis CI API docs: http://docs.travis-ci.com/api/#repositories
-func (rs *RepositoriesService) Find(opt *RepositoryListOptions) ([]Repository, *http.Response, error) {
+// Travis CI API docs: https://developer.travis-ci.com/resource/repository#find
+func (rs *RepositoriesService) Find(ctx context.Context, opt *RepositoryListOptions) ([]Repository, *http.Response, error) {
 	u, err := urlWithOptions("/repos", opt)
 	if err != nil {
 		return nil, nil, err
@@ -85,7 +77,7 @@ func (rs *RepositoriesService) Find(opt *RepositoryListOptions) ([]Repository, *
 	}
 
 	var reposResp listRepositoriesResponse
-	resp, err := rs.client.Do(req, &reposResp)
+	resp, err := rs.client.Do(ctx, req, &reposResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -96,7 +88,7 @@ func (rs *RepositoriesService) Find(opt *RepositoryListOptions) ([]Repository, *
 // GetBySlug fetches a repository based on the provided slug.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#repositories
-func (rs *RepositoriesService) GetFromSlug(slug string) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) GetFromSlug(ctx context.Context, slug string) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%s", slug), nil)
 	if err != nil {
 		return nil, nil, err
@@ -108,7 +100,7 @@ func (rs *RepositoriesService) GetFromSlug(slug string) (*Repository, *http.Resp
 	}
 
 	var repoResp getRepositoryResponse
-	resp, err := rs.client.Do(req, &repoResp)
+	resp, err := rs.client.Do(ctx, req, &repoResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -119,7 +111,7 @@ func (rs *RepositoriesService) GetFromSlug(slug string) (*Repository, *http.Resp
 // Get fetches a repository based on the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#repositories
-func (rs *RepositoriesService) Get(id uint) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) Get(ctx context.Context, id uint) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%d", id), nil)
 	if err != nil {
 		return nil, nil, err
@@ -131,7 +123,7 @@ func (rs *RepositoriesService) Get(id uint) (*Repository, *http.Response, error)
 	}
 
 	var repoResp getRepositoryResponse
-	resp, err := rs.client.Do(req, &repoResp)
+	resp, err := rs.client.Do(ctx, req, &repoResp)
 	if err != nil {
 		return nil, resp, err
 	}

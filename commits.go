@@ -1,15 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -39,7 +31,7 @@ type Commit struct {
 // Get fetches the commit that triggered a build based on the build id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (cs *CommitsService) GetFromBuild(buildId uint) (*Commit, *http.Response, error) {
+func (cs *CommitsService) GetFromBuild(ctx context.Context, buildId uint) (*Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", buildId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -51,7 +43,7 @@ func (cs *CommitsService) GetFromBuild(buildId uint) (*Commit, *http.Response, e
 	}
 
 	var buildResp getBuildResponse
-	resp, err := cs.client.Do(req, &buildResp)
+	resp, err := cs.client.Do(ctx, req, &buildResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -62,7 +54,7 @@ func (cs *CommitsService) GetFromBuild(buildId uint) (*Commit, *http.Response, e
 // List last commits attached to a repository builds.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (cs *CommitsService) ListFromRepository(repositorySlug string) ([]Commit, *http.Response, error) {
+func (cs *CommitsService) ListFromRepository(ctx context.Context, repositorySlug string) ([]Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%s/builds", repositorySlug), nil)
 	if err != nil {
 		return nil, nil, err
@@ -74,7 +66,7 @@ func (cs *CommitsService) ListFromRepository(repositorySlug string) ([]Commit, *
 	}
 
 	var buildsResp listBuildsResponse
-	resp, err := cs.client.Do(req, &buildsResp)
+	resp, err := cs.client.Do(ctx, req, &buildsResp)
 	if err != nil {
 		return nil, resp, err
 	}

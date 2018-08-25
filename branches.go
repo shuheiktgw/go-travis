@@ -1,15 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -50,7 +42,7 @@ type getBranchResponse struct {
 // List the branches of a given repository.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BranchesService) ListFromRepository(slug string) ([]Branch, *http.Response, error) {
+func (bs *BranchesService) ListFromRepository(ctx context.Context, slug string) ([]Branch, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches", slug), nil)
 	if err != nil {
 		return nil, nil, err
@@ -62,7 +54,7 @@ func (bs *BranchesService) ListFromRepository(slug string) ([]Branch, *http.Resp
 	}
 
 	var branchesResp listBranchesResponse
-	resp, err := bs.client.Do(req, &branchesResp)
+	resp, err := bs.client.Do(ctx, req, &branchesResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -74,7 +66,7 @@ func (bs *BranchesService) ListFromRepository(slug string) ([]Branch, *http.Resp
 // and it's id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BranchesService) Get(repoSlug string, branchId uint) (*Branch, *http.Response, error) {
+func (bs *BranchesService) Get(ctx context.Context, repoSlug string, branchId uint) (*Branch, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches/%d", repoSlug, branchId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -86,7 +78,7 @@ func (bs *BranchesService) Get(repoSlug string, branchId uint) (*Branch, *http.R
 	}
 
 	var branchResp getBranchResponse
-	resp, err := bs.client.Do(req, &branchResp)
+	resp, err := bs.client.Do(ctx, req, &branchResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -98,7 +90,7 @@ func (bs *BranchesService) Get(repoSlug string, branchId uint) (*Branch, *http.R
 // and its name.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BranchesService) GetFromSlug(repoSlug string, branchSlug string) (*Branch, *http.Response, error) {
+func (bs *BranchesService) GetFromSlug(ctx context.Context, repoSlug string, branchSlug string) (*Branch, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/branches/%v", repoSlug, branchSlug), nil)
 	if err != nil {
 		return nil, nil, err
@@ -110,7 +102,7 @@ func (bs *BranchesService) GetFromSlug(repoSlug string, branchSlug string) (*Bra
 	}
 
 	var branchResp getBranchResponse
-	resp, err := bs.client.Do(req, &branchResp)
+	resp, err := bs.client.Do(ctx, req, &branchResp)
 	if err != nil {
 		return nil, resp, err
 	}

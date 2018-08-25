@@ -1,11 +1,9 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package travis
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 func TestJobFindOptions_IsValid_with_only_one_value_set(t *testing.T) {
 	jfo := JobFindOptions{Ids: []uint{1234, 5678}}
@@ -29,6 +27,6 @@ func TestJobsService_Find_fails_with_invalid_opt(t *testing.T) {
 	// No need to instantiate client. Should fail fast
 	js := &JobsService{}
 	opt := &JobFindOptions{Ids: []uint{1234, 5678}, State: "datqueue"}
-	_, _, err := js.Find(opt)
+	_, _, err := js.Find(context.TODO(), opt)
 	notOk(t, err)
 }

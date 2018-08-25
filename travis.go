@@ -2,6 +2,7 @@ package travis
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -17,8 +18,8 @@ import (
 )
 
 const (
-	defaultBaseURL     = "https://api.travis-ci.org/"
-	userAgent          = "go-travis/" + version
+	defaultBaseURL = "https://api.travis-ci.org/"
+	userAgent      = "go-travis/" + version
 
 	defaultContentType = "application/json"
 
@@ -147,9 +148,22 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map
 // error if an API error has occurred.  If v implements the io.Writer
 // interface, the raw response body will be written to v, without attempting to
 // first decode it.
-func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
+//
+// The provided ctx must be non-nil. If it is canceled or times out,
+// ctx.Err() will be returned.
+func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
+	req = withContext(ctx, req)
+
 	resp, err := c.client.Do(req)
 	if err != nil {
+		// If we got an error, and the context has been canceled,
+		// the context's error is probably more useful.
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+		}
+
 		return nil, err
 	}
 	defer resp.Body.Close()
@@ -274,4 +288,8 @@ func (into *ListOptions) GetNextPage(from interface{}) error {
 	into.AfterNumber = uint(math.Max(float64(number), 0))
 
 	return nil
+}
+
+func withContext(ctx context.Context, req *http.Request) *http.Request {
+	return req.WithContext(ctx)
 }

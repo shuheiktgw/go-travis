@@ -1,11 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -13,7 +9,7 @@ import (
 func TestAuthenticate_UsingGithubToken_with_empty_token(t *testing.T) {
 	as := &AuthenticationService{client: NewClient(defaultBaseURL, "")}
 
-	_, _, err := as.UsingGithubToken("")
+	_, _, err := as.UsingGithubToken(context.TODO(), "")
 	notOk(t, err)
 }
 

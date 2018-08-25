@@ -1,17 +1,10 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
 	"fmt"
 	"net/http"
+
+	"context"
 
 	"github.com/fatih/structs"
 )
@@ -90,7 +83,7 @@ func (jfo *JobFindOptions) IsValid() bool {
 // Get fetches job with the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
-func (js *JobsService) Get(id uint) (*Job, *http.Response, error) {
+func (js *JobsService) Get(ctx context.Context, id uint) (*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/jobs/%d", id), nil)
 	if err != nil {
 		return nil, nil, err
@@ -102,7 +95,7 @@ func (js *JobsService) Get(id uint) (*Job, *http.Response, error) {
 	}
 
 	var jobResp getJobResponse
-	resp, err := js.client.Do(req, &jobResp)
+	resp, err := js.client.Do(ctx, req, &jobResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -113,7 +106,7 @@ func (js *JobsService) Get(id uint) (*Job, *http.Response, error) {
 // ListByBuild retrieve a build jobs from its provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
-func (js *JobsService) ListFromBuild(buildId uint) ([]Job, *http.Response, error) {
+func (js *JobsService) ListFromBuild(ctx context.Context, buildId uint) ([]Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", buildId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -125,7 +118,7 @@ func (js *JobsService) ListFromBuild(buildId uint) ([]Job, *http.Response, error
 	}
 
 	var buildResp getBuildResponse
-	resp, err := js.client.Do(req, &buildResp)
+	resp, err := js.client.Do(ctx, req, &buildResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -138,10 +131,10 @@ func (js *JobsService) ListFromBuild(buildId uint) ([]Job, *http.Response, error
 // If you provide State or Queue, a maximum of 250 jobs will be returned.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
-func (js *JobsService) Find(opt *JobFindOptions) ([]Job, *http.Response, error) {
+func (js *JobsService) Find(ctx context.Context, opt *JobFindOptions) ([]Job, *http.Response, error) {
 	if opt != nil && !opt.IsValid() {
 		return nil, nil, fmt.Errorf(
-			"More than one value set in provided JobFindOptions instance",
+			"more than one value set in provided JobFindOptions instance",
 		)
 	}
 
@@ -156,7 +149,7 @@ func (js *JobsService) Find(opt *JobFindOptions) ([]Job, *http.Response, error) 
 	}
 
 	var jobsResp findJobsResponse
-	resp, err := js.client.Do(req, &jobsResp)
+	resp, err := js.client.Do(ctx, req, &jobsResp)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -167,7 +160,7 @@ func (js *JobsService) Find(opt *JobFindOptions) ([]Job, *http.Response, error) 
 // Cancel job with the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
-func (js *JobsService) Cancel(id uint) (*http.Response, error) {
+func (js *JobsService) Cancel(ctx context.Context, id uint) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/jobs/%d/cancel", id), nil)
 	if err != nil {
 		return nil, err
@@ -178,7 +171,7 @@ func (js *JobsService) Cancel(id uint) (*http.Response, error) {
 		return nil, err
 	}
 
-	resp, err := js.client.Do(req, nil)
+	resp, err := js.client.Do(ctx, req, nil)
 	if err != nil {
 		return resp, err
 	}
@@ -189,7 +182,7 @@ func (js *JobsService) Cancel(id uint) (*http.Response, error) {
 // Restart job with the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#jobs
-func (js *JobsService) Restart(id uint) (*http.Response, error) {
+func (js *JobsService) Restart(ctx context.Context, id uint) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/jobs/%d/restart", id), nil)
 	if err != nil {
 		return nil, err
@@ -200,7 +193,7 @@ func (js *JobsService) Restart(id uint) (*http.Response, error) {
 		return nil, err
 	}
 
-	resp, err := js.client.Do(req, nil)
+	resp, err := js.client.Do(ctx, req, nil)
 	if err != nil {
 		return resp, err
 	}

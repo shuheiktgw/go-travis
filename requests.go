@@ -1,15 +1,7 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -66,7 +58,7 @@ type RequestsListOptions struct {
 // Get fetches the request with the provided id from the Travis CI API.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (rs *RequestsService) Get(requestId uint) (*Request, *Commit, *http.Response, error) {
+func (rs *RequestsService) Get(ctx context.Context, requestId uint) (*Request, *Commit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/requests/%d", requestId), nil)
 	if err != nil {
 		return nil, nil, nil, err
@@ -78,7 +70,7 @@ func (rs *RequestsService) Get(requestId uint) (*Request, *Commit, *http.Respons
 	}
 
 	var reqResp getRequestResponse
-	resp, err := rs.client.Do(req, &reqResp)
+	resp, err := rs.client.Do(ctx, req, &reqResp)
 	if err != nil {
 		return nil, nil, resp, err
 	}
@@ -107,7 +99,7 @@ func (rs *RequestsService) ListFromRepository(slug string, opt *RequestsListOpti
 	}
 
 	var reqResp listRequestsResponse
-	resp, err := rs.client.Do(req, &reqResp)
+	resp, err := rs.client.Do(context.TODO(), req, &reqResp)
 	if err != nil {
 		return nil, nil, resp, err
 	}

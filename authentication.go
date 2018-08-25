@@ -1,6 +1,7 @@
 package travis
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -19,7 +20,7 @@ type accessTokenResponse struct {
 // UsingGithubToken will generate a Travis CI API authentication
 // token and call the UsingTravisToken method with it, leaving your
 // client authenticated and ready to use.
-func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessToken, *http.Response, error) {
+func (as *AuthenticationService) UsingGithubToken(ctx context.Context, githubToken string) (AccessToken, *http.Response, error) {
 	if githubToken == "" {
 		return "", nil, fmt.Errorf("unable to authenticate client; empty github token provided")
 	}
@@ -34,11 +35,11 @@ func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessTok
 
 	// This is the only place you need to access Travis API v2.1
 	// See https://github.com/travis-ci/travis-ci/issues/9273
-	// FIXME Use API V3 once GitHub Token API is implemented
+	// FIXME Use API V3 once compatible API is implemented
 	req.Header.Del("Travis-API-Version")
 
 	atr := &accessTokenResponse{}
-	resp, err := as.client.Do(req, atr)
+	resp, err := as.client.Do(ctx, req, atr)
 	if err != nil {
 		return "", nil, err
 	}

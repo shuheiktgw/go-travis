@@ -1,18 +1,16 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 // +build integration
 
 package travis
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 func TestBuildsService_List_without_options(t *testing.T) {
 	t.Parallel()
 
-	builds, _, _, _, err := integrationClient.Builds.List(nil)
+	builds, _, _, _, err := integrationClient.Builds.List(context.TODO(), nil)
 	ok(t, err)
 
 	assert(
@@ -29,7 +27,7 @@ func TestBuildsService_List_with_options(t *testing.T) {
 	number := "1"
 	opt := &BuildListOptions{Slug: slug, Number: number}
 
-	builds, _, _, _, err := integrationClient.Builds.List(opt)
+	builds, _, _, _, err := integrationClient.Builds.List(context.TODO(), opt)
 	ok(t, err)
 
 	assert(
@@ -56,7 +54,7 @@ func TestBuildsService_List_with_options(t *testing.T) {
 func TestBuildsService_ListFromRepository_without_options(t *testing.T) {
 	t.Parallel()
 
-	_, _, _, _, err := integrationClient.Builds.ListFromRepository(integrationRepo, nil)
+	_, _, _, _, err := integrationClient.Builds.ListFromRepository(context.TODO(), integrationRepo, nil)
 	ok(t, err)
 }
 
@@ -65,7 +63,7 @@ func TestBuildsService_ListFromRepository_with_options(t *testing.T) {
 
 	opt := &BuildListOptions{EventType: "push"}
 
-	builds, _, _, _, err := integrationClient.Builds.ListFromRepository(integrationRepo, opt)
+	builds, _, _, _, err := integrationClient.Builds.ListFromRepository(context.TODO(), integrationRepo, opt)
 	ok(t, err)
 
 	if builds != nil {
@@ -84,7 +82,7 @@ func TestBuildsService_Get(t *testing.T) {
 
 	// Fetch the reference repository first build in order
 	// to have an existing build id to test against
-	builds, _, _, _, err := integrationClient.Builds.ListFromRepository(integrationRepo, &BuildListOptions{Number: "1"})
+	builds, _, _, _, err := integrationClient.Builds.ListFromRepository(context.TODO(), integrationRepo, &BuildListOptions{Number: "1"})
 	if builds == nil || len(builds) == 0 {
 		t.Skip("No builds found for the provided integration repo. skipping test")
 	}
