@@ -2,7 +2,7 @@ go-travis
 ====
 
 [![GitHub release](http://img.shields.io/github/release/shuheiktgw/go-travis.svg?style=flat-square)](release)
-[![Build Status](https://travis-ci.org/shuheiktgw/travis.svg?branch=master)](https://travis-ci.org/shuheiktgw/ghbr)
+[![Build Status](https://travis-ci.org/shuheiktgw/go-travis.svg?branch=master)](https://travis-ci.org/shuheiktgw/ghbr)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 go-travis is a Go client library to interact with the [Travis CI API](https://docs.travis-ci.com/user/developer/).
