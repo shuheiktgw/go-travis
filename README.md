@@ -1,23 +1,30 @@
-# go-travis
+go-travis
+====
 
-go-travis is a Go client library for accessing the [Travis CI API](http://docs.travis-ci.com/api/).
+[![GitHub release](http://img.shields.io/github/release/shuheiktgw/go-travis.svg?style=flat-square)](release)
+[![Build Status](https://travis-ci.org/shuheiktgw/travis.svg?branch=master)](https://travis-ci.org/shuheiktgw/ghbr)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-**Documentation:** [![GoDoc](https://godoc.org/github.com/Ableton/go-travis/travis?status.svg)](https://godoc.org/github.com/Ableton/go-travis)
+go-travis is a Go client library to interact with the [Travis CI API](https://docs.travis-ci.com/user/developer/).
 
-**Build Status:** [![Build Status](https://travis-ci.org/Ableton/go-travis.svg?branch=master)](https://travis-ci.org/Ableton/go-travis)
+go-travis requires Go version 1.10 or greater.
 
-go-travis requires Go version 1.1 or greater.
+## Motivation
+
+[shuheiktgw/go-travis](https://github.com/shuheiktgw/go-travis) is originally forked from [Ableton/go-travis](https://github.com/Ableton/go-travis). Unfortunately, the original library does not seem to be maintained any more, and it does not support the latest Travis CI API, V3.
+
+shuheiktgw/go-travis updates the original library and supports the latest Travis CI API.
 
 ## Dive
 
 ```go
 import (
     "log"
-    travis "github.com/Ableton/go-travis"
+    travis "github.com/shuheiktgw/go-travis"
 )
 
 client := travis.NewDefaultClient("")
-builds, _, _, resp, err := client.Builds.ListFromRepository("Ableton/go-travis", nil)
+builds, _, _, resp, err := client.Builds.ListFromRepository("shuheiktgw/go-travis", nil)
 if err != nil {
     log.Fatal(err)
 }
@@ -28,7 +35,7 @@ if err != nil {
 ## Installation
 
 ```bash
-$ go get github.com/Ableton/go-travis
+$ go get github.com/shuheiktgw/go-travis
 ```
 
 ## Usage
@@ -36,7 +43,7 @@ $ go get github.com/Ableton/go-travis
 Interaction with the Travis CI API is done through a `Client` instance.
 
 ```go
-import travis "github.com/Ableton/go-travis"
+import travis "github.com/shuheiktgw/go-travis"
 
 client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "asuperdupertoken")
 ```
@@ -153,28 +160,7 @@ for {
 }
 ```
 
-## Roadmap
-
-This library is being initially developed for internal applications at
-[Ableton](http://ableton.com). Therefore API methods are implemented in the order that they are
-needed by our applications. Eventually, we would like to cover the entire
-Travis API, so contributions are of course [always welcome][contributing].
-
-[contributing]: CONTRIBUTING.md
-
-## Maintainers
-
-* [@mst-ableton](https://github.com/mst-ableton)
-
-## Maintainers-Emeritus
-
-* Theo Crevon <theo.crevon@ableton.com>
 
 ## Disclaimer
 
-This library design is heavily inspired from the amazing Google's [go-github](https://github.com/google/go-github) library. Some pieces of code have been directly extracted from there too. Therefore any obvious similarities would not be adventitious.
-
-## License
-
-This library is distributed under the BSD-style license found in the [LICENSE](./LICENSE)
-file.
+This library is based on [Ableton/go-travis](https://github.com/Ableton/go-travis) and most of the credits of this library is attributed to them.
