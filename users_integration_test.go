@@ -3,6 +3,7 @@
 package travis
 
 import (
+	"context"
 	"testing"
 	"time"
 )
@@ -14,7 +15,7 @@ func TestUsersService_GetAuthenticated(t *testing.T) {
 		t.Skip("test client is unauthenticated. skipping.")
 	}
 
-	user, _, err := integrationClient.Users.GetAuthenticated()
+	user, _, err := integrationClient.Users.GetAuthenticated(context.TODO())
 	ok(t, err)
 
 	assert(
@@ -31,10 +32,10 @@ func TestUsersService_Get(t *testing.T) {
 		t.Skip("test client is unauthenticated. skipping.")
 	}
 
-	authenticatedUser, _, err := integrationClient.Users.GetAuthenticated()
+	authenticatedUser, _, err := integrationClient.Users.GetAuthenticated(context.TODO())
 	userId := authenticatedUser.Id
 
-	user, _, err := integrationClient.Users.Get(userId)
+	user, _, err := integrationClient.Users.Get(context.TODO(), userId)
 	ok(t, err)
 
 	assert(
@@ -57,12 +58,12 @@ func TestUsersService_Sync(t *testing.T) {
 		t.Skip("test client is unauthenticated. skipping.")
 	}
 
-	userNow, _, err := integrationClient.Users.GetAuthenticated()
-	_, err = integrationClient.Users.Sync()
+	userNow, _, err := integrationClient.Users.GetAuthenticated(context.TODO())
+	_, err = integrationClient.Users.Sync(context.TODO())
 	ok(t, err)
 	time.Sleep(5 * time.Second)
 
-	userThen, _, err := integrationClient.Users.GetAuthenticated()
+	userThen, _, err := integrationClient.Users.GetAuthenticated(context.TODO())
 	if userThen != nil {
 		// User might have been destroyed since last sync
 		assert(

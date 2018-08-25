@@ -2,7 +2,10 @@
 
 package travis
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 func TestRequestsService_ListFromRepository_without_options(t *testing.T) {
 	t.Parallel()
@@ -36,7 +39,7 @@ func TestRequestsService_Get(t *testing.T) {
 	}
 	requestId := requests[0].Id
 
-	request, _, _, err := integrationClient.Requests.Get(requestId)
+	request, _, _, err := integrationClient.Requests.Get(context.TODO(), requestId)
 	ok(t, err)
 
 	assert(

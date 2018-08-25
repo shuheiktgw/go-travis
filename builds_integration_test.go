@@ -88,7 +88,7 @@ func TestBuildsService_Get(t *testing.T) {
 	}
 	buildId := builds[0].Id
 
-	build, _, _, _, err := integrationClient.Builds.Get(buildId)
+	build, _, _, _, err := integrationClient.Builds.Get(context.TODO(), buildId)
 	ok(t, err)
 
 	assert(
