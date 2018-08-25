@@ -13,14 +13,14 @@ Usage
 Interaction with the Travis CI API is done through a Client instance.
 
     import travis "github.com/AbletonAppDev/go-travis"
-    client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "AQFvXR7r88s2Db5-dMYo3g")
+    client := travis.NewClient(travis.defaultBaseURL, "AQFvXR7r88s2Db5-dMYo3g")
 
 Constructing it with the NewClient helper requires two arguments:
 
 First, the Travis CI API URL you wish to communicate with. Different Travis CI plans are accessed through different URLs.
 go-travis exposes constants for these URLs:
 
-    TRAVIS_API_DEFAULT_URL -> default api.travis-ci.org endpoint for the free Travis "Open Source" plan.
+    defaultBaseURL -> default api.travis-ci.org endpoint for the free Travis "Open Source" plan.
     TRAVIS_API_PRO_URL -> the api.travis-ci.com endpoint for the paid Travis pro plans.
 
 Second, a Travis CI token with which to authenticate.
@@ -49,7 +49,7 @@ API. Note that both Pro and Enterprise will require almost all API calls to be a
 
 It is possible to use the client unauthenticated. However some resources won't be accesible.
 
-    unauthClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+    unauthClient := travis.NewClient(travis.defaultBaseURL, "")
     builds, _, _, resp, err :=
     unauthClient.Builds.ListFromRepository("mygithubuser/myopensourceproject", nil)
     // Do something with your builds
@@ -62,7 +62,7 @@ It is possible to use the client unauthenticated. However some resources won't b
 
 The Client instance supports authentication with both Travis token and Github token.
 
-    authClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "mytravistoken")
+    authClient := travis.NewClient(travis.defaultBaseURL, "mytravistoken")
     builds, _, _, resp, err := authClient.Builds.ListFromRepository("mygithubuser/myopensourceproject",
     nil)
     // Do something with your builds
@@ -72,7 +72,7 @@ The Client instance supports authentication with both Travis token and Github to
 
 However, authentication with a Github token will require and extra step (and request).
 
-    authWithGithubClient := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+    authWithGithubClient := travis.NewClient(travis.defaultBaseURL, "")
     // authWithGithubClient.IsAuthenticated() will return false
 
     err := authWithGithubClient.Authentication.UsingGithubToken("mygithubtoken")
@@ -90,7 +90,7 @@ Pagination
 The services support resource pagination through the ListOption type. Every services `Option` type
 implements the ListOption type.
 
-    client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "mysuperdupertoken")
+    client := travis.NewClient(travis.defaultBaseURL, "mysuperdupertoken")
     opt := &travis.BuildListOptions{}
 
     for {

@@ -15,13 +15,13 @@ func TestClient_NewDefaultClient(t *testing.T) {
 
 	assert(
 		t,
-		c.BaseURL.String() == TRAVIS_API_DEFAULT_URL,
-		"Client.BaseURL = %s; expected %s", c.BaseURL.String(), TRAVIS_API_DEFAULT_URL,
+		c.BaseURL.String() == defaultBaseURL,
+		"Client.BaseURL = %s; expected %s", c.BaseURL.String(), defaultBaseURL,
 	)
 }
 
 func TestClient_NewRequest(t *testing.T) {
-	c := NewClient(TRAVIS_API_DEFAULT_URL, "")
+	c := NewClient(defaultBaseURL, "")
 
 	req, err := c.NewRequest("GET", "/test", nil, nil)
 	if err != nil {
@@ -36,15 +36,15 @@ func TestClient_NewRequest(t *testing.T) {
 
 	assert(
 		t,
-		req.URL.String() == TRAVIS_API_DEFAULT_URL+"test",
+		req.URL.String() == defaultBaseURL+"test",
 		"Wrong Request URL set",
 	)
 
 }
 
 func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
-	baseUrl, _ := url.Parse(TRAVIS_API_DEFAULT_URL)
-	c := NewClient(TRAVIS_API_DEFAULT_URL, "")
+	baseUrl, _ := url.Parse(defaultBaseURL)
+	c := NewClient(defaultBaseURL, "")
 
 	req, err := c.NewRequest("GET", "/users", nil, nil)
 	if err != nil {
@@ -53,13 +53,13 @@ func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
 
 	assert(
 		t,
-		req.Header.Get("User-Agent") == TRAVIS_USER_AGENT,
+		req.Header.Get("User-Agent") == userAgent,
 		"Wrong Request User-Agent header set",
 	)
 
 	assert(
 		t,
-		req.Header.Get("Accept") == TRAVIS_REQUEST_ACCEPT_HEADER,
+		req.Header.Get("Accept") == mediaTypeV2,
 		"Wrong Request Accept header set",
 	)
 
@@ -71,8 +71,8 @@ func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
 }
 
 func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
-	baseUrl, _ := url.Parse(TRAVIS_API_DEFAULT_URL)
-	c := NewClient(TRAVIS_API_DEFAULT_URL, "")
+	baseUrl, _ := url.Parse(defaultBaseURL)
+	c := NewClient(defaultBaseURL, "")
 	h := map[string]string{
 		"Abc": "123",
 	}
@@ -90,13 +90,13 @@ func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
 
 	assert(
 		t,
-		req.Header.Get("User-Agent") == TRAVIS_USER_AGENT,
+		req.Header.Get("User-Agent") == userAgent,
 		"Wrong Request User-Agent header set",
 	)
 
 	assert(
 		t,
-		req.Header.Get("Accept") == TRAVIS_REQUEST_ACCEPT_HEADER,
+		req.Header.Get("Accept") == mediaTypeV2,
 		"Wrong Request Accept header set",
 	)
 
@@ -108,7 +108,7 @@ func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
 }
 
 func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
-	c := NewClient(TRAVIS_API_DEFAULT_URL, "")
+	c := NewClient(defaultBaseURL, "")
 	h := map[string]string{
 		"Host": "api.travis-ci.com",
 	}
@@ -120,13 +120,13 @@ func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
 
 	assert(
 		t,
-		req.Header.Get("User-Agent") == TRAVIS_USER_AGENT,
+		req.Header.Get("User-Agent") == userAgent,
 		"Wrong Request User-Agent header set",
 	)
 
 	assert(
 		t,
-		req.Header.Get("Accept") == TRAVIS_REQUEST_ACCEPT_HEADER,
+		req.Header.Get("Accept") == mediaTypeV2,
 		"Wrong Request Accept header set",
 	)
 

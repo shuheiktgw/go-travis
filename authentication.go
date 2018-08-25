@@ -1,8 +1,3 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package travis
 
 import (
@@ -28,10 +23,11 @@ func (as *AuthenticationService) UsingGithubToken(githubToken string) (AccessTok
 	if githubToken == "" {
 		return "", nil, fmt.Errorf("unable to authenticate client; empty github token provided")
 	}
-	var u string = "/auth/github"
-	var b map[string]string = map[string]string{"github_token": githubToken}
 
-	req, err := as.client.NewRequest("POST", u, b, nil)
+	b := map[string]string{"github_token": githubToken}
+	h := map[string]string{"Accept": V2_HEADER}
+
+	req, err := as.client.NewRequest("POST", "/auth/github", b, h)
 	if err != nil {
 		return "", nil, err
 	}

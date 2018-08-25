@@ -15,7 +15,7 @@ import (
 var (
 	integrationClient *Client
 	integrationToken  string
-	integrationUrl    string = TRAVIS_API_DEFAULT_URL
+	integrationUrl    string = defaultBaseURL
 	integrationRepo   string = "Ableton/go-travis"
 )
 

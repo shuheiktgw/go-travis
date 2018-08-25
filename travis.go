@@ -1,12 +1,3 @@
-// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-//
-// Fragments of this file have been copied from the go-github (https://github.com/google/go-github)
-// project, and is therefore licensed under the following copyright:
-// Copyright 2013 The go-github AUTHORS. All rights reserved.
-
 package travis
 
 import (
@@ -26,15 +17,13 @@ import (
 )
 
 const (
-	TRAVIS_USER_AGENT string = "go-travis/1.0.0"
+	defaultBaseURL     = "https://api.travis-ci.org/"
+	userAgent          = "go-travis/" + version
 
-	TRAVIS_REQUEST_ACCEPT_HEADER string = "application/vnd.travis-ci.2+json"
-	TRAVIS_REQUEST_CONTENT_TYPE  string = "application/json"
+	defaultContentType = "application/json"
 
-	TRAVIS_API_DEFAULT_URL string = "https://api.travis-ci.org/"
-	TRAVIS_API_PRO_URL     string = "https://api.travis-ci.com/"
-
-	TRAVIS_RESPONSE_PER_PAGE uint64 = 25
+	apiVersion3 = "3"
+	mediaTypeV2 = "application/vnd.travis-ci.2.1+json"
 )
 
 // A Client manages communication with the Travis CI API.
@@ -74,17 +63,17 @@ type Client struct {
 func NewClient(baseUrl string, travisToken string) *Client {
 	bu, _ := url.Parse(baseUrl)
 	bh := map[string]string{
-		"Content-Type": TRAVIS_REQUEST_CONTENT_TYPE,
-		"User-Agent":   TRAVIS_USER_AGENT,
-		"Accept":       TRAVIS_REQUEST_ACCEPT_HEADER,
-		"Host":         bu.Host,
+		"Content-Type":       defaultContentType,
+		"User-Agent":         userAgent,
+		"Travis-API-Version": apiVersion3,
+		"Host":               bu.Host,
 	}
 
 	c := &Client{
 		client:    http.DefaultClient,
 		Headers:   bh,
 		BaseURL:   bu,
-		UserAgent: TRAVIS_USER_AGENT,
+		UserAgent: userAgent,
 	}
 
 	c.Authentication = &AuthenticationService{client: c}
@@ -108,7 +97,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 // If travisToken is not provided, the client can be authenticated at any time,
 // using it's Authentication exposed service.
 func NewDefaultClient(travisToken string) *Client {
-	return NewClient(TRAVIS_API_DEFAULT_URL, travisToken)
+	return NewClient(defaultBaseURL, travisToken)
 }
 
 // NewRequest creates an API request. A relative URL can be provided in urlStr,
@@ -139,7 +128,7 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map
 		return nil, err
 	}
 
-	var h map[string]string = c.Headers
+	var h = c.Headers
 	if headers != nil {
 		for k, v := range headers {
 			h[k] = v
