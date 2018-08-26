@@ -64,7 +64,7 @@ type JobFindOptions struct {
 // and only one value set to a non-zero value.
 //
 // This method is particularly useful to check a JobFindOptions
-// instance before passing it to JobsService.Find method.
+// instance before passing it to JobsService.FindByID method.
 func (jfo *JobFindOptions) IsValid() bool {
 	s := structs.New(jfo)
 	f := s.Fields()
@@ -126,7 +126,7 @@ func (js *JobsService) ListFromBuild(ctx context.Context, buildId uint) ([]Job, 
 	return buildResp.Jobs, resp, err
 }
 
-// Find jobs using the provided options.
+// FindByID jobs using the provided options.
 // You need to provide exactly one of the opt fields value.
 // If you provide State or Queue, a maximum of 250 jobs will be returned.
 //

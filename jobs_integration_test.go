@@ -28,7 +28,7 @@ func TestJobsService_Find_with_options(t *testing.T) {
 			assert(
 				t,
 				j.Queue == jobQueue,
-				"JobsService.Find return a job with Queue %s; expected %s", j.Queue, jobQueue,
+				"JobsService.FindByID return a job with Queue %s; expected %s", j.Queue, jobQueue,
 			)
 		}
 	}

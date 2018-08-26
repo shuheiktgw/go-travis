@@ -14,17 +14,18 @@ type BranchesService struct {
 
 // Branch represents a Travis CI build
 type Branch struct {
-	Id           uint   `json:"id,omitempty"`
-	RepositoryId uint   `json:"repository_id,omitempty"`
-	CommitId     uint   `json:"commit_id,omitempty"`
-	Number       string `json:"number,omitempty"`
-	// Config       Config `json:"config,omitempty"`
-	State       string `json:"state,omitempty"`
-	StartedAt   string `json:"started_at,omitempty"`
-	FinishedAt  string `json:"finished_at,omitempty"`
-	Duration    uint   `json:"duration,omitempty"`
-	JobIds      []uint `json:"job_ids,omitempty"`
-	PullRequest bool   `json:"pull_request,omitempty"`
+	Name           string     `json:"name,omitempty"`
+	Repository     Repository `json:"repository,omitempty"`
+	DefaultBranch  bool       `json:"default_branch,omitempty"`
+	ExistsOnGithub bool       `json:"exists_on_github,omitempty"`
+	LastBuild      Build      `json:"last_build,omitempty"`
+}
+
+// MinimalBranch included when the resource is returned as part of another resource
+//
+// https://developer.travis-ci.com/resource/branch#minimal-representation
+type MinimalBranch struct {
+	Name string `json:"name,omitempty"`
 }
 
 // listBranchesResponse represents the response of a call
