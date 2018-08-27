@@ -11,7 +11,7 @@ var (
 	integrationTravisToken = os.Getenv("TRAVIS_API_AUTH_TOKEN")
 	integrationGitHubToken = os.Getenv("TRAVIS_GITHUB_PERSONAL_ACCESS_TOKEN")
 	integrationUrl         = defaultBaseURL
-	integrationRepo        = "shuheiktgw/go-travis"
+	integrationRepo        = "shuheiktgwtest/go-travis-test"
 )
 
 func init() {

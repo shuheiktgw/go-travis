@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const GoTravisRepoId = 20762031
+const GoTravisRepoId = 20783933
 
 func TestRepositoryService_Find_Success(t *testing.T) {
 	t.Parallel()
@@ -18,9 +18,9 @@ func TestRepositoryService_Find_Success(t *testing.T) {
 		slug string
 		want string
 	}{
-		{id: GoTravisRepoId, want: "shuheiktgw/go-travis"},
-		{slug: "shuheiktgw/go-travis", want: "shuheiktgw/go-travis"},
-		{id: GoTravisRepoId, slug: "shuheiktgw/go-travis", want: "shuheiktgw/go-travis"},
+		{id: GoTravisRepoId, want: integrationRepo},
+		{slug: integrationRepo, want: integrationRepo},
+		{id: GoTravisRepoId, slug: integrationRepo, want: integrationRepo},
 	}
 
 	for i, tc := range cases {
@@ -36,7 +36,7 @@ func TestRepositoryService_Find_Success(t *testing.T) {
 			t.Fatalf("#%d invalid http status: %s", i, res.Status)
 		}
 
-		if got, want := repo.Slug, "shuheiktgw/go-travis"; got != want {
+		if got, want := repo.Slug, tc.want; got != want {
 			t.Fatalf("#%d unexpected repository returned: want %s: got %s", i, want, got)
 		}
 	}
