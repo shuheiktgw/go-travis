@@ -94,3 +94,61 @@ func (rs *RepositoryService) Find(ctx context.Context, ro *RepositoryOption) (*R
 
 	return &repository, resp, err
 }
+
+// Activate activates Travis CI on the specified repository
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/repository#activate
+func (rs *RepositoryService) Activate(ctx context.Context, ro *RepositoryOption) (*Repository, *http.Response, error) {
+	identifier, err := ro.Identifier()
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/activate", identifier), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var repository Repository
+	resp, err := rs.client.Do(ctx, req, &repository)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &repository, resp, err
+}
+
+// Deactivate deactivates Travis CI on the specified repository
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/repository#deactivate
+func (rs *RepositoryService) Deactivate(ctx context.Context, ro *RepositoryOption) (*Repository, *http.Response, error) {
+	identifier, err := ro.Identifier()
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/deactivate", identifier), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var repository Repository
+	resp, err := rs.client.Do(ctx, req, &repository)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &repository, resp, err
+}

@@ -8,10 +8,11 @@ import (
 
 var (
 	integrationClient      *Client
-	integrationTravisToken = os.Getenv("TRAVIS_API_AUTH_TOKEN")
-	integrationGitHubToken = os.Getenv("TRAVIS_GITHUB_PERSONAL_ACCESS_TOKEN")
-	integrationUrl         = defaultBaseURL
-	integrationRepo        = "shuheiktgwtest/go-travis-test"
+	integrationTravisToken      = os.Getenv("TRAVIS_API_AUTH_TOKEN")
+	integrationGitHubToken      = os.Getenv("TRAVIS_GITHUB_PERSONAL_ACCESS_TOKEN")
+	integrationUrl              = defaultBaseURL
+	integrationRepo             = "shuheiktgwtest/go-travis-test"
+	integrationRepoId      uint = 20783933
 )
 
 func init() {
