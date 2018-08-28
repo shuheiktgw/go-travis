@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestRepositoryService_Find_Success(t *testing.T) {
+func TestRepositoryService_Find(t *testing.T) {
 	t.Parallel()
 
 	cases := []struct {
