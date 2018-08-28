@@ -152,3 +152,61 @@ func (rs *RepositoryService) Deactivate(ctx context.Context, ro *RepositoryOptio
 
 	return &repository, resp, err
 }
+
+// Star stars a repository based on the currently logged in user
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/repository#star
+func (rs *RepositoryService) Star(ctx context.Context, ro *RepositoryOption) (*Repository, *http.Response, error) {
+	identifier, err := ro.Identifier()
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/star", identifier), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var repository Repository
+	resp, err := rs.client.Do(ctx, req, &repository)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &repository, resp, err
+}
+
+// Unstar unstars a repository based on the currently logged in user
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/repository#unstar
+func (rs *RepositoryService) Unstar(ctx context.Context, ro *RepositoryOption) (*Repository, *http.Response, error) {
+	identifier, err := ro.Identifier()
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/unstar", identifier), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var repository Repository
+	resp, err := rs.client.Do(ctx, req, &repository)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &repository, resp, err
+}
