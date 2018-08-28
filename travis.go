@@ -48,12 +48,13 @@ type Client struct {
 
 	// Services used to manipulate API entities
 	Authentication *AuthenticationService
-	Repository     *RepositoryService
-	Builds         *BuildsService
-	Jobs           *JobsService
 	Branches       *BranchesService
-	Logs           *LogsService
+	Builds         *BuildsService
 	Commits        *CommitsService
+	Jobs           *JobsService
+	Logs           *LogsService
+	Owner          *OwnerService
+	Repository     *RepositoryService
 	Requests       *RequestsService
 	Users          *UsersService
 }
@@ -78,12 +79,13 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	}
 
 	c.Authentication = &AuthenticationService{client: c}
-	c.Repository = &RepositoryService{client: c}
-	c.Builds = &BuildsService{client: c}
-	c.Jobs = &JobsService{client: c}
 	c.Branches = &BranchesService{client: c}
-	c.Logs = &LogsService{client: c}
+	c.Builds = &BuildsService{client: c}
 	c.Commits = &CommitsService{client: c}
+	c.Jobs = &JobsService{client: c}
+	c.Logs = &LogsService{client: c}
+	c.Owner = &OwnerService{client: c}
+	c.Repository = &RepositoryService{client: c}
 	c.Requests = &RequestsService{client: c}
 	c.Users = &UsersService{client: c}
 

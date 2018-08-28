@@ -35,25 +35,19 @@ type Repository struct {
 	ActiveOnOrg           bool          `json:"active_on_org"`
 }
 
-// MinimalOwner represents a GitHub Owner
-//
-// https://developer.travis-ci.com/resource/owner#minimal-representation
-type MinimalOwner struct {
-	Id    uint   `json:"id"`
-	Login string `json:"login"`
-}
-
 // RepositoryOption specifies the optional parameters for the
 // RepositoryService.
 type RepositoryOption struct {
-	// list of repository ids to fetch, cannot be combined with other parameters
+	// Repository Id on Travis.
+	// Do not confuse with a Repository Id on GitHub.
 	Id uint `url:"id,omitempty"`
 
-	// filter by slug
+	// GitHub owner name / GitHub repository name.
+	// ex. "shuheiktgw/go-travis"
 	Slug string `url:"slug,omitempty"`
 }
 
-// // Identifier returns repository's identifier, either id or slug
+// Identifier returns repository's identifier, either id or slug
 func (ro *RepositoryOption) Identifier() (string, error) {
 	if ro.Id != 0 {
 		return fmt.Sprint(ro.Id), nil
