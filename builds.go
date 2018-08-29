@@ -35,17 +35,17 @@ type Build struct {
 // listBuildsResponse represents the response of a call
 // to the Travis CI list builds endpoint.
 type listBuildsResponse struct {
-	Builds  []Build  `json:"builds,omitempty"`
-	Commits []Commit `json:"commits,omitempty"`
-	Jobs    []Job    `json:"jobs,omitempty"`
+	Builds  []Build         `json:"builds,omitempty"`
+	Commits []MinimalCommit `json:"commits,omitempty"`
+	Jobs    []Job           `json:"jobs,omitempty"`
 }
 
 // getBuildResponse represents the response of a call
 // to the Travis CI get build endpoint.
 type getBuildResponse struct {
-	Build  Build  `json:"build"`
-	Commit Commit `json:"commit"`
-	Jobs   []Job  `json:"jobs"`
+	Build  Build         `json:"build"`
+	Commit MinimalCommit `json:"commit"`
+	Jobs   []Job         `json:"jobs"`
 }
 
 // BuildListOptions specifies the optional parameters to the
@@ -63,7 +63,7 @@ type BuildListOptions struct {
 // List the builds for the authenticated user.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) List(ctx context.Context, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
+func (bs *BuildsService) List(ctx context.Context, opt *BuildListOptions) ([]Build, []Job, []MinimalCommit, *http.Response, error) {
 	u, err := urlWithOptions("/builds", opt)
 	if err != nil {
 		return nil, nil, nil, nil, err
@@ -86,7 +86,7 @@ func (bs *BuildsService) List(ctx context.Context, opt *BuildListOptions) ([]Bui
 // List a repository builds based on it's provided slug.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) ListFromRepository(ctx context.Context, slug string, opt *BuildListOptions) ([]Build, []Job, []Commit, *http.Response, error) {
+func (bs *BuildsService) ListFromRepository(ctx context.Context, slug string, opt *BuildListOptions) ([]Build, []Job, []MinimalCommit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/builds", slug), opt)
 	if err != nil {
 		return nil, nil, nil, nil, err
@@ -109,7 +109,7 @@ func (bs *BuildsService) ListFromRepository(ctx context.Context, slug string, op
 // Get fetches a build based on the provided id.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Get(ctx context.Context, id uint) (*Build, []Job, *Commit, *http.Response, error) {
+func (bs *BuildsService) Get(ctx context.Context, id uint) (*Build, []Job, *MinimalCommit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", id), nil)
 	if err != nil {
 		return nil, nil, nil, nil, err

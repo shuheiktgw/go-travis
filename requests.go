@@ -28,13 +28,13 @@ type Request struct {
 }
 
 type listRequestsResponse struct {
-	Requests []Request `json:"requests"`
-	Commits  []Commit  `json:"commits"`
+	Requests []Request       `json:"requests"`
+	Commits  []MinimalCommit `json:"commits"`
 }
 
 type getRequestResponse struct {
-	Request Request `json:"request"`
-	Commit  Commit  `json:"commit"`
+	Request Request       `json:"request"`
+	Commit  MinimalCommit `json:"commit"`
 }
 
 // RequestsListOptions specifies the optional parameters to the
@@ -58,7 +58,7 @@ type RequestsListOptions struct {
 // Get fetches the request with the provided id from the Travis CI API.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (rs *RequestsService) Get(ctx context.Context, requestId uint) (*Request, *Commit, *http.Response, error) {
+func (rs *RequestsService) Get(ctx context.Context, requestId uint) (*Request, *MinimalCommit, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/requests/%d", requestId), nil)
 	if err != nil {
 		return nil, nil, nil, err
@@ -81,7 +81,7 @@ func (rs *RequestsService) Get(ctx context.Context, requestId uint) (*Request, *
 // List requests triggered (or not) by a repository's builds.
 //
 // Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (rs *RequestsService) ListFromRepository(slug string, opt *RequestsListOptions) ([]Request, []Commit, *http.Response, error) {
+func (rs *RequestsService) ListFromRepository(slug string, opt *RequestsListOptions) ([]Request, []MinimalCommit, *http.Response, error) {
 	if opt != nil {
 		opt.Slug = slug
 	} else {

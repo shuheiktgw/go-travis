@@ -12,22 +12,6 @@ type BranchesService struct {
 	client *Client
 }
 
-// Branch represents a Travis CI build
-type Branch struct {
-	Name           string     `json:"name,omitempty"`
-	Repository     Repository `json:"repository,omitempty"`
-	DefaultBranch  bool       `json:"default_branch,omitempty"`
-	ExistsOnGithub bool       `json:"exists_on_github,omitempty"`
-	LastBuild      Build      `json:"last_build,omitempty"`
-}
-
-// MinimalBranch included when the resource is returned as part of another resource
-//
-// https://developer.travis-ci.com/resource/branch#minimal-representation
-type MinimalBranch struct {
-	Name string `json:"name,omitempty"`
-}
-
 // listBranchesResponse represents the response of a call
 // to the Travis CI list branches endpoint.
 type listBranchesResponse struct {
