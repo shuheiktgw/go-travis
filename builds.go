@@ -32,6 +32,23 @@ type Build struct {
 	EventType         string `json:"event_type,omitempty"`
 }
 
+// MinimalBuild is a minimal representation of a Travis CI build
+//
+// https://developer.travis-ci.com/resource/build#minimal-representation
+type MinimalBuild struct {
+	Id                uint   `json:"id,omitempty"`
+	Number            string `json:"number,omitempty"`
+	State             string `json:"state,omitempty"`
+	Duration          uint   `json:"duration,omitempty"`
+	EventType         string `json:"event_type,omitempty"`
+	PreviousState     string `json:"previous_state,omitempty"`
+	PullRequestTitle  string `json:"pull_request_title,omitempty"`
+	PullRequestNumber uint   `json:"pull_request_number,omitempty"`
+	StartedAt         string `json:"started_at,omitempty"`
+	FinishedAt        string `json:"finished_at,omitempty"`
+	Private           bool   `json:"private,omitempty"`
+}
+
 // listBuildsResponse represents the response of a call
 // to the Travis CI list builds endpoint.
 type listBuildsResponse struct {
