@@ -4,7 +4,6 @@ package travis
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 )
@@ -30,6 +29,4 @@ func TestBranchService_Find(t *testing.T) {
 	if branch.Repository.Slug != integrationRepo {
 		t.Fatalf("unexpected branch returned: want %s: got %s", integrationRepo, branch.Repository.Slug)
 	}
-
-	fmt.Println(branch)
 }
