@@ -35,6 +35,15 @@ type Repository struct {
 	ActiveOnOrg           bool          `json:"active_on_org"`
 }
 
+// MinimalRepository is a minimal representation of a Travis CI repository
+//
+// https://developer.travis-ci.com/resource/repository#minimal-representation
+type MinimalRepository struct {
+	Id   uint   `json:"id"`
+	Name string `json:"name"`
+	Slug string `json:"slug"`
+}
+
 // RepositoryOption specifies the optional parameters for the
 // RepositoryService.
 type RepositoryOption struct {
