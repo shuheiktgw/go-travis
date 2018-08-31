@@ -15,24 +15,6 @@ type JobsService struct {
 	client *Client
 }
 
-// Job represents a Travis CI job
-type Job struct {
-	Id           uint   `json:"id,omitempty"`
-	BuildId      uint   `json:"build_id,omitempty"`
-	RepositoryId uint   `json:"repository_id,omitempty"`
-	CommitId     uint   `json:"commit_id,omitempty"`
-	LogId        uint   `json:"log_id,omitempty"`
-	Number       string `json:"number,omitempty"`
-	// Config        Config `json:"config,omitempty"`
-	State         string `json:"state,omitempty"`
-	StartedAt     string `json:"started_at,omitempty"`
-	FinishedAt    string `json:"finished_at,omitempty"`
-	Duration      uint   `json:"duration,omitempty"`
-	Queue         string `json:"queue,omitempty"`
-	AllowFailure  bool   `json:"allow_failure,omitempty"`
-	AnnotationIds []uint `json:"annotation_ids,omitempty"`
-}
-
 type findJobsResponse struct {
 	Jobs []Job `json:"jobs"`
 }

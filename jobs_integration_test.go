@@ -46,8 +46,8 @@ func TestJobsService_ListFromBuild(t *testing.T) {
 		for _, j := range jobs {
 			assert(
 				t,
-				j.BuildId == buildId,
-				"JobsService.ListFromBuild return a job with BuildId %d; expected %d", j.BuildId, buildId,
+				j.Build.Id == buildId,
+				"JobsService.ListFromBuild return a job with BuildId %d; expected %d", j.Build.Id, buildId,
 			)
 		}
 	}
