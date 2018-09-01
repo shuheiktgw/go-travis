@@ -39,8 +39,8 @@ func TestJobService_RestartAndCancel(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if job.Job.Id != jobId {
-		t.Fatalf("unexpected job returned: want job id %d: got job id %d", jobId, job.Job.Id)
+	if job.Id != jobId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", jobId, job.Id)
 	}
 
 	// Wait till the job has successfully processed
@@ -52,7 +52,7 @@ func TestJobService_RestartAndCancel(t *testing.T) {
 		t.Fatalf("unexpected error occured: %s", err)
 	}
 
-	if job.Job.Id != jobId {
-		t.Fatalf("unexpected job returned: want job id %d: got job id %d", jobId, job.Job.Id)
+	if job.Id != jobId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", jobId, job.Id)
 	}
 }
