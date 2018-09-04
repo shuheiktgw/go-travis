@@ -250,8 +250,11 @@ func urlWithOptions(s string, opt interface{}) (string, error) {
 	}
 
 	qs, err := query.Values(opt)
-	u.RawQuery = qs.Encode()
+	if err != nil {
+		return s, err
+	}
 
+	u.RawQuery = qs.Encode()
 	return u.String(), nil
 }
 

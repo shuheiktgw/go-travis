@@ -25,3 +25,23 @@ func TestJobsService_FindByBuild(t *testing.T) {
 		t.Fatalf("returned empty jobs")
 	}
 }
+
+func TestJobsService_Find(t *testing.T) {
+	opt := &JobOption{}
+	jobs, res, err := integrationClient.Jobs.Find(context.TODO(), opt)
+
+	// This endpoint returns 500 as of 2019/09/04
+	t.Skip()
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("#invalid http status: %s", res.Status)
+	}
+
+	if len(jobs) == 0 {
+		t.Fatalf("returned empty jobs")
+	}
+}
