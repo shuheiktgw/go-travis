@@ -12,7 +12,7 @@ type JobsService struct {
 	client *Client
 }
 
-type JobOption struct {
+type JobsOption struct {
 	Limit  int      `url:"limit,omitempty"`
 	Offset int      `url:"offset,omitempty"`
 	SortBy []string `url:"sort_by,omitempty,brackets"`
@@ -25,7 +25,7 @@ type getJobsResponse struct {
 
 // FindByBuild fetches jobs based on the provided build id
 //
-// Travis CI API docs: https://developer.travis-ci.com/resource/jobs#find
+// Travis CI API docs: https://developer.travis-ci.csom/resource/jobs#find
 func (js *JobsService) FindByBuild(ctx context.Context, buildId uint) ([]Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/build/%d/jobs", buildId), nil)
 	if err != nil {
@@ -51,7 +51,7 @@ func (js *JobsService) FindByBuild(ctx context.Context, buildId uint) ([]Job, *h
 // See jobs_integration_test.go, TestJobsService_Find
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/jobs#find
-func (js *JobsService) Find(ctx context.Context, opt *JobOption) ([]Job, *http.Response, error) {
+func (js *JobsService) Find(ctx context.Context, opt *JobsOption) ([]Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/jobs"), opt)
 	if err != nil {
 		return nil, nil, err

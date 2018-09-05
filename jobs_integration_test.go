@@ -27,7 +27,7 @@ func TestJobsService_FindByBuild(t *testing.T) {
 }
 
 func TestJobsService_Find(t *testing.T) {
-	opt := &JobOption{}
+	opt := &JobsOption{}
 	jobs, res, err := integrationClient.Jobs.Find(context.TODO(), opt)
 
 	// This endpoint returns 500 as of 2019/09/04
