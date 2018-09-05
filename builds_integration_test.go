@@ -4,102 +4,40 @@ package travis
 
 import (
 	"context"
+	"net/http"
 	"testing"
 )
 
-func TestBuildsService_List_without_options(t *testing.T) {
-	t.Parallel()
+func TestBuildsService_Find_WithEmptyOption(t *testing.T) {
+	opt := &BuildsOption{}
+	builds, res, err := integrationClient.Builds.Find(context.TODO(), opt)
 
-	builds, _, _, _, err := integrationClient.Builds.List(context.TODO(), nil)
-	ok(t, err)
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
 
-	assert(
-		t,
-		len(builds) > 0,
-		"Builds.List returned no builds",
-	)
-}
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("#invalid http status: %s", res.Status)
+	}
 
-func TestBuildsService_List_with_options(t *testing.T) {
-	t.Parallel()
-
-	slug := integrationRepo
-	number := "1"
-	opt := &BuildListOptions{Slug: slug, Number: number}
-
-	builds, _, _, _, err := integrationClient.Builds.List(context.TODO(), opt)
-	ok(t, err)
-
-	assert(
-		t,
-		len(builds) == 1,
-		"Builds.List returned no builds",
-	)
-
-	// Weirdly, the returned payload does not contained the slug
-	// you are filtering on...
-	// assert(
-	// 	t,
-	// 	builds[0].Slug == slug,
-	// 	"Builds.List first returned build instance Slug = %s; expected %s", builds[0].Slug, slug,
-	// )
-
-	assert(
-		t,
-		builds[0].Number == "1",
-		"Builds.List first returned build instance Number = %s; expected %s", builds[0].Number, number,
-	)
-}
-
-func TestBuildsService_ListFromRepository_without_options(t *testing.T) {
-	t.Parallel()
-
-	_, _, _, _, err := integrationClient.Builds.ListFromRepository(context.TODO(), integrationRepo, nil)
-	ok(t, err)
-}
-
-func TestBuildsService_ListFromRepository_with_options(t *testing.T) {
-	t.Parallel()
-
-	opt := &BuildListOptions{EventType: "push"}
-
-	builds, _, _, _, err := integrationClient.Builds.ListFromRepository(context.TODO(), integrationRepo, opt)
-	ok(t, err)
-
-	if builds != nil {
-		for _, b := range builds {
-			assert(
-				t,
-				b.EventType == "push",
-				"Builds.ListFromRepository returned builds with EventType != push",
-			)
-		}
+	if len(builds) == 0 {
+		t.Fatalf("returned empty builds")
 	}
 }
 
-func TestBuildsService_Get(t *testing.T) {
-	t.Parallel()
+func TestBuildsService_Find_WithOption(t *testing.T) {
+	opt := &BuildsOption{Limit: 1}
+	builds, res, err := integrationClient.Builds.Find(context.TODO(), opt)
 
-	// Fetch the reference repository first build in order
-	// to have an existing build id to test against
-	builds, _, _, _, err := integrationClient.Builds.ListFromRepository(context.TODO(), integrationRepo, &BuildListOptions{Number: "1"})
-	if builds == nil || len(builds) == 0 {
-		t.Skip("No builds found for the provided integration repo. skipping test")
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
 	}
-	buildId := builds[0].Id
 
-	build, _, _, _, err := integrationClient.Builds.Get(context.TODO(), buildId)
-	ok(t, err)
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("#invalid http status: %s", res.Status)
+	}
 
-	assert(
-		t,
-		build.Id == buildId,
-		"Builds.Get return build with Id %d; expected %d", build.Id, buildId,
-	)
-
-	assert(
-		t,
-		build.Number == "1",
-		"Builds.Get return build with Number %s; expected %s", build.Number, "1",
-	)
+	if len(builds) != 1 {
+		t.Fatalf("limit 1 does not seem to work correctly")
+	}
 }

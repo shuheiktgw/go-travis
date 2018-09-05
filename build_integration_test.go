@@ -4,7 +4,6 @@ package travis
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 	"time"
@@ -26,8 +25,6 @@ func TestBuildService_Find(t *testing.T) {
 	if build.Id != integrationBuildId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
 	}
-
-	fmt.Println(build)
 }
 
 func TestBuildService_RestartAndCancel(t *testing.T) {

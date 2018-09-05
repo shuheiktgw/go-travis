@@ -12,143 +12,36 @@ type BuildsService struct {
 	client *Client
 }
 
-// listBuildsResponse represents the response of a call
-// to the Travis CI list builds endpoint.
-type listBuildsResponse struct {
-	Builds  []Build         `json:"builds,omitempty"`
-	Commits []MinimalCommit `json:"commits,omitempty"`
-	Jobs    []Job           `json:"jobs,omitempty"`
+// BuildListOptions specifies the optional parameters for builds endpoint
+type BuildsOption struct {
+	Limit  int      `url:"limit,omitempty"`
+	Offset int      `url:"offset,omitempty"`
+	SortBy []string `url:"sort_by,omitempty,brackets"`
 }
 
-// getBuildResponse represents the response of a call
-// to the Travis CI get build endpoint.
-type getBuildResponse struct {
-	Build  Build         `json:"build"`
-	Commit MinimalCommit `json:"commit"`
-	Jobs   []Job         `json:"jobs"`
+type getBuildsResponse struct {
+	Builds []Build `json:"builds"`
 }
 
-// BuildListOptions specifies the optional parameters to the
-// BuildsService.List method.
-type BuildListOptions struct {
-	ListOptions
-
-	Ids          []uint `url:"ids,omitempty"`
-	RepositoryId uint   `url:"repository_id,omitempty"`
-	Slug         string `url:"slug,omitempty"`
-	Number       string `url:"number,omitempty"`
-	EventType    string `url:"event_type,omitempty"`
-}
-
-// List the builds for the authenticated user.
+// Find fetches current user's builds based on the provided options
 //
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) List(ctx context.Context, opt *BuildListOptions) ([]Build, []Job, []MinimalCommit, *http.Response, error) {
-	u, err := urlWithOptions("/builds", opt)
+// Travis CI API docs: https://developer.travis-ci.com/resource/builds#for_current_user
+func (bs *BuildsService) Find(ctx context.Context, opt *BuildsOption) ([]Build, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/builds"), opt)
 	if err != nil {
-		return nil, nil, nil, nil, err
+		return nil, nil, err
 	}
 
 	req, err := bs.client.NewRequest("GET", u, nil, nil)
 	if err != nil {
-		return nil, nil, nil, nil, err
+		return nil, nil, err
 	}
 
-	var buildsResp listBuildsResponse
-	resp, err := bs.client.Do(ctx, req, &buildsResp)
+	var getBuildsResponse getBuildsResponse
+	resp, err := bs.client.Do(ctx, req, &getBuildsResponse)
 	if err != nil {
-		return nil, nil, nil, resp, err
+		return nil, resp, err
 	}
 
-	return buildsResp.Builds, buildsResp.Jobs, buildsResp.Commits, resp, err
-}
-
-// List a repository builds based on it's provided slug.
-//
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) ListFromRepository(ctx context.Context, slug string, opt *BuildListOptions) ([]Build, []Job, []MinimalCommit, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%v/builds", slug), opt)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
-
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
-
-	var buildsResp listBuildsResponse
-	resp, err := bs.client.Do(ctx, req, &buildsResp)
-	if err != nil {
-		return nil, nil, nil, resp, err
-	}
-
-	return buildsResp.Builds, buildsResp.Jobs, buildsResp.Commits, resp, err
-}
-
-// Get fetches a build based on the provided id.
-//
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Get(ctx context.Context, id uint) (*Build, []Job, *MinimalCommit, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/builds/%d", id), nil)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
-
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
-	if err != nil {
-		return nil, nil, nil, nil, err
-	}
-
-	var buildResp getBuildResponse
-	resp, err := bs.client.Do(ctx, req, &buildResp)
-	if err != nil {
-		return nil, nil, nil, resp, err
-	}
-
-	return &buildResp.Build, buildResp.Jobs, &buildResp.Commit, resp, err
-}
-
-// Cancel build with the provided id.
-//
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Cancel(ctx context.Context, id uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/builds/%d/cancel", id), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := bs.client.NewRequest("POST", u, nil, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := bs.client.Do(ctx, req, nil)
-	if err != nil {
-		return resp, err
-	}
-
-	return resp, err
-}
-
-// Restart build with the provided id.
-//
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (bs *BuildsService) Restart(ctx context.Context, id uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/builds/%d/restart", id), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := bs.client.NewRequest("POST", u, nil, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := bs.client.Do(ctx, req, nil)
-	if err != nil {
-		return resp, err
-	}
-
-	return resp, err
+	return getBuildsResponse.Builds, resp, err
 }
