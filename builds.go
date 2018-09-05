@@ -12,43 +12,6 @@ type BuildsService struct {
 	client *Client
 }
 
-// Build represents a Travis CI build
-type Build struct {
-	Id           uint   `json:"id,omitempty"`
-	RepositoryId uint   `json:"repository_id,omitempty"`
-	Slug         string `json:"slug,omitempty"`
-	CommitId     uint   `json:"commit_id,omitempty"`
-	Number       string `json:"number,omitempty"`
-	// Config            Config `json:"config,omitempty"`
-	PullRequest       bool   `json:"pull_request,omitempty"`
-	PullRequestTitle  string `json:"pull_request_title,omitempty"`
-	PullRequestNumber uint   `json:"pull_request_number,omitempty"`
-	State             string `json:"state,omitempty"`
-	StartedAt         string `json:"started_at,omitempty"`
-	FinishedAt        string `json:"finished_at,omitempty"`
-	Duration          uint   `json:"duration,omitempty"`
-	JobIds            []uint `json:"job_ids,omitempty"`
-	AfterNumber       uint   `json:"after_number,omitempty"`
-	EventType         string `json:"event_type,omitempty"`
-}
-
-// MinimalBuild is a minimal representation of a Travis CI build
-//
-// https://developer.travis-ci.com/resource/build#minimal-representation
-type MinimalBuild struct {
-	Id                uint   `json:"id,omitempty"`
-	Number            string `json:"number,omitempty"`
-	State             string `json:"state,omitempty"`
-	Duration          uint   `json:"duration,omitempty"`
-	EventType         string `json:"event_type,omitempty"`
-	PreviousState     string `json:"previous_state,omitempty"`
-	PullRequestTitle  string `json:"pull_request_title,omitempty"`
-	PullRequestNumber uint   `json:"pull_request_number,omitempty"`
-	StartedAt         string `json:"started_at,omitempty"`
-	FinishedAt        string `json:"finished_at,omitempty"`
-	Private           bool   `json:"private,omitempty"`
-}
-
 // listBuildsResponse represents the response of a call
 // to the Travis CI list builds endpoint.
 type listBuildsResponse struct {
