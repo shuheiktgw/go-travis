@@ -59,6 +59,31 @@ type buildResponse struct {
 	Build MinimalBuild `json:"build,omitempty"`
 }
 
+//
+const (
+	// BuildStateCreated represents the build state `created`
+	BuildStateCreated = "created"
+	// BuildStateReceived represents the build state `received`
+	BuildStateReceived = "received"
+	// BuildStateStarted represents the build state `started`
+	BuildStateStarted = "started"
+	// BuildStatePassed represents the build state `passed`
+	BuildStatePassed = "passed"
+	// BuildStateFailed represents the build state `failed`
+	BuildStateFailed = "failed"
+	// BuildStateErrored represents the build state `errored`
+	BuildStateErrored = "errored"
+	// BuildStateCanceled represents the build state `canceled`
+	BuildStateCanceled = "canceled"
+)
+
+const (
+	// BuildEventTypePush represents the build event type `push`
+	BuildEventTypePush = "push"
+	// BuildEventTypePullRequest represents the build event type `pull_request`
+	BuildEventTypePullRequest = "pull_request"
+)
+
 // Find fetches a build based on the provided build id
 //
 // https://developer.travis-ci.com/resource/build#find
