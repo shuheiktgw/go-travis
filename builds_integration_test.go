@@ -8,36 +8,85 @@ import (
 	"testing"
 )
 
-func TestBuildsService_Find_WithEmptyOption(t *testing.T) {
-	opt := &BuildsOption{}
-	builds, res, err := integrationClient.Builds.Find(context.TODO(), opt)
-
-	if err != nil {
-		t.Fatalf("unexpected error occured: %s", err)
+func TestBuildsService_Find(t *testing.T) {
+	cases := []*BuildsOption{
+		{},
+		{Limit: 1},
+		{SortBy: "id"},
+		{Offset: 0},
 	}
 
-	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
-	}
+	for i, opt := range cases {
+		builds, res, err := integrationClient.Builds.Find(context.TODO(), opt)
 
-	if len(builds) == 0 {
-		t.Fatalf("returned empty builds")
+		if err != nil {
+			t.Fatalf("#%d unexpected error occured: %s", i, err)
+		}
+
+		if res.StatusCode != http.StatusOK {
+			t.Fatalf("#%d invalid http status: %s", i, res.Status)
+		}
+
+		if len(builds) == 0 {
+			t.Fatalf("#%d returned empty builds", i)
+		}
 	}
 }
 
-func TestBuildsService_Find_WithOption(t *testing.T) {
-	opt := &BuildsOption{Limit: 1}
-	builds, res, err := integrationClient.Builds.Find(context.TODO(), opt)
-
-	if err != nil {
-		t.Fatalf("unexpected error occured: %s", err)
+func TestBuildsService_FindByRepositoryId(t *testing.T) {
+	cases := []*BuildsByRepositoryOption{
+		{},
+		{Limit: 1},
+		{SortBy: "id"},
+		{Offset: 0},
+		{State: []string{BuildStateCanceled}},
+		{PreviousState: []string{BuildStatePassed}},
+		{EventType: []string{BuildEventTypePush}},
+		{CreatedBy: []string{"shuheiktgwtest"}},
 	}
 
-	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
+	for i, opt := range cases {
+		builds, res, err := integrationClient.Builds.FindByRepositoryId(context.TODO(), integrationRepoId, opt)
+
+		if err != nil {
+			t.Fatalf("#%d unexpected error occured: %s", i, err)
+		}
+
+		if res.StatusCode != http.StatusOK {
+			t.Fatalf("#%d invalid http status: %s", i, res.Status)
+		}
+
+		if len(builds) == 0 {
+			t.Fatalf("#%d returned empty builds", i)
+		}
+	}
+}
+
+func TestBuildsService_FindByRepositorySlug(t *testing.T) {
+	cases := []*BuildsByRepositoryOption{
+		{},
+		{Limit: 1},
+		{SortBy: "id"},
+		{Offset: 0},
+		{State: []string{BuildStateCanceled}},
+		{PreviousState: []string{BuildStatePassed}},
+		{EventType: []string{BuildEventTypePush}},
+		{CreatedBy: []string{"shuheiktgwtest"}},
 	}
 
-	if len(builds) != 1 {
-		t.Fatalf("limit 1 does not seem to work correctly")
+	for i, opt := range cases {
+		builds, res, err := integrationClient.Builds.FindByRepositorySlug(context.TODO(), integrationRepo, opt)
+
+		if err != nil {
+			t.Fatalf("#%d unexpected error occured: %s", i, err)
+		}
+
+		if res.StatusCode != http.StatusOK {
+			t.Fatalf("#%d invalid http status: %s", i, res.Status)
+		}
+
+		if len(builds) == 0 {
+			t.Fatalf("#%d returned empty builds", i)
+		}
 	}
 }
