@@ -2,12 +2,6 @@
 
 
 [[projects]]
-  name = "github.com/fatih/structs"
-  packages = ["."]
-  revision = "a720dfa8df582c51dee1b36feabb906bde1588bd"
-  version = "v1.0"
-
-[[projects]]
   branch = "master"
   name = "github.com/google/go-querystring"
   packages = ["query"]
@@ -28,6 +22,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "63e4f03b58093dd590869e5a19bc56f6f36e9eeae77e948380774abc2d44ed40"
+  inputs-digest = "a79c4ecfc76e24b9618ff68c35d7963dc0a8b82336783bacbc98bce012cf9835"
   solver-name = "gps-cdcl"
   solver-version = 1
