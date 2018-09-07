@@ -58,7 +58,7 @@ type Client struct {
 	Owner          *OwnerService
 	Repository     *RepositoryService
 	Requests       *RequestsService
-	Users          *UsersService
+	User           *UserService
 }
 
 // NewClient returns a new Travis API client.
@@ -91,7 +91,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Owner = &OwnerService{client: c}
 	c.Repository = &RepositoryService{client: c}
 	c.Requests = &RequestsService{client: c}
-	c.Users = &UsersService{client: c}
+	c.User = &UserService{client: c}
 
 	if travisToken != "" {
 		c.Authentication.UsingTravisToken(travisToken)
