@@ -26,7 +26,7 @@ func TestBranchOption_RepoIdentifier_Success(t *testing.T) {
 	}
 
 	for i, tc := range cases {
-		op := BranchOption{RepositoryId: tc.id, Slug: tc.slug}
+		op := BranchOption{RepoId: tc.id, Slug: tc.slug}
 
 		id, err := op.RepoIdentifier()
 

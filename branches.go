@@ -27,12 +27,12 @@ type getBranchesResponse struct {
 	Branches []Branch `json:"branches"`
 }
 
-// FindByRepositoryId fetches the branches of a given repository id.
+// FindByRepoId fetches the branches of a given repository id.
 // As of 2018/9/7 this endpoints returns 404 and does not seem to work correctly
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branches#find
-func (bs *BranchesService) FindByRepositoryId(ctx context.Context, repositoryId uint, opt *BranchesOption) ([]Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%d/branches", repositoryId), opt)
+func (bs *BranchesService) FindByRepoId(ctx context.Context, repoId uint, opt *BranchesOption) ([]Branch, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%d/branches", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -51,12 +51,12 @@ func (bs *BranchesService) FindByRepositoryId(ctx context.Context, repositoryId 
 	return getBranchesResponse.Branches, resp, err
 }
 
-// FindByRepositorySlug fetches the branches of a given repository slug.
+// FindByRepoSlug fetches the branches of a given repository slug.
 // As of 2018/9/7 this endpoints returns 404 and does not seem to work correctly
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branches#find
-func (bs *BranchesService) FindByRepositorySlug(ctx context.Context, repositorySlug string, opt *BranchesOption) ([]Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repos/%s/branches", url.QueryEscape(repositorySlug)), opt)
+func (bs *BranchesService) FindByRepoSlug(ctx context.Context, repoSlug string, opt *BranchesOption) ([]Branch, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repos/%s/branches", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}

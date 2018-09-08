@@ -58,11 +58,11 @@ func (bs *BuildsService) Find(ctx context.Context, opt *BuildsOption) ([]Build, 
 	return getBuildsResponse.Builds, resp, err
 }
 
-// FindByRepositoryId fetches current user's builds based on the repository id and options
+// FindByRepoId fetches current user's builds based on the repository id and options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#find
-func (bs *BuildsService) FindByRepositoryId(ctx context.Context, repositoryId uint, opt *BuildsByRepositoryOption) ([]Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/builds", repositoryId), opt)
+func (bs *BuildsService) FindByRepoId(ctx context.Context, repoId uint, opt *BuildsByRepositoryOption) ([]Build, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/builds", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -81,11 +81,11 @@ func (bs *BuildsService) FindByRepositoryId(ctx context.Context, repositoryId ui
 	return getBuildsResponse.Builds, resp, err
 }
 
-// FindByRepositorySlug fetches current user's builds based on the repository slug and options
+// FindByRepoSlug fetches current user's builds based on the repository slug and options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#find
-func (bs *BuildsService) FindByRepositorySlug(ctx context.Context, repositorySlug string, opt *BuildsByRepositoryOption) ([]Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/builds", url.QueryEscape(repositorySlug)), opt)
+func (bs *BuildsService) FindByRepoSlug(ctx context.Context, repoSlug string, opt *BuildsByRepositoryOption) ([]Build, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/builds", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}

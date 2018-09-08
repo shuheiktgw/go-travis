@@ -39,7 +39,7 @@ type MinimalBranch struct {
 type BranchOption struct {
 	// Repository Id on Travis.
 	// Do not confuse with a Repository Id on GitHub.
-	RepositoryId uint `url:"repository_id,omitempty"`
+	RepoId uint `url:"repository_id,omitempty"`
 
 	// GitHub owner name / GitHub repository name.
 	// ex. "shuheiktgw/go-travis"
@@ -51,8 +51,8 @@ type BranchOption struct {
 
 // RepoIdentifier returns repository's identifier, either repository id or slug
 func (bo *BranchOption) RepoIdentifier() (string, error) {
-	if bo.RepositoryId != 0 {
-		return fmt.Sprint(bo.RepositoryId), nil
+	if bo.RepoId != 0 {
+		return fmt.Sprint(bo.RepoId), nil
 	}
 
 	if bo.Slug != "" {

@@ -33,7 +33,7 @@ func TestBuildsService_Find(t *testing.T) {
 	}
 }
 
-func TestBuildsService_FindByRepositoryId(t *testing.T) {
+func TestBuildsService_FindByRepoId(t *testing.T) {
 	cases := []*BuildsByRepositoryOption{
 		{},
 		{Limit: 1},
@@ -46,7 +46,7 @@ func TestBuildsService_FindByRepositoryId(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		builds, res, err := integrationClient.Builds.FindByRepositoryId(context.TODO(), integrationRepoId, opt)
+		builds, res, err := integrationClient.Builds.FindByRepoId(context.TODO(), integrationRepoId, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -62,7 +62,7 @@ func TestBuildsService_FindByRepositoryId(t *testing.T) {
 	}
 }
 
-func TestBuildsService_FindByRepositorySlug(t *testing.T) {
+func TestBuildsService_FindByRepoSlug(t *testing.T) {
 	cases := []*BuildsByRepositoryOption{
 		{},
 		{Limit: 1},
@@ -75,7 +75,7 @@ func TestBuildsService_FindByRepositorySlug(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		builds, res, err := integrationClient.Builds.FindByRepositorySlug(context.TODO(), integrationRepo, opt)
+		builds, res, err := integrationClient.Builds.FindByRepoSlug(context.TODO(), integrationRepo, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)

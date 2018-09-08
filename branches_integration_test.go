@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestBranchesService_FindByRepositoryId(t *testing.T) {
+func TestBranchesService_FindByRepoId(t *testing.T) {
 	t.Parallel()
 
 	t.Skip("As of 2018/9/7 this endpoints returns 404 and does not seem to work correctly")
@@ -22,7 +22,7 @@ func TestBranchesService_FindByRepositoryId(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		branches, res, err := integrationClient.Branches.FindByRepositoryId(context.TODO(), integrationRepoId, opt)
+		branches, res, err := integrationClient.Branches.FindByRepoId(context.TODO(), integrationRepoId, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -40,7 +40,7 @@ func TestBranchesService_FindByRepositoryId(t *testing.T) {
 	}
 }
 
-func TestBranchesService_FindByRepositorySlug(t *testing.T) {
+func TestBranchesService_FindByRepoSlug(t *testing.T) {
 	t.Parallel()
 
 	t.Skip("As of 2018/9/7 this endpoints returns 404 and does not seem to work correctly")
@@ -53,7 +53,7 @@ func TestBranchesService_FindByRepositorySlug(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		branches, res, err := integrationClient.Branches.FindByRepositorySlug(context.TODO(), integrationRepo, opt)
+		branches, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepo, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
