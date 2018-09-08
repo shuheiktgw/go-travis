@@ -7,14 +7,11 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math"
 	"net/http"
 	"net/url"
 	"reflect"
-	"strconv"
 
 	"github.com/google/go-querystring/query"
-	"github.com/oleiade/reflections"
 )
 
 const (
@@ -57,6 +54,7 @@ type Client struct {
 	Logs           *LogsService
 	Owner          *OwnerService
 	Repository     *RepositoryService
+	Request        *RequestService
 	Requests       *RequestsService
 	User           *UserService
 }
@@ -90,6 +88,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Logs = &LogsService{client: c}
 	c.Owner = &OwnerService{client: c}
 	c.Repository = &RepositoryService{client: c}
+	c.Request = &RequestService{client: c}
 	c.Requests = &RequestsService{client: c}
 	c.User = &UserService{client: c}
 
@@ -258,45 +257,6 @@ func urlWithOptions(s string, opt interface{}) (string, error) {
 
 	u.RawQuery = qs.Encode()
 	return u.String(), nil
-}
-
-type Paginator interface {
-	GetNextPage(interface{}) error
-}
-
-type ListOptions struct {
-	AfterNumber uint `url:"after_number,omitempty"`
-}
-
-// GetNextPage provided a collection of resources (Builds or Jobs),
-// will update the ListOptions to fetch the next resource page on next call.
-func (into *ListOptions) GetNextPage(from interface{}) error {
-	if reflect.TypeOf(from).Kind() != reflect.Slice {
-		return fmt.Errorf("provided interface{} does not represent a slice")
-	}
-
-	slice := reflect.ValueOf(from)
-	if slice.Len() == 0 {
-		return fmt.Errorf("provided interface{} is a zero sized slice")
-	}
-
-	lastElem := slice.Index(slice.Len() - 1).Interface()
-	has, _ := reflections.HasField(lastElem, "Number")
-	if !has {
-		return fmt.Errorf("last element of the provided slice does not have a Number attribute")
-	}
-
-	value, err := reflections.GetField(lastElem, "Number")
-	if err != nil {
-		return err
-	}
-
-	// We rely on travis sending us numbers representations here
-	// so no real need to check for errors
-	number, _ := strconv.ParseUint(value.(string), 10, 64)
-	into.AfterNumber = uint(math.Max(float64(number), 0))
-
-	return nil
 }
 
 func withContext(ctx context.Context, req *http.Request) *http.Request {

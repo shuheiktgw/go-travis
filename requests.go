@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 // RequestsService handles communication with the requests
@@ -12,97 +13,154 @@ type RequestsService struct {
 	client *Client
 }
 
-// Request represents a Travis CI request.
-// They can be used to see if and why a GitHub even has or has not triggered a new build.
-type Request struct {
-	Id           uint   `json:"id,omitempty"`
-	RepositoryId uint   `json:"repository_id,omitempty"`
-	CommitId     uint   `json:"commit_id,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	OwnerId      uint   `json:"owner_id"`
-	OwnerType    string `json:"owner_type,omitempty"`
-	EventType    string `json:"event_type,omitempty"`
-	Result       string `json:"result,omitempty"`
-	PullRequest  bool   `json:"pull_request,omitempty"`
-	Branch       string `json:"branch,omitempty"`
+// FindRequestsOption specifies options for
+// FindRequests request.
+type FindRequestsOption struct {
+	Limit  int `url:"limit,omitempty"`
+	Offset int `url:"offset,omitempty"`
 }
 
-type listRequestsResponse struct {
-	Requests []Request       `json:"requests"`
-	Commits  []MinimalCommit `json:"commits"`
+// CreateRequestsOption specifies options for
+// CreateRequests request.
+type CreateRequestsOption struct {
+	// Build configuration (as parsed from .travis.yml)
+	Config string `json:"config,omitempty"`
+	// Travis-ci status message attached to the request
+	Message string `json:"message,omitempty"`
+	// Branch requested to be built
+	Branch string `json:"branch,omitempty"`
+	// Travis token associated with webhook on GitHub (DEPRECATED)
+	Token string `json:"token,omitempty"`
 }
 
-type getRequestResponse struct {
-	Request Request       `json:"request"`
-	Commit  MinimalCommit `json:"commit"`
+type getRequestsResponse struct {
+	Requests []Request `json:"requests"`
 }
 
-// RequestsListOptions specifies the optional parameters to the
-// RequestsService.List method.
+// Create endpoints actually returns following form of response.
+// It is different from standard nor minimal representation of request.
+// So far, I'm not going to create a special struct to parse it, and
+// just use the minimal representation of request.
 //
-// You have to either provide RepositoryId or Slug
-type RequestsListOptions struct {
-	// repository id the requests belong to
-	RepositoryId uint `url:"repository_id,omitempty"`
-
-	// repository slug the requests belong to
-	Slug string `url:"slug,omitempty"`
-
-	// maximum number of requests to return (cannot be larger than 100)
-	Limit uint `url:"limit,omitempty"`
-
-	// list requests before older_than (with older_than being a request id)
-	OlderThan uint `url:"older_than,omitempty"`
+//{
+//  "@type":              "pending",
+//  "remaining_requests": 1,
+//  "repository":         {
+//    "@type":            "repository",
+//    "@href":            "/repo/1",
+//    "@representation":  "minimal",
+//    "id":               1,
+//    "name":             "test",
+//    "slug":             "owner/repo"
+//  },
+//  "request":            {
+//    "repository":       {
+//      "id":             1,
+//      "owner_name":     "owner",
+//      "name":           "repo"
+//    },
+//    "user":             {
+//      "id":             1
+//    },
+//    "id":               1,
+//    "message":          "Override the commit message: this is an api request",
+//    "branch":           "master",
+//    "config":           { }
+//  },
+//  "resource_type":      "request"
+//}
+type createRequestResponse struct {
+	Request MinimalRequest `json:"request"`
 }
 
-// Get fetches the request with the provided id from the Travis CI API.
+// FindByRepoId fetches requests of given repository id
 //
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (rs *RequestsService) Get(ctx context.Context, requestId uint) (*Request, *MinimalCommit, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/requests/%d", requestId), nil)
+// Travis CI API docs: https://developer.travis-ci.com/resource/requests#find
+func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, opt *FindRequestsOption) ([]Request, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), opt)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, err
 	}
 
 	req, err := rs.client.NewRequest("GET", u, nil, nil)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, err
 	}
 
-	var reqResp getRequestResponse
-	resp, err := rs.client.Do(ctx, req, &reqResp)
+	var getRequestsResponse getRequestsResponse
+	resp, err := rs.client.Do(ctx, req, &getRequestsResponse)
 	if err != nil {
-		return nil, nil, resp, err
+		return nil, resp, err
 	}
 
-	return &reqResp.Request, &reqResp.Commit, resp, err
+	return getRequestsResponse.Requests, resp, err
 }
 
-// List requests triggered (or not) by a repository's builds.
+// Find fetches requests of given repository slug
 //
-// Travis CI API docs: http://docs.travis-ci.com/api/#builds
-func (rs *RequestsService) ListFromRepository(slug string, opt *RequestsListOptions) ([]Request, []MinimalCommit, *http.Response, error) {
-	if opt != nil {
-		opt.Slug = slug
-	} else {
-		opt = &RequestsListOptions{Slug: slug}
-	}
-
-	u, err := urlWithOptions("/requests", opt)
+// Travis CI API docs: https://developer.travis-ci.com/resource/requests#find
+func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, opt *FindRequestsOption) ([]Request, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, err
 	}
 
 	req, err := rs.client.NewRequest("GET", u, nil, nil)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, err
 	}
 
-	var reqResp listRequestsResponse
-	resp, err := rs.client.Do(context.TODO(), req, &reqResp)
+	var getRequestsResponse getRequestsResponse
+	resp, err := rs.client.Do(ctx, req, &getRequestsResponse)
 	if err != nil {
-		return nil, nil, resp, err
+		return nil, resp, err
 	}
 
-	return reqResp.Requests, reqResp.Commits, resp, err
+	return getRequestsResponse.Requests, resp, err
+}
+
+// CreateByRepoId create requests of given repository id and provided options
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
+func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt *CreateRequestsOption) (*MinimalRequest, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest("POST", u, opt, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var createRequestResponse createRequestResponse
+	resp, err := rs.client.Do(ctx, req, &createRequestResponse)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &createRequestResponse.Request, resp, err
+}
+
+// CreateByRepoSlug create requests of given repository slug and provided options
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
+func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string, opt *CreateRequestsOption) (*MinimalRequest, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest("POST", u, opt, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var createRequestResponse createRequestResponse
+	resp, err := rs.client.Do(ctx, req, &createRequestResponse)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &createRequestResponse.Request, resp, err
 }

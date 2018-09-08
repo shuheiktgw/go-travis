@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestRequestsService_CreateAndFindById(t *testing.T) {
+func TestRequestService_CreateAndFindById(t *testing.T) {
 	t.Parallel()
 
 	createdRequest, res, err := integrationClient.Requests.CreateByRepoId(context.TODO(), integrationRepoId, &CreateRequestsOption{Message: "test", Branch: "master"})
@@ -21,7 +21,7 @@ func TestRequestsService_CreateAndFindById(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	requests, res, err := integrationClient.Requests.FindByRepoId(context.TODO(), integrationRepoId, &FindRequestsOption{})
+	request, res, err := integrationClient.Request.FindByRepoId(context.TODO(), integrationRepoId, createdRequest.Id)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -31,12 +31,12 @@ func TestRequestsService_CreateAndFindById(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if requests[0].Id != createdRequest.Id {
-		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", requests[0].Id, createdRequest.Id)
+	if request.Id != createdRequest.Id {
+		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", request.Id, createdRequest.Id)
 	}
 }
 
-func TestRequestsService_CreateAndFindBySlug(t *testing.T) {
+func TestRequestService_CreateAndFindBySlug(t *testing.T) {
 	t.Parallel()
 
 	createdRequest, res, err := integrationClient.Requests.CreateByRepoSlug(context.TODO(), integrationRepo, &CreateRequestsOption{Message: "test", Branch: "master"})
@@ -49,7 +49,7 @@ func TestRequestsService_CreateAndFindBySlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	requests, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepo, &FindRequestsOption{})
+	request, res, err := integrationClient.Request.FindByRepoSlug(context.TODO(), integrationRepo, createdRequest.Id)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -59,7 +59,7 @@ func TestRequestsService_CreateAndFindBySlug(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if requests[0].Id != createdRequest.Id {
-		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", requests[0].Id, createdRequest.Id)
+	if request.Id != createdRequest.Id {
+		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", request.Id, createdRequest.Id)
 	}
 }
