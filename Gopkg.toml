@@ -2,10 +2,6 @@
   branch = "master"
   name = "github.com/google/go-querystring"
 
-[[constraint]]
-  name = "github.com/oleiade/reflections"
-  version = "1.0.0"
-
 [prune]
   go-tests = true
   unused-packages = true

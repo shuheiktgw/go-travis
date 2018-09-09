@@ -8,12 +8,6 @@
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
-  name = "github.com/oleiade/reflections"
-  packages = ["."]
-  revision = "2b6ec3da648e3e834dc41bad8d9ed7f2dc6a9496"
-  version = "v1.0.0"
-
-[[projects]]
   name = "github.com/pkg/errors"
   packages = ["."]
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
@@ -22,6 +16,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a79c4ecfc76e24b9618ff68c35d7963dc0a8b82336783bacbc98bce012cf9835"
+  inputs-digest = "6b4e3082456b86be350394279fe0b9846ed9fa66bf4c25192a7d456625686551"
   solver-name = "gps-cdcl"
   solver-version = 1
