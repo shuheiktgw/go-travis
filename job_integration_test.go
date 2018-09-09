@@ -10,7 +10,7 @@ import (
 )
 
 func TestJobService_Find(t *testing.T) {
-	job, res, err := integrationClient.Job.Find(context.TODO(), integrationBuildId)
+	job, res, err := integrationClient.Job.Find(context.TODO(), integrationJobId)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -20,14 +20,14 @@ func TestJobService_Find(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if job.Id != integrationBuildId {
+	if job.Id != integrationJobId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, job.Id)
 	}
 }
 
 func TestJobService_RestartAndCancel(t *testing.T) {
 	// Start a job
-	job, res, err := integrationClient.Job.Restart(context.TODO(), integrationBuildId)
+	job, res, err := integrationClient.Job.Restart(context.TODO(), integrationJobId)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -37,20 +37,20 @@ func TestJobService_RestartAndCancel(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if job.Id != integrationBuildId {
-		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, job.Id)
+	if job.Id != integrationJobId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationJobId, job.Id)
 	}
 
 	// Wait till the job has successfully processed
 	time.Sleep(2 * time.Second)
 
-	job, res, err = integrationClient.Job.Cancel(context.TODO(), integrationBuildId)
+	job, res, err = integrationClient.Job.Cancel(context.TODO(), integrationJobId)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
 	}
 
-	if job.Id != integrationBuildId {
-		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, job.Id)
+	if job.Id != integrationJobId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationJobId, job.Id)
 	}
 }
