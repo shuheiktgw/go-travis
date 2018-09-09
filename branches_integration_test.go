@@ -35,8 +35,6 @@ func TestBranchesService_FindByRepoId(t *testing.T) {
 		if len(branches) == 0 {
 			t.Fatalf("#%d returned empty branches", i)
 		}
-
-		fmt.Println(branches)
 	}
 }
 

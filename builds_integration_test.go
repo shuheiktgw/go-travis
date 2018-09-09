@@ -4,7 +4,6 @@ package travis
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 )
@@ -31,8 +30,6 @@ func TestBuildsService_Find(t *testing.T) {
 		if len(builds) == 0 {
 			t.Fatalf("#%d returned empty builds", i)
 		}
-
-		fmt.Println(builds)
 	}
 }
 
