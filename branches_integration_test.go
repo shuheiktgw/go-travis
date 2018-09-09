@@ -53,7 +53,7 @@ func TestBranchesService_FindByRepoSlug(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		branches, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepo, opt)
+		branches, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepoSlug, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)

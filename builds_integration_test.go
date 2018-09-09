@@ -75,7 +75,7 @@ func TestBuildsService_FindByRepoSlug(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		builds, res, err := integrationClient.Builds.FindByRepoSlug(context.TODO(), integrationRepo, opt)
+		builds, res, err := integrationClient.Builds.FindByRepoSlug(context.TODO(), integrationRepoSlug, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)

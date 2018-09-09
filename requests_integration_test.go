@@ -39,7 +39,7 @@ func TestRequestsService_CreateAndFindById(t *testing.T) {
 func TestRequestsService_CreateAndFindBySlug(t *testing.T) {
 	t.Parallel()
 
-	createdRequest, res, err := integrationClient.Requests.CreateByRepoSlug(context.TODO(), integrationRepo, &CreateRequestsOption{Message: "test", Branch: "master"})
+	createdRequest, res, err := integrationClient.Requests.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &CreateRequestsOption{Message: "test", Branch: "master"})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -49,7 +49,7 @@ func TestRequestsService_CreateAndFindBySlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	requests, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepo, &FindRequestsOption{})
+	requests, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepoSlug, &FindRequestsOption{})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)

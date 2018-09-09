@@ -16,9 +16,9 @@ func TestRepositoryService_Find(t *testing.T) {
 		slug string
 		want string
 	}{
-		{id: integrationRepoId, want: integrationRepo},
-		{slug: integrationRepo, want: integrationRepo},
-		{id: integrationRepoId, slug: integrationRepo, want: integrationRepo},
+		{id: integrationRepoId, want: integrationRepoSlug},
+		{slug: integrationRepoSlug, want: integrationRepoSlug},
+		{id: integrationRepoId, slug: integrationRepoSlug, want: integrationRepoSlug},
 	}
 
 	for i, tc := range cases {
@@ -55,8 +55,8 @@ func TestRepositoryService_Activation(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepo {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepo, repo.Slug)
+	if repo.Slug != integrationRepoSlug {
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
 	repo, res, err = integrationClient.Repository.Activate(context.TODO(), op)
@@ -69,8 +69,8 @@ func TestRepositoryService_Activation(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepo {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepo, repo.Slug)
+	if repo.Slug != integrationRepoSlug {
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 }
 
@@ -89,8 +89,8 @@ func TestRepositoryService_Star(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepo {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepo, repo.Slug)
+	if repo.Slug != integrationRepoSlug {
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
 	repo, res, err = integrationClient.Repository.Unstar(context.TODO(), op)
@@ -103,7 +103,7 @@ func TestRepositoryService_Star(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepo {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepo, repo.Slug)
+	if repo.Slug != integrationRepoSlug {
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 }
