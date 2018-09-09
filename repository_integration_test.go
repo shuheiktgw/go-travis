@@ -9,43 +9,25 @@ import (
 )
 
 func TestRepositoryService_Find(t *testing.T) {
-	t.Parallel()
+	repo, res, err := integrationClient.Repository.Find(context.TODO(), integrationRepoSlug)
 
-	cases := []struct {
-		id   uint
-		slug string
-		want string
-	}{
-		{id: integrationRepoId, want: integrationRepoSlug},
-		{slug: integrationRepoSlug, want: integrationRepoSlug},
-		{id: integrationRepoId, slug: integrationRepoSlug, want: integrationRepoSlug},
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
 	}
 
-	for i, tc := range cases {
-		op := &RepositoryOption{Id: tc.id, Slug: tc.slug}
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
 
-		repo, res, err := integrationClient.Repository.Find(context.TODO(), op)
-
-		if err != nil {
-			t.Fatalf("#%d unexpected error occured: %s", i, err)
-		}
-
-		if res.StatusCode != http.StatusOK {
-			t.Fatalf("#%d invalid http status: %s", i, res.Status)
-		}
-
-		if got, want := repo.Slug, tc.want; got != want {
-			t.Fatalf("#%d unexpected repository returned: want %s: got %s", i, want, got)
-		}
+	if got, want := repo.Slug, integrationRepoSlug; got != want {
+		t.Fatalf("unexpected repository returned: want %s: got %s", want, got)
 	}
 }
 
 func TestRepositoryService_Activation(t *testing.T) {
 	t.Parallel()
 
-	op := &RepositoryOption{Id: integrationRepoId}
-
-	repo, res, err := integrationClient.Repository.Deactivate(context.TODO(), op)
+	repo, res, err := integrationClient.Repository.Deactivate(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -59,7 +41,7 @@ func TestRepositoryService_Activation(t *testing.T) {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
-	repo, res, err = integrationClient.Repository.Activate(context.TODO(), op)
+	repo, res, err = integrationClient.Repository.Activate(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -77,9 +59,7 @@ func TestRepositoryService_Activation(t *testing.T) {
 func TestRepositoryService_Star(t *testing.T) {
 	t.Parallel()
 
-	op := &RepositoryOption{Id: integrationRepoId}
-
-	repo, res, err := integrationClient.Repository.Star(context.TODO(), op)
+	repo, res, err := integrationClient.Repository.Star(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -93,7 +73,7 @@ func TestRepositoryService_Star(t *testing.T) {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
-	repo, res, err = integrationClient.Repository.Unstar(context.TODO(), op)
+	repo, res, err = integrationClient.Repository.Unstar(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
