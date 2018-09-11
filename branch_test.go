@@ -10,8 +10,9 @@ import (
 )
 
 var (
-	testRepoId   uint = 12345
-	testRepoSlug      = url.QueryEscape("shuheiktgw/go-travis-test")
+	testRepoId          uint = 12345
+	testRepoSlug             = "shuheiktgw/go-travis-test"
+	testEscapedRepoSlug      = url.QueryEscape(testRepoSlug)
 )
 
 func TestBranchService_FindByRepoId(t *testing.T) {
@@ -39,12 +40,12 @@ func TestBranchService_FindByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
-	mux.HandleFunc(fmt.Sprintf("/repo/%s/branch/%s", testRepoSlug, "master"), func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc(fmt.Sprintf("/repo/%s/branch/%s", testEscapedRepoSlug, "master"), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		fmt.Fprint(w, `{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}`)
 	})
 
-	branch, _, err := client.Branch.FindByRepoSlug(context.Background(), testRepoSlug, "master")
+	branch, _, err := client.Branch.FindByRepoSlug(context.Background(), testEscapedRepoSlug, "master")
 
 	if err != nil {
 		t.Errorf("Branch.FindByRepoId returned error: %v", err)

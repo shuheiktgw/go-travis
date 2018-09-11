@@ -39,7 +39,7 @@ type getBuildsResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#for_current_user
 func (bs *BuildsService) Find(ctx context.Context, opt *BuildsOption) ([]Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/builds"), opt)
+	u, err := urlWithOptions("/builds", opt)
 	if err != nil {
 		return nil, nil, err
 	}

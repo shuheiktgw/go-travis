@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestBuildsService_Find(t *testing.T) {
+func TestBuildsService_Integration_Find(t *testing.T) {
 	cases := []*BuildsOption{
 		{},
 		{Limit: 1},
@@ -33,7 +33,7 @@ func TestBuildsService_Find(t *testing.T) {
 	}
 }
 
-func TestBuildsService_FindByRepoId(t *testing.T) {
+func TestBuildsService_Integration_FindByRepoId(t *testing.T) {
 	cases := []*BuildsByRepositoryOption{
 		{},
 		{Limit: 1},
@@ -62,7 +62,7 @@ func TestBuildsService_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestBuildsService_FindByRepoSlug(t *testing.T) {
+func TestBuildsService_Integration_FindByRepoSlug(t *testing.T) {
 	cases := []*BuildsByRepositoryOption{
 		{},
 		{Limit: 1},
