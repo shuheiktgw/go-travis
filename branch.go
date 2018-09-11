@@ -17,11 +17,11 @@ type BranchService struct {
 //
 // https://developer.travis-ci.com/resource/branch#standard-representation
 type Branch struct {
-	Name           string     `json:"name,omitempty"`
-	Repository     Repository `json:"repository,omitempty"`
-	DefaultBranch  bool       `json:"default_branch,omitempty"`
-	ExistsOnGithub bool       `json:"exists_on_github,omitempty"`
-	LastBuild      Build      `json:"last_build,omitempty"`
+	Name           string            `json:"name,omitempty"`
+	Repository     MinimalRepository `json:"repository,omitempty"`
+	DefaultBranch  bool              `json:"default_branch,omitempty"`
+	ExistsOnGithub bool              `json:"exists_on_github,omitempty"`
+	LastBuild      MinimalBuild      `json:"last_build,omitempty"`
 }
 
 // MinimalBranch included when the resource is returned as part of another resource

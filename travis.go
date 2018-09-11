@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"strings"
 
 	"github.com/google/go-querystring/query"
 )
@@ -37,7 +38,7 @@ type Client struct {
 
 	// Base URL for api requests. Defaults to the public Travis API, but
 	// can be set to an alternative endpoint to use with Travis Pro or Enterprise.
-	// BaseURL should alway be terminated by a slash.
+	// BaseURL should always be terminated by a slash.
 	BaseURL *url.URL
 
 	// User agent used when communicating with the Travis API
@@ -113,12 +114,16 @@ func NewDefaultClient(travisToken string) *Client {
 // request body. If specified, the map provided by headers will be used to udate
 // request headers.
 func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map[string]string) (*http.Request, error) {
-	rel, err := url.Parse(urlStr)
+	if !strings.HasSuffix(c.BaseURL.Path, "/") {
+		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
+	}
+
+	u, err := c.BaseURL.Parse(urlStr)
 	if err != nil {
 		return nil, err
 	}
 
-	u := c.BaseURL.ResolveReference(rel)
+	fmt.Println(u)
 
 	var buf io.ReadWriter
 	if body != nil {

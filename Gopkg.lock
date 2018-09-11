@@ -7,15 +7,9 @@
   packages = ["query"]
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6b4e3082456b86be350394279fe0b9846ed9fa66bf4c25192a7d456625686551"
+  inputs-digest = "76bbf95770a3088afdf90b21c79f268a0c650ee829f40d29fef6d5cda71ad535"
   solver-name = "gps-cdcl"
   solver-version = 1

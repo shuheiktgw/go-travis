@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestBranchService_FindByRepoId(t *testing.T) {
+func TestBranchService_Integration_FindByRepoId(t *testing.T) {
 	t.Parallel()
 
 	branch, res, err := integrationClient.Branch.FindByRepoId(context.TODO(), integrationRepoId, "master")
@@ -30,7 +30,7 @@ func TestBranchService_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestBranchService_FindByRepoSlug(t *testing.T) {
+func TestBranchService_Integration_FindByRepoSlug(t *testing.T) {
 	t.Parallel()
 
 	branch, res, err := integrationClient.Branch.FindByRepoSlug(context.TODO(), integrationRepoSlug, "master")

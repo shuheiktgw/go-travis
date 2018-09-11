@@ -4,7 +4,6 @@ package travis
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 )
@@ -64,7 +63,5 @@ func TestBranchesService_FindByRepoSlug(t *testing.T) {
 		if len(branches) == 0 {
 			t.Fatalf("#%d returned empty branches", i)
 		}
-
-		fmt.Println(branches)
 	}
 }
