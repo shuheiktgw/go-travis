@@ -15,8 +15,6 @@ var (
 )
 
 func TestBranchService_FindByRepoId(t *testing.T) {
-	t.Parallel()
-
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -38,8 +36,6 @@ func TestBranchService_FindByRepoId(t *testing.T) {
 }
 
 func TestBranchService_FindByRepoSlug(t *testing.T) {
-	t.Parallel()
-
 	client, mux, _, teardown := setup()
 	defer teardown()
 

@@ -123,8 +123,6 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map
 		return nil, err
 	}
 
-	fmt.Println(u)
-
 	var buf io.ReadWriter
 	if body != nil {
 		buf = new(bytes.Buffer)
