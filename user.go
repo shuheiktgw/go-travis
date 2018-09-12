@@ -60,8 +60,8 @@ func (us *UserService) Current(ctx context.Context) (*User, *http.Response, erro
 // Get fetches the user with the provided id from the Travis CI API.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#find
-func (us *UserService) Find(ctx context.Context, userId uint) (*User, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d", userId), nil)
+func (us *UserService) Find(ctx context.Context, id uint) (*User, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/user/%d", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -84,8 +84,8 @@ func (us *UserService) Find(ctx context.Context, userId uint) (*User, *http.Resp
 // Might return status 409 if the user is currently syncing.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#sync
-func (us *UserService) Sync(ctx context.Context, userId uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/sync", userId), nil)
+func (us *UserService) Sync(ctx context.Context, id uint) (*http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/user/%d/sync", id), nil)
 	if err != nil {
 		return nil, err
 	}
