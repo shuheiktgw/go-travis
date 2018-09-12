@@ -8,10 +8,8 @@ import (
 	"testing"
 )
 
-func TestBranchesService_FindByRepoId(t *testing.T) {
+func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
 	t.Parallel()
-
-	t.Skip("As of 2018/9/7 this endpoints returns 404 and does not seem to work correctly")
 
 	cases := []*BranchesOption{
 		{},
@@ -37,10 +35,8 @@ func TestBranchesService_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestBranchesService_FindByRepoSlug(t *testing.T) {
+func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
 	t.Parallel()
-
-	t.Skip("As of 2018/9/7 this endpoints returns 404 and does not seem to work correctly")
 
 	cases := []*BranchesOption{
 		{},
