@@ -10,7 +10,7 @@ import (
 
 const buildId = 420907933
 
-func TestJobsService_FindByBuild(t *testing.T) {
+func TestJobsService_Integration_FindByBuild(t *testing.T) {
 	jobs, res, err := integrationClient.Jobs.FindByBuild(context.TODO(), buildId)
 
 	if err != nil {
@@ -26,7 +26,7 @@ func TestJobsService_FindByBuild(t *testing.T) {
 	}
 }
 
-func TestJobsService_Find(t *testing.T) {
+func TestJobsService_Integration_Find(t *testing.T) {
 	opt := &JobsOption{}
 	jobs, res, err := integrationClient.Jobs.Find(context.TODO(), opt)
 
