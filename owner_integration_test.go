@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestOwnerService_FindByLogin(t *testing.T) {
+func TestOwnerService_Integration_FindByLogin(t *testing.T) {
 	t.Parallel()
 
 	owner, res, err := integrationClient.Owner.FindByLogin(context.TODO(), integrationGitHubOwner)
@@ -26,7 +26,7 @@ func TestOwnerService_FindByLogin(t *testing.T) {
 	}
 }
 
-func TestOwnerService_FindByGitHubId(t *testing.T) {
+func TestOwnerService_Integration_FindByGitHubId(t *testing.T) {
 	t.Parallel()
 
 	owner, res, err := integrationClient.Owner.FindByGitHubId(context.TODO(), integrationGitHubOwnerId)

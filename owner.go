@@ -33,6 +33,7 @@ type MinimalOwner struct {
 }
 
 // Find fetches a owner based on the provided login
+// Login is user or organization login set on GitHub
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/owner#find
 func (os *OwnerService) FindByLogin(ctx context.Context, login string) (*Owner, *http.Response, error) {
