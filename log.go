@@ -19,7 +19,7 @@ type Log struct {
 	LogParts []LogPart `json:"log_parts,omitempty"`
 }
 
-// 	The log parts that form the log
+// 	LogPart is parts that form the log
 type LogPart struct {
 	Content string `json:"content,omitempty"`
 	Final   bool   `json:"final,omitempty"`

@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestLogService_FindByJob(t *testing.T) {
+func TestLogService_Integration_FindByJob(t *testing.T) {
 	_, res, err := integrationClient.Log.FindByJob(context.TODO(), integrationJobId)
 
 	if err != nil {
