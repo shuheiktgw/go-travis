@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func TestJobService_Find(t *testing.T) {
+func TestJobService_Integration_Find(t *testing.T) {
 	job, res, err := integrationClient.Job.Find(context.TODO(), integrationJobId)
 
 	if err != nil {
@@ -25,7 +25,7 @@ func TestJobService_Find(t *testing.T) {
 	}
 }
 
-func TestJobService_RestartAndCancel(t *testing.T) {
+func TestJobService_Integration_RestartAndCancel(t *testing.T) {
 	// Start a job
 	job, res, err := integrationClient.Job.Restart(context.TODO(), integrationJobId)
 
