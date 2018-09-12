@@ -20,17 +20,17 @@ type FindRequestsOption struct {
 	Offset int `url:"offset,omitempty"`
 }
 
-// CreateRequestsOption specifies options for
-// CreateRequests request.
-type CreateRequestsOption struct {
+// CreateRequestOption specifies options for
+// CreateRequest request.
+type CreateRequestOption struct {
 	// Build configuration (as parsed from .travis.yml)
-	Config string `json:"config,omitempty"`
+	Config string `url:"config,omitempty"`
 	// Travis-ci status message attached to the request
-	Message string `json:"message,omitempty"`
+	Message string `url:"message,omitempty"`
 	// Branch requested to be built
-	Branch string `json:"branch,omitempty"`
+	Branch string `url:"branch,omitempty"`
 	// Travis token associated with webhook on GitHub (DEPRECATED)
-	Token string `json:"token,omitempty"`
+	Token string `url:"token,omitempty"`
 }
 
 type getRequestsResponse struct {
@@ -38,7 +38,7 @@ type getRequestsResponse struct {
 }
 
 // Create endpoints actually returns following form of response.
-// It is different from standard nor minimal representation of request.
+// It is different from standard nor minimal representation of a request.
 // So far, I'm not going to create a special struct to parse it, and
 // just use the minimal representation of request.
 //
@@ -122,8 +122,8 @@ func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 // CreateByRepoId create requests of given repository id and provided options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
-func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt *CreateRequestsOption) (*MinimalRequest, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), nil)
+func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt *CreateRequestOption) (*MinimalRequest, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -145,8 +145,8 @@ func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt 
 // CreateByRepoSlug create requests of given repository slug and provided options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
-func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string, opt *CreateRequestsOption) (*MinimalRequest, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), nil)
+func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string, opt *CreateRequestOption) (*MinimalRequest, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}
