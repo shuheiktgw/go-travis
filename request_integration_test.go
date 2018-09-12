@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestRequestService_CreateAndFindById(t *testing.T) {
+func TestRequestService_Integration_CreateAndFindById(t *testing.T) {
 	t.Parallel()
 
 	createdRequest, res, err := integrationClient.Requests.CreateByRepoId(context.TODO(), integrationRepoId, &CreateRequestsOption{Message: "test", Branch: "master"})
@@ -36,7 +36,7 @@ func TestRequestService_CreateAndFindById(t *testing.T) {
 	}
 }
 
-func TestRequestService_CreateAndFindBySlug(t *testing.T) {
+func TestRequestService_Integration_CreateAndFindBySlug(t *testing.T) {
 	t.Parallel()
 
 	createdRequest, res, err := integrationClient.Requests.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &CreateRequestsOption{Message: "test", Branch: "master"})
