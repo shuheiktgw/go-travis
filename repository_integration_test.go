@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestRepositoryService_Find(t *testing.T) {
+func TestRepositoryService_Integration_Find(t *testing.T) {
 	repo, res, err := integrationClient.Repository.Find(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
@@ -24,7 +24,7 @@ func TestRepositoryService_Find(t *testing.T) {
 	}
 }
 
-func TestRepositoryService_Activation(t *testing.T) {
+func TestRepositoryService_Integration_Activation(t *testing.T) {
 	t.Parallel()
 
 	repo, res, err := integrationClient.Repository.Deactivate(context.TODO(), integrationRepoSlug)
@@ -56,7 +56,7 @@ func TestRepositoryService_Activation(t *testing.T) {
 	}
 }
 
-func TestRepositoryService_Star(t *testing.T) {
+func TestRepositoryService_Integration_Star(t *testing.T) {
 	t.Parallel()
 
 	repo, res, err := integrationClient.Repository.Star(context.TODO(), integrationRepoSlug)
