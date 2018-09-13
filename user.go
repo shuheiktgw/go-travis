@@ -19,7 +19,7 @@ type User struct {
 	// Value uniquely identifying the user
 	Id uint `json:"id,omitempty"`
 	// Login set on Github
-	Login string `json:"commit_id,omitempty"`
+	Login string `json:"login,omitempty"`
 	// Name set on GitHub
 	Name string `json:"name,omitempty"`
 	// Id set on GitHub
@@ -84,21 +84,22 @@ func (us *UserService) Find(ctx context.Context, id uint) (*User, *http.Response
 // Might return status 409 if the user is currently syncing.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#sync
-func (us *UserService) Sync(ctx context.Context, id uint) (*http.Response, error) {
+func (us *UserService) Sync(ctx context.Context, id uint) (*User, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/user/%d/sync", id), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	req, err := us.client.NewRequest("POST", u, nil, nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	resp, err := us.client.Do(ctx, req, nil)
+	var user User
+	resp, err := us.client.Do(ctx, req, &user)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return resp, err
+	return &user, resp, err
 }
