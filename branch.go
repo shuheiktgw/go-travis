@@ -15,19 +15,25 @@ type BranchService struct {
 
 // Branch represents a branch of a GitHub repository
 //
-// https://developer.travis-ci.com/resource/branch#standard-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/branch#standard-representation
 type Branch struct {
-	Name           string            `json:"name,omitempty"`
-	Repository     MinimalRepository `json:"repository,omitempty"`
-	DefaultBranch  bool              `json:"default_branch,omitempty"`
-	ExistsOnGithub bool              `json:"exists_on_github,omitempty"`
-	LastBuild      MinimalBuild      `json:"last_build,omitempty"`
+	// Name of the git branch
+	Name string `json:"name,omitempty"`
+	// GitHub Repository
+	Repository MinimalRepository `json:"repository,omitempty"`
+	// Whether or not this is the repository's default branch
+	DefaultBranch bool `json:"default_branch,omitempty"`
+	// Whether or not the branch still exists on GitHub
+	ExistsOnGithub bool `json:"exists_on_github,omitempty"`
+	// Last build on the branch
+	LastBuild MinimalBuild `json:"last_build,omitempty"`
 }
 
 // MinimalBranch included when the resource is returned as part of another resource
 //
-// https://developer.travis-ci.com/resource/branch#minimal-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/branch#minimal-representation
 type MinimalBranch struct {
+	// Name of the git branch
 	Name string `json:"name,omitempty"`
 }
 

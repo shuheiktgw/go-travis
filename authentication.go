@@ -12,7 +12,9 @@ type AuthenticationService struct {
 	client *Client
 }
 
+// AccessToken is a token to access Travis CI API
 type AccessToken string
+
 type accessTokenResponse struct {
 	Token AccessToken `json:"access_token"`
 }

@@ -15,10 +15,14 @@ type BranchesService struct {
 
 // BranchesOption specifies the optional parameters for branches endpoint
 type BranchesOption struct {
-	ExistsOnGithub bool   `url:"exists_on_github,omitempty"`
-	Limit          int    `url:"limit,omitempty"`
-	Offset         int    `url:"offset,omitempty"`
-	SortBy         string `url:"sort_by,omitempty"`
+	// Whether or not the branch still exists on GitHub
+	ExistsOnGithub bool `url:"exists_on_github,omitempty"`
+	// How many branches to include in the response
+	Limit int `url:"limit,omitempty"`
+	// How many branches to skip before the first entry in the response
+	Offset int `url:"offset,omitempty"`
+	// Attributes to sort branches by
+	SortBy string `url:"sort_by,omitempty"`
 }
 
 // getBranchesResponse represents the response of a call

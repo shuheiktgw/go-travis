@@ -15,20 +15,30 @@ type BuildsService struct {
 
 // BuildsOption specifies the optional parameters for builds endpoint
 type BuildsOption struct {
-	Limit  int    `url:"limit,omitempty"`
-	Offset int    `url:"offset,omitempty"`
+	// How many builds to include in the response
+	Limit int `url:"limit,omitempty"`
+	// How many builds to skip before the first entry in the response
+	Offset int `url:"offset,omitempty"`
+	// Attributes to sort builds by
 	SortBy string `url:"sort_by,omitempty"`
 }
 
 // BuildsByRepositoryOption specifies the optional parameters for builds endpoint
 type BuildsByRepositoryOption struct {
-	CreatedBy     []string `url:"created_by,omitempty,brackets"`
-	EventType     []string `url:"event_type,omitempty,brackets"`
+	// The User or Organization that created the build
+	CreatedBy []string `url:"created_by,omitempty,brackets"`
+	// Event that triggered the build
+	EventType []string `url:"event_type,omitempty,brackets"`
+	// State of the previous build (useful to see if state changed)
 	PreviousState []string `url:"previous_state,omitempty,brackets"`
-	State         []string `url:"state,omitempty,brackets"`
-	Limit         int      `url:"limit,omitempty"`
-	Offset        int      `url:"offset,omitempty"`
-	SortBy        string   `url:"sort_by,omitempty"`
+	// Current state of the build
+	State []string `url:"state,omitempty,brackets"`
+	// How many builds to include in the response
+	Limit int `url:"limit,omitempty"`
+	// How many builds to skip before the first entry in the response
+	Offset int `url:"offset,omitempty"`
+	// Attributes to sort builds by
+	SortBy string `url:"sort_by,omitempty"`
 }
 
 type getBuildsResponse struct {

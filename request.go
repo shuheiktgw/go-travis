@@ -15,6 +15,8 @@ type RequestService struct {
 
 // Request represents a Travis CI request.
 // They can be used to see if and why a GitHub even has or has not triggered a new build.
+//
+// // Travis CI API docs: https://developer.travis-ci.com/resource/request#standard-representation
 type Request struct {
 	// Value uniquely identifying the request
 	Id uint `json:"id,omitempty"`
@@ -41,6 +43,8 @@ type Request struct {
 }
 
 // MinimalRequest is a minimal representation a Travis CI request.
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/request#minimal-representation
 type MinimalRequest struct {
 	// Value uniquely identifying the request
 	Id uint `json:"id,omitempty"`

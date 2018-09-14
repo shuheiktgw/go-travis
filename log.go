@@ -14,8 +14,11 @@ type LogService struct {
 
 // Log represents a Travis CI job log
 type Log struct {
-	Id       uint      `json:"id,omitempty"`
-	Content  string    `json:"content,omitempty"`
+	// The log's id
+	Id uint `json:"id,omitempty"`
+	// The content of the log
+	Content string `json:"content,omitempty"`
+	// The log parts that form the log
 	LogParts []LogPart `json:"log_parts,omitempty"`
 }
 

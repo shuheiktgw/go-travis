@@ -16,7 +16,9 @@ type RequestsService struct {
 // FindRequestsOption specifies options for
 // FindRequests request.
 type FindRequestsOption struct {
-	Limit  int `url:"limit,omitempty"`
+	// How many requests to include in the response
+	Limit int `url:"limit,omitempty"`
+	// How many requests to skip before the first entry in the response
 	Offset int `url:"offset,omitempty"`
 }
 

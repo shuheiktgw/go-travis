@@ -12,11 +12,17 @@ type JobsService struct {
 	client *Client
 }
 
+// JobsOption is query parameters to one can specify
+// to find jobs
 type JobsOption struct {
-	Limit  int      `url:"limit,omitempty"`
-	Offset int      `url:"offset,omitempty"`
+	// How many jobs to include in the response
+	Limit int `url:"limit,omitempty"`
+	// How many jobs to skip before the first entry in the response
+	Offset int `url:"offset,omitempty"`
+	// Attributes to sort jobs by
 	SortBy []string `url:"sort_by,omitempty,brackets"`
-	State  []string `url:"state,omitempty,brackets"`
+	// // Current state of the job
+	State []string `url:"state,omitempty,brackets"`
 }
 
 type getJobsResponse struct {

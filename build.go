@@ -14,44 +14,74 @@ type BuildService struct {
 
 // Build represents a Travis CI build
 //
-// https://developer.travis-ci.com/resource/build#standard-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/build#standard-representation
 type Build struct {
-	Id                uint              `json:"id,omitempty"`
-	Number            string            `json:"number,omitempty"`
-	State             string            `json:"state,omitempty"`
-	Duration          uint              `json:"duration,omitempty"`
-	EventType         string            `json:"event_type,omitempty"`
-	PreviousState     string            `json:"previous_state,omitempty"`
-	PullRequestTitle  string            `json:"pull_request_title,omitempty"`
-	PullRequestNumber uint              `json:"pull_request_number,omitempty"`
-	StartedAt         string            `json:"started_at,omitempty"`
-	FinishedAt        string            `json:"finished_at,omitempty"`
-	UpdatedAt         string            `json:"updated_at,omitempty"`
-	Private           bool              `json:"private,omitempty"`
-	Repository        MinimalRepository `json:"repository,omitempty"`
-	Branch            MinimalBranch     `json:"branch,omitempty"`
-	Tag               string            `json:"tag,omitempty"`
-	Commit            MinimalCommit     `json:"commit,omitempty"`
-	Jobs              []MinimalJob      `json:"jobs,omitempty"`
-	Stages            []MinimalStage    `json:"stages,omitempty"`
-	CreatedBy         MinimalOwner      `json:"owner,omitempty"`
+	// Value uniquely identifying the build
+	Id uint `json:"id,omitempty"`
+	// Incremental number for a repository's builds
+	Number string `json:"number,omitempty"`
+	// Current state of the build
+	State string `json:"state,omitempty"`
+	// Wall clock time in seconds
+	Duration uint `json:"duration,omitempty"`
+	// Event that triggered the build
+	EventType string `json:"event_type,omitempty"`
+	// State of the previous build (useful to see if state changed)
+	PreviousState string `json:"previous_state,omitempty"`
+	// Title of the build's pull request
+	PullRequestTitle string `json:"pull_request_title,omitempty"`
+	// Number of the build's pull request
+	PullRequestNumber uint `json:"pull_request_number,omitempty"`
+	// When the build started
+	StartedAt string `json:"started_at,omitempty"`
+	// When the build finished
+	FinishedAt string `json:"finished_at,omitempty"`
+	// The last time the build was updated
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// Whether or not the build is private
+	Private bool `json:"private,omitempty"`
+	// GitHub repository the build is associated with
+	Repository MinimalRepository `json:"repository,omitempty"`
+	// The branch the build is associated with
+	Branch MinimalBranch `json:"branch,omitempty"`
+	// The build's tag
+	Tag string `json:"tag,omitempty"`
+	// The commit the build is associated with
+	Commit MinimalCommit `json:"commit,omitempty"`
+	// List of jobs that are part of the build's matrix
+	Jobs []MinimalJob `json:"jobs,omitempty"`
+	// The stages of the build
+	Stages []MinimalStage `json:"stages,omitempty"`
+	// The User or Organization that created the build
+	CreatedBy MinimalOwner `json:"owner,omitempty"`
 }
 
 // MinimalBuild is a minimal representation of a Travis CI build
 //
-// https://developer.travis-ci.com/resource/build#minimal-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/build#minimal-representation
 type MinimalBuild struct {
-	Id                uint   `json:"id,omitempty"`
-	Number            string `json:"number,omitempty"`
-	State             string `json:"state,omitempty"`
-	Duration          uint   `json:"duration,omitempty"`
-	EventType         string `json:"event_type,omitempty"`
-	PreviousState     string `json:"previous_state,omitempty"`
-	PullRequestTitle  string `json:"pull_request_title,omitempty"`
-	PullRequestNumber uint   `json:"pull_request_number,omitempty"`
-	StartedAt         string `json:"started_at,omitempty"`
-	FinishedAt        string `json:"finished_at,omitempty"`
-	Private           bool   `json:"private,omitempty"`
+	// Value uniquely identifying the build
+	Id uint `json:"id,omitempty"`
+	// Incremental number for a repository's builds
+	Number string `json:"number,omitempty"`
+	// Current state of the build
+	State string `json:"state,omitempty"`
+	// Wall clock time in seconds
+	Duration uint `json:"duration,omitempty"`
+	// Event that triggered the build
+	EventType string `json:"event_type,omitempty"`
+	// State of the previous build (useful to see if state changed)
+	PreviousState string `json:"previous_state,omitempty"`
+	// Title of the build's pull request
+	PullRequestTitle string `json:"pull_request_title,omitempty"`
+	// Number of the build's pull request
+	PullRequestNumber uint `json:"pull_request_number,omitempty"`
+	// When the build started
+	StartedAt string `json:"started_at,omitempty"`
+	// When the build finished
+	FinishedAt string `json:"finished_at,omitempty"`
+	// Whether or not the build is private
+	Private bool `json:"private,omitempty"`
 }
 
 // buildResponse is only used to parse responses from Restart, Cancel
@@ -86,7 +116,7 @@ const (
 
 // Find fetches a build based on the provided build id
 //
-// https://developer.travis-ci.com/resource/build#find
+// Travis CI API docs: https://developer.travis-ci.com/resource/build#find
 func (bs *BuildService) Find(ctx context.Context, id uint) (*Build, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/build/%d", id), nil)
 	if err != nil {
@@ -109,7 +139,7 @@ func (bs *BuildService) Find(ctx context.Context, id uint) (*Build, *http.Respon
 
 // Cancel cancels a build based on the provided build id
 //
-// https://developer.travis-ci.com/resource/build#cancel
+// Travis CI API docs: https://developer.travis-ci.com/resource/build#cancel
 func (bs *BuildService) Cancel(ctx context.Context, id uint) (*MinimalBuild, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/build/%d/cancel", id), nil)
 	if err != nil {
@@ -132,7 +162,7 @@ func (bs *BuildService) Cancel(ctx context.Context, id uint) (*MinimalBuild, *ht
 
 // Restart restarts a build based on the provided build id
 //
-// https://developer.travis-ci.com/resource/build#restart
+// Travis CI API docs: https://developer.travis-ci.com/resource/build#restart
 func (bs *BuildService) Restart(ctx context.Context, id uint) (*MinimalBuild, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/build/%d/restart", id), nil)
 	if err != nil {

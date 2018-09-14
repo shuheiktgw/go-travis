@@ -14,21 +14,29 @@ type OwnerService struct {
 
 // Owner represents a GitHub Repository
 //
-// https://developer.travis-ci.com/resource/owner#standard-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/owner#standard-representation
 type Owner struct {
-	Id        uint   `json:"id"`
-	Login     string `json:"login"`
-	Name      string `json:"name"`
-	GitHubId  uint   `json:"github_id"`
+	// Value uniquely identifying the owner
+	Id uint `json:"id"`
+	// User or organization login set on GitHub
+	Login string `json:"login"`
+	// User or organization name set on GitHub
+	Name string `json:"name"`
+	// User or organization id set on GitHub
+	GitHubId uint `json:"github_id"`
+	// Link to user or organization avatar (image) set on GitHub
 	AvatarUrl string `json:"avatar_url"`
-	Education bool   `json:"education"`
+	// Whether or not the owner has an education account
+	Education bool `json:"education"`
 }
 
 // MinimalOwner represents a minimal GitHub Owner
 //
-// https://developer.travis-ci.com/resource/owner#minimal-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/owner#minimal-representation
 type MinimalOwner struct {
-	Id    uint   `json:"id"`
+	// // Value uniquely identifying the owner
+	Id uint `json:"id"`
+	// User or organization login set on GitHub
 	Login string `json:"login"`
 }
 

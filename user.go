@@ -14,7 +14,7 @@ type UserService struct {
 
 // User represents a Travis CI user.
 //
-// https://developer.travis-ci.com/resource/user#standard-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/user#standard-representation
 type User struct {
 	// Value uniquely identifying the user
 	Id uint `json:"id,omitempty"`

@@ -13,39 +13,61 @@ type JobService struct {
 }
 
 const (
-	JobStatusCreated  = "created"
-	JobStatusQueued   = "queued"
+	// JobStatusCreated represents the job state `created`
+	JobStatusCreated = "created"
+	// JobStatusQueued represents the job state `queued`
+	JobStatusQueued = "queued"
+	// JobStatusReceived represents the job state `received`
 	JobStatusReceived = "received"
-	JobStatusStarted  = "started"
+	// JobStatusStarted represents the job state `started`
+	JobStatusStarted = "started"
+	// JobStatusCanceled represents the job state `canceled`
 	JobStatusCanceled = "canceled"
-	JobStatusPassed   = "passed"
+	// JobStatusPassed represents the job state `passed`
+	JobStatusPassed = "passed"
 )
 
 // Job represents a Travis CI job
 //
-// https://developer.travis-ci.com/resource/job#standard-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/job#standard-representation
 type Job struct {
-	Id           uint              `json:"id,omitempty"`
-	AllowFailure bool              `json:"allow_failure,omitempty"`
-	Number       string            `json:"number,omitempty"`
-	State        string            `json:"state,omitempty"`
-	StartedAt    string            `json:"started_at,omitempty"`
-	FinishedAt   string            `json:"finished_at,omitempty"`
-	Build        MinimalBuild      `json:"build,omitempty"`
-	Queue        string            `json:"queue,omitempty"`
-	Repository   MinimalRepository `json:"repository,omitempty"`
-	Commit       MinimalCommit     `json:"commit,omitempty"`
-	Owner        MinimalOwner      `json:"owner,omitempty"`
-	Stage        MinimalStage      `json:"stage,omitempty"`
-	CreatedAt    string            `json:"created_at,omitempty"`
-	UpdatedAt    string            `json:"updated_at,omitempty"`
-	Private      bool              `json:"private,omitempty"`
+	// Value uniquely identifying the job
+	Id uint `json:"id,omitempty"`
+	// The job's allow_failure
+	AllowFailure bool `json:"allow_failure,omitempty"`
+	// Incremental number for a repository's builds
+	Number string `json:"number,omitempty"`
+	// Current state of the job
+	State string `json:"state,omitempty"`
+	// When the job started
+	StartedAt string `json:"started_at,omitempty"`
+	// When the job finished
+	FinishedAt string `json:"finished_at,omitempty"`
+	// The build the job is associated with
+	Build MinimalBuild `json:"build,omitempty"`
+	// Worker queue this job is/was scheduled on
+	Queue string `json:"queue,omitempty"`
+	// GitHub repository the job is associated with
+	Repository MinimalRepository `json:"repository,omitempty"`
+	// The commit the job is associated with
+	Commit MinimalCommit `json:"commit,omitempty"`
+	// GitHub user or organization the job belongs to
+	Owner MinimalOwner `json:"owner,omitempty"`
+	// The stages of the job
+	Stage MinimalStage `json:"stage,omitempty"`
+	// When the job was created
+	CreatedAt string `json:"created_at,omitempty"`
+	// When the job was updated
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// Whether or not the job is private
+	Private bool `json:"private,omitempty"`
 }
 
 // MinimalJob is a minimal representation of a Travis CI job
 //
-// https://developer.travis-ci.com/resource/job#standard-representation
+// Travis CI API docs: https://developer.travis-ci.com/resource/job#standard-representation
 type MinimalJob struct {
+	// Value uniquely identifying the job
 	Id uint `json:"id,omitempty"`
 }
 
@@ -56,7 +78,7 @@ type jobResponse struct {
 
 // Find fetches a job based on the provided job id
 //
-// https://developer.travis-ci.com/resource/job#find
+// Travis CI API docs: https://developer.travis-ci.com/resource/job#find
 func (js *JobService) Find(ctx context.Context, id uint) (*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d", id), nil)
 	if err != nil {
@@ -79,7 +101,7 @@ func (js *JobService) Find(ctx context.Context, id uint) (*Job, *http.Response, 
 
 // Cancel cancels a job based on the provided job id
 //
-// https://developer.travis-ci.com/resource/job#cancel
+// Travis CI API docs: https://developer.travis-ci.com/resource/job#cancel
 func (js *JobService) Cancel(ctx context.Context, id uint) (*MinimalJob, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/cancel", id), nil)
 	if err != nil {
@@ -102,7 +124,7 @@ func (js *JobService) Cancel(ctx context.Context, id uint) (*MinimalJob, *http.R
 
 // Restart restarts a job based on the provided job id
 //
-// https://developer.travis-ci.com/resource/job#restart
+// Travis CI API docs: https://developer.travis-ci.com/resource/job#restart
 func (js *JobService) Restart(ctx context.Context, id uint) (*MinimalJob, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/restart", id), nil)
 	if err != nil {
@@ -127,7 +149,7 @@ func (js *JobService) Restart(ctx context.Context, id uint) (*MinimalJob, *http.
 // Debug is only available on the travis-ci.com domain, and you need
 // to enable the debug feature
 //
-// https://developer.travis-ci.com/resource/job#debug
+// Travis CI API docs: https://developer.travis-ci.com/resource/job#debug
 func (js *JobService) Debug(ctx context.Context, id uint) (*MinimalJob, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/debug", id), nil)
 	if err != nil {
