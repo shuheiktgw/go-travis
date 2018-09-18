@@ -15,8 +15,6 @@ import (
 )
 
 func TestBuildService_Integration_Find(t *testing.T) {
-	t.Parallel()
-
 	build, res, err := integrationClient.Build.Find(context.TODO(), integrationBuildId)
 
 	if err != nil {
@@ -33,8 +31,6 @@ func TestBuildService_Integration_Find(t *testing.T) {
 }
 
 func TestBuildService_Integration_RestartAndCancel(t *testing.T) {
-	t.Parallel()
-
 	build, res, err := integrationClient.Build.Restart(context.TODO(), integrationBuildId)
 
 	if err != nil {
