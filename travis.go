@@ -50,6 +50,7 @@ type Client struct {
 	UserAgent string
 
 	// Services used to manipulate API entities
+	Active         *ActiveService
 	Authentication *AuthenticationService
 	Branch         *BranchService
 	Branches       *BranchesService
@@ -84,6 +85,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 		UserAgent: userAgent,
 	}
 
+	c.Active = &ActiveService{client: c}
 	c.Authentication = &AuthenticationService{client: c}
 	c.Branch = &BranchService{client: c}
 	c.Branches = &BranchesService{client: c}
