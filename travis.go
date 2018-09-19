@@ -56,6 +56,7 @@ type Client struct {
 	Branches       *BranchesService
 	Build          *BuildService
 	Builds         *BuildsService
+	Caches         *CachesService
 	EnvVar         *EnvVarService
 	EnvVars        *EnvVarsService
 	Job            *JobService
@@ -93,6 +94,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Branches = &BranchesService{client: c}
 	c.Build = &BuildService{client: c}
 	c.Builds = &BuildsService{client: c}
+	c.Caches = &CachesService{client: c}
 	c.EnvVar = &EnvVarService{client: c}
 	c.EnvVars = &EnvVarsService{client: c}
 	c.Job = &JobService{client: c}
