@@ -18,7 +18,7 @@ func TestRequestsService_FindByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/requests", testRepoId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		testFormValues(t, r, values{"limit": "5", "offset": "5"})
 		fmt.Fprint(w, `{"requests": [{"id":1,"state":"processed","result":"rejected"}]}`)
 	})
@@ -40,7 +40,7 @@ func TestRequestsService_FindByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/requests", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		testFormValues(t, r, values{"limit": "5", "offset": "5"})
 		fmt.Fprint(w, `{"requests": [{"id":1,"state":"processed","result":"rejected"}]}`)
 	})
@@ -62,7 +62,7 @@ func TestRequestsService_CreateByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/requests", testRepoId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		testFormValues(t, r, values{"config": "testConfig", "message": "testMessage", "branch": "master", "token": "testToken"})
 		fmt.Fprint(w, `{"request": {"id":1,"message":"message!"}}`)
 	})
@@ -84,7 +84,7 @@ func TestRequestsService_CreateByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/requests", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		testFormValues(t, r, values{"config": "testConfig", "message": "testMessage", "branch": "master", "token": "testToken"})
 		fmt.Fprint(w, `{"request": {"id":1,"message":"message!"}}`)
 	})

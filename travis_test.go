@@ -74,14 +74,14 @@ func TestClient_NewDefaultClient(t *testing.T) {
 func TestClient_NewRequest(t *testing.T) {
 	c := NewClient(defaultBaseURL, "")
 
-	req, err := c.NewRequest("GET", "/test", nil, nil)
+	req, err := c.NewRequest(http.MethodGet, "/test", nil, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	assert(
 		t,
-		req.Method == "GET",
+		req.Method == http.MethodGet,
 		"Wrong Request Method set",
 	)
 
@@ -97,7 +97,7 @@ func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
 	baseUrl, _ := url.Parse(defaultBaseURL)
 	c := NewClient(defaultBaseURL, "")
 
-	req, err := c.NewRequest("GET", "/users", nil, nil)
+	req, err := c.NewRequest(http.MethodGet, "/users", nil, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -128,7 +128,7 @@ func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
 		"Abc": "123",
 	}
 
-	req, err := c.NewRequest("GET", "/users", nil, h)
+	req, err := c.NewRequest(http.MethodGet, "/users", nil, h)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -164,7 +164,7 @@ func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
 		"Host": "api.travis-ci.com",
 	}
 
-	req, err := c.NewRequest("GET", "/users", nil, h)
+	req, err := c.NewRequest(http.MethodGet, "/users", nil, h)
 	if err != nil {
 		t.Fatal(err)
 	}

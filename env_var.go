@@ -52,7 +52,7 @@ func (es *EnvVarService) FindByRepoId(ctx context.Context, repoId uint, id strin
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("GET", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -75,7 +75,7 @@ func (es *EnvVarService) FindByRepoSlug(ctx context.Context, repoSlug string, id
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("GET", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -98,7 +98,7 @@ func (es *EnvVarService) UpdateByRepoId(ctx context.Context, repoId uint, id str
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("PATCH", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodPatch, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -121,7 +121,7 @@ func (es *EnvVarService) UpdateByRepoSlug(ctx context.Context, repoSlug string, 
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("PATCH", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodPatch, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -144,7 +144,7 @@ func (es *EnvVarService) DeleteByRepoId(ctx context.Context, repoId uint, id str
 		return nil, err
 	}
 
-	req, err := es.client.NewRequest("DELETE", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodDelete, u, nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +166,7 @@ func (es *EnvVarService) DeleteByRepoSlug(ctx context.Context, repoSlug string, 
 		return nil, err
 	}
 
-	req, err := es.client.NewRequest("DELETE", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodDelete, u, nil, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -20,7 +20,7 @@ func TestEnvVarService_FindByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_var/%s", testRepoId, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
 
@@ -41,7 +41,7 @@ func TestEnvVarService_FindByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_var/%s", testRepoSlug, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
 
@@ -62,7 +62,7 @@ func TestEnvVarService_UpdateByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_var/%s", testRepoId, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "PATCH")
+		testMethod(t, r, http.MethodPatch)
 		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
@@ -85,7 +85,7 @@ func TestEnvVarService_UpdateByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_var/%s", testRepoSlug, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "PATCH")
+		testMethod(t, r, http.MethodPatch)
 		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
@@ -108,7 +108,7 @@ func TestEnvVarService_DeleteByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_var/%s", testRepoId, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "DELETE")
+		testMethod(t, r, http.MethodDelete)
 		fmt.Fprint(w, `{}`)
 	})
 
@@ -124,7 +124,7 @@ func TestEnvVarService_DeleteByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_var/%s", testRepoSlug, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "DELETE")
+		testMethod(t, r, http.MethodDelete)
 		fmt.Fprint(w, `{}`)
 	})
 

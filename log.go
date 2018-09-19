@@ -43,7 +43,7 @@ func (ls *LogService) FindByJob(ctx context.Context, jobId uint) (*Log, *http.Re
 		return nil, nil, err
 	}
 
-	req, err := ls.client.NewRequest("GET", u, nil, nil)
+	req, err := ls.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

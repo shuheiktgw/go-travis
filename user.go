@@ -48,7 +48,7 @@ func (us *UserService) Current(ctx context.Context) (*User, *http.Response, erro
 		return nil, nil, err
 	}
 
-	req, err := us.client.NewRequest("GET", u, nil, nil)
+	req, err := us.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -71,7 +71,7 @@ func (us *UserService) Find(ctx context.Context, id uint) (*User, *http.Response
 		return nil, nil, err
 	}
 
-	req, err := us.client.NewRequest("GET", u, nil, nil)
+	req, err := us.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,7 +95,7 @@ func (us *UserService) Sync(ctx context.Context, id uint) (*User, *http.Response
 		return nil, nil, err
 	}
 
-	req, err := us.client.NewRequest("POST", u, nil, nil)
+	req, err := us.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

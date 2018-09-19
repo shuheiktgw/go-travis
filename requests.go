@@ -89,7 +89,7 @@ func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, opt *F
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("GET", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -112,7 +112,7 @@ func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("GET", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -135,7 +135,7 @@ func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt 
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("POST", u, opt, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, opt, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -158,7 +158,7 @@ func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("POST", u, opt, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, opt, nil)
 	if err != nil {
 		return nil, nil, err
 	}

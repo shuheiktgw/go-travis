@@ -20,7 +20,7 @@ func TestJobService_Find(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/job/%d", testJobId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"allow_failure":true,"number":"1","state":"created"}`)
 	})
 
@@ -41,7 +41,7 @@ func TestJobService_Cancel(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/job/%d/cancel", testJobId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"job":{"id":1}}`)
 	})
 
@@ -62,7 +62,7 @@ func TestJobService_Restart(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/job/%d/restart", testJobId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"job":{"id":1}}`)
 	})
 
@@ -83,7 +83,7 @@ func TestJobService_Debug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/job/%d/debug", testJobId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"job":{"id":1}}`)
 	})
 

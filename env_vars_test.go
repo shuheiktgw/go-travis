@@ -18,7 +18,7 @@ func TestEnvVarsService_FindByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_vars", testRepoId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"env_vars": [{"id":"test-12345-absde","name":"TEST","value":"test","public":false}]}`)
 	})
 
@@ -39,7 +39,7 @@ func TestEnvVarsService_FindByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_vars", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"env_vars": [{"id":"test-12345-absde","name":"TEST","value":"test","public":false}]}`)
 	})
 
@@ -60,7 +60,7 @@ func TestEnvVarsService_CreateByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_vars", testRepoId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
@@ -83,7 +83,7 @@ func TestEnvVarsService_CreateByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_vars", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})

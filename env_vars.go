@@ -33,7 +33,7 @@ func (es *EnvVarsService) FindByRepoId(ctx context.Context, repoId uint) ([]EnvV
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("GET", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -56,7 +56,7 @@ func (es *EnvVarsService) FindByRepoSlug(ctx context.Context, repoSlug string) (
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("GET", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -79,7 +79,7 @@ func (es *EnvVarsService) CreateByRepoId(ctx context.Context, repoId uint, opt *
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("POST", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -102,7 +102,7 @@ func (es *EnvVarsService) CreateByRepoSlug(ctx context.Context, repoSlug string,
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest("POST", u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

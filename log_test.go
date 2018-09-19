@@ -18,7 +18,7 @@ func TestLogService_FindByJob(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/job/%d/log", testJobId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"content":"test"}`)
 	})
 

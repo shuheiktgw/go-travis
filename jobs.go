@@ -43,7 +43,7 @@ func (js *JobsService) FindByBuild(ctx context.Context, buildId uint) ([]Job, *h
 		return nil, nil, err
 	}
 
-	req, err := js.client.NewRequest("GET", u, nil, nil)
+	req, err := js.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -68,7 +68,7 @@ func (js *JobsService) Find(ctx context.Context, opt *JobsOption) ([]Job, *http.
 		return nil, nil, err
 	}
 
-	req, err := js.client.NewRequest("GET", u, nil, nil)
+	req, err := js.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

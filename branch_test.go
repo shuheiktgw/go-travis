@@ -25,7 +25,7 @@ func TestBranchService_FindByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/branch/%s", testRepoId, "master"), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}`)
 	})
 
@@ -46,7 +46,7 @@ func TestBranchService_FindByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/branch/%s", testEscapedRepoSlug, "master"), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}`)
 	})
 

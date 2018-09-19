@@ -59,7 +59,7 @@ func (bs *BuildsService) Find(ctx context.Context, opt *BuildsOption) ([]Build, 
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,7 +82,7 @@ func (bs *BuildsService) FindByRepoId(ctx context.Context, repoId uint, opt *Bui
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -105,7 +105,7 @@ func (bs *BuildsService) FindByRepoSlug(ctx context.Context, repoSlug string, op
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

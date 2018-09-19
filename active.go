@@ -32,7 +32,7 @@ func (as *ActiveService) FindByOwner(ctx context.Context, owner string) ([]Build
 		return nil, nil, err
 	}
 
-	req, err := as.client.NewRequest("GET", u, nil, nil)
+	req, err := as.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -55,7 +55,7 @@ func (as *ActiveService) FindByGitHubId(ctx context.Context, githubId uint) ([]B
 		return nil, nil, err
 	}
 
-	req, err := as.client.NewRequest("GET", u, nil, nil)
+	req, err := as.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

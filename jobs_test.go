@@ -18,7 +18,7 @@ func TestJobsService_FindByBuild(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/build/%d/jobs", testBuildId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"jobs":[{"id":1,"allow_failure":true,"number":"1","state":"created"}]}`)
 	})
 
@@ -39,7 +39,7 @@ func TestJobsService_Find(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc("/jobs", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		testFormValues(t, r, values{"limit": "50", "state[]": "created"})
 		fmt.Fprint(w, `{"jobs":[{"id":1,"allow_failure":true,"number":"1","state":"created"}]}`)
 	})

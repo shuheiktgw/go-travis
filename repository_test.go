@@ -18,7 +18,7 @@ func TestRepositoryService_Find(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
 	})
 
@@ -39,7 +39,7 @@ func TestRepositoryService_Activate(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/activate", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
 	})
 
@@ -60,7 +60,7 @@ func TestRepositoryService_Deactivate(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/deactivate", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
 	})
 
@@ -81,7 +81,7 @@ func TestRepositoryService_Star(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/star", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
 	})
 
@@ -102,7 +102,7 @@ func TestRepositoryService_Unstar(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/unstar", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
 	})
 

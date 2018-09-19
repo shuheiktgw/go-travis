@@ -72,7 +72,7 @@ func (rs *RepositoryService) Find(ctx context.Context, slug string) (*Repository
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("GET", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,7 +95,7 @@ func (rs *RepositoryService) Activate(ctx context.Context, slug string) (*Reposi
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -118,7 +118,7 @@ func (rs *RepositoryService) Deactivate(ctx context.Context, slug string) (*Repo
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -141,7 +141,7 @@ func (rs *RepositoryService) Star(ctx context.Context, slug string) (*Repository
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -164,7 +164,7 @@ func (rs *RepositoryService) Unstar(ctx context.Context, slug string) (*Reposito
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("POST", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

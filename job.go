@@ -90,7 +90,7 @@ func (js *JobService) Find(ctx context.Context, id uint) (*Job, *http.Response, 
 		return nil, nil, err
 	}
 
-	req, err := js.client.NewRequest("GET", u, nil, nil)
+	req, err := js.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -113,7 +113,7 @@ func (js *JobService) Cancel(ctx context.Context, id uint) (*MinimalJob, *http.R
 		return nil, nil, err
 	}
 
-	req, err := js.client.NewRequest("POST", u, nil, nil)
+	req, err := js.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -136,7 +136,7 @@ func (js *JobService) Restart(ctx context.Context, id uint) (*MinimalJob, *http.
 		return nil, nil, err
 	}
 
-	req, err := js.client.NewRequest("POST", u, nil, nil)
+	req, err := js.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -161,7 +161,7 @@ func (js *JobService) Debug(ctx context.Context, id uint) (*MinimalJob, *http.Re
 		return nil, nil, err
 	}
 
-	req, err := js.client.NewRequest("POST", u, nil, nil)
+	req, err := js.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

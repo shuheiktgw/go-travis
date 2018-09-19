@@ -18,7 +18,7 @@ func TestOwnerService_FindByLogin(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc("/owner/shuheiktgw", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","github_id":1}`)
 	})
 
@@ -39,7 +39,7 @@ func TestOwnerService_FindByGitHubId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc("/owner/github_id/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","github_id":1}`)
 	})
 

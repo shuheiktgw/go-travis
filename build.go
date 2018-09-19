@@ -128,7 +128,7 @@ func (bs *BuildService) Find(ctx context.Context, id uint) (*Build, *http.Respon
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -151,7 +151,7 @@ func (bs *BuildService) Cancel(ctx context.Context, id uint) (*MinimalBuild, *ht
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("POST", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -174,7 +174,7 @@ func (bs *BuildService) Restart(ctx context.Context, id uint) (*MinimalBuild, *h
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("POST", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodPost, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

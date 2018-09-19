@@ -51,7 +51,7 @@ func (bs *BranchService) FindByRepoId(ctx context.Context, repoId uint, branchNa
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -74,7 +74,7 @@ func (bs *BranchService) FindByRepoSlug(ctx context.Context, repoSlug string, br
 		return nil, nil, err
 	}
 
-	req, err := bs.client.NewRequest("GET", u, nil, nil)
+	req, err := bs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -70,7 +70,7 @@ func (rs *RequestService) FindByRepoId(ctx context.Context, repoId uint, id uint
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("GET", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -93,7 +93,7 @@ func (rs *RequestService) FindByRepoSlug(ctx context.Context, repoSlug string, i
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest("GET", u, nil, nil)
+	req, err := rs.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

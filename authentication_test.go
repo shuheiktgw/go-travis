@@ -28,7 +28,7 @@ func TestAuthenticationService_UsingGithubToken_with_token(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc("/auth/github", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		testHeader(t, r, "Accept", "application/vnd.travis-ci.2.1+json")
 		fmt.Fprint(w, `{"access_token":"test_access_token"}`)
 	})

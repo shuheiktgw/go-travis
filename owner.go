@@ -55,7 +55,7 @@ func (os *OwnerService) FindByLogin(ctx context.Context, login string) (*Owner, 
 		return nil, nil, err
 	}
 
-	req, err := os.client.NewRequest("GET", u, nil, nil)
+	req, err := os.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -78,7 +78,7 @@ func (os *OwnerService) FindByGitHubId(ctx context.Context, githubId uint) (*Own
 		return nil, nil, err
 	}
 
-	req, err := os.client.NewRequest("GET", u, nil, nil)
+	req, err := os.client.NewRequest(http.MethodGet, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}

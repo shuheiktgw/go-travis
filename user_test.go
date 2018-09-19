@@ -20,7 +20,7 @@ func TestUserService_Current(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","name":"shuheiktgw","github_id":1}`)
 	})
 
@@ -41,7 +41,7 @@ func TestUserService_Find(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/user/%d", testUserId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","name":"shuheiktgw","github_id":1}`)
 	})
 
@@ -62,7 +62,7 @@ func TestUserService_Sync(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/user/%d/sync", testUserId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","name":"shuheiktgw","github_id":1}`)
 	})
 

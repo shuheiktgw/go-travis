@@ -20,7 +20,7 @@ func TestBuildService_Find(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/build/%d", testBuildId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"number":"1","state":"created","duration":10}`)
 	})
 
@@ -41,7 +41,7 @@ func TestBuildService_Cancel(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/build/%d/cancel", testBuildId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"build":{"id":1,"number":"1","state":"created","duration":10}}`)
 	})
 
@@ -62,7 +62,7 @@ func TestBuildService_Restart(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/build/%d/restart", testBuildId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "POST")
+		testMethod(t, r, http.MethodPost)
 		fmt.Fprint(w, `{"build":{"id":1,"number":"1","state":"created","duration":10}}`)
 	})
 

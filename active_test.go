@@ -21,7 +21,7 @@ func TestActiveService_FindByOwner(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/owner/%s/active", testOwner), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"builds": [{"id":1,"number":"1","state":"created","duration":10}]}`)
 	})
 
@@ -42,7 +42,7 @@ func TestActiveService_FindByGitHubId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/owner/github_id/%d/active", testGitHubId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"builds": [{"id":1,"number":"1","state":"created","duration":10}]}`)
 	})
 

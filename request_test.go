@@ -20,7 +20,7 @@ func TestRequestService_FindByRepoId(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/request/%d", testRepoId, testRequestId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"state":"processed","result":"rejected"}`)
 	})
 
@@ -41,7 +41,7 @@ func TestRequestService_FindByRepoSlug(t *testing.T) {
 	defer teardown()
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/request/%d", testRepoSlug, testRequestId), func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
+		testMethod(t, r, http.MethodGet)
 		fmt.Fprint(w, `{"id":1,"state":"processed","result":"rejected"}`)
 	})
 

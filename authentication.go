@@ -35,7 +35,7 @@ func (as *AuthenticationService) UsingGithubToken(ctx context.Context, githubTok
 	b := map[string]string{"github_token": githubToken}
 	h := map[string]string{"Accept": mediaTypeV2}
 
-	req, err := as.client.NewRequest("POST", "/auth/github", b, h)
+	req, err := as.client.NewRequest(http.MethodPost, "/auth/github", b, h)
 	if err != nil {
 		return "", nil, err
 	}
