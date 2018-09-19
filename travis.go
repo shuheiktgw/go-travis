@@ -217,16 +217,20 @@ type ErrorResponse struct {
 	// HTTP response that caused this error
 	Response *http.Response
 
+	// Error type produced by Travis API
+	Type string `json:"error_type"`
+
 	// Error message produced by Travis API
-	Message string `json:"error"`
+	Message string `json:"error_message"`
 }
 
 func (er *ErrorResponse) Error() string {
 	return fmt.Sprintf(
-		"%v %v: %d %v",
+		"%v %v: %d %v %v",
 		er.Response.Request.Method,
 		er.Response.Request.URL.String(),
 		er.Response.StatusCode,
+		er.Type,
 		er.Message,
 	)
 }
