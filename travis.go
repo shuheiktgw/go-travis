@@ -219,15 +219,23 @@ func (c *Client) IsAuthenticated() bool {
 
 // ErrorResponse reports an error caused by an API request.
 // ErrorResponse implemented the Error interface.
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/error#error
 type ErrorResponse struct {
 	// HTTP response that caused this error
 	Response *http.Response
 
-	// Error type produced by Travis API
-	Type string `json:"error_type"`
+	// The error's type
+	ErrorType string `json:"error_type"`
 
-	// Error message produced by Travis API
-	Message string `json:"error_message"`
+	// The error's message
+	ErrorMessage string `json:"error_message"`
+
+	// The error's resource type
+	ResourceType string `json:"resource_type"`
+
+	// The error's permission
+	Permission string `json:"permission"`
 }
 
 func (er *ErrorResponse) Error() string {
@@ -236,8 +244,8 @@ func (er *ErrorResponse) Error() string {
 		er.Response.Request.Method,
 		er.Response.Request.URL.String(),
 		er.Response.StatusCode,
-		er.Type,
-		er.Message,
+		er.ErrorType,
+		er.ErrorMessage,
 	)
 }
 
