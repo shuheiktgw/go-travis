@@ -27,17 +27,17 @@ type FindRequestsOption struct {
 	Offset int `url:"offset,omitempty"`
 }
 
-// CreateRequestOption specifies options for
-// CreateRequest request.
-type CreateRequestOption struct {
+// RequestBody specifies body for
+// creating request.
+type RequestBody struct {
 	// Build configuration (as parsed from .travis.yml)
-	Config string `url:"config,omitempty"`
+	Config string `json:"config,omitempty"`
 	// Travis-ci status message attached to the request
-	Message string `url:"message,omitempty"`
+	Message string `json:"message,omitempty"`
 	// Branch requested to be built
-	Branch string `url:"branch,omitempty"`
+	Branch string `json:"branch,omitempty"`
 	// Travis token associated with webhook on GitHub (DEPRECATED)
-	Token string `url:"token,omitempty"`
+	Token string `json:"token,omitempty"`
 }
 
 type getRequestsResponse struct {
@@ -129,13 +129,13 @@ func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 // CreateByRepoId create requests of given repository id and provided options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
-func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt *CreateRequestOption) (*MinimalRequest, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), opt)
+func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, request *RequestBody) (*MinimalRequest, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest(http.MethodPost, u, opt, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, request, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -152,13 +152,13 @@ func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, opt 
 // CreateByRepoSlug create requests of given repository slug and provided options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
-func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string, opt *CreateRequestOption) (*MinimalRequest, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), opt)
+func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string, request *RequestBody) (*MinimalRequest, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := rs.client.NewRequest(http.MethodPost, u, opt, nil)
+	req, err := rs.client.NewRequest(http.MethodPost, u, request, nil)
 	if err != nil {
 		return nil, nil, err
 	}

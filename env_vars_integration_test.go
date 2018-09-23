@@ -49,8 +49,8 @@ func TestEnvVarsService_Integration_FindByRepoSlug(t *testing.T) {
 
 func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *testing.T) {
 	// Create
-	opt := EnvVarOption{Name: "TEST", Value: "test", Public: true}
-	envVar, res, err := integrationClient.EnvVars.CreateByRepoId(context.TODO(), integrationRepoId, &opt)
+	body := EnvVarBody{Name: "TEST", Value: "test", Public: true}
+	envVar, res, err := integrationClient.EnvVars.CreateByRepoId(context.TODO(), integrationRepoId, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVars.CreateByRepoId returned unexpected error: %s", err)
@@ -69,8 +69,8 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 	time.Sleep(2 * time.Second)
 
 	// Update
-	opt = EnvVarOption{Name: "NEW_TEST", Value: "new_test", Public: false}
-	envVar, res, err = integrationClient.EnvVar.UpdateByRepoId(context.TODO(), integrationRepoId, envVar.Id, &opt)
+	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
+	envVar, res, err = integrationClient.EnvVar.UpdateByRepoId(context.TODO(), integrationRepoId, envVar.Id, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVar.UpdateByRepoId returned unexpected error: %s", err)
@@ -102,8 +102,8 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 
 func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *testing.T) {
 	// Create
-	opt := EnvVarOption{Name: "TEST", Value: "test", Public: true}
-	envVar, res, err := integrationClient.EnvVars.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &opt)
+	body := EnvVarBody{Name: "TEST", Value: "test", Public: true}
+	envVar, res, err := integrationClient.EnvVars.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVars.CreateByRepoSlug returned unexpected error: %s", err)
@@ -122,8 +122,8 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 	time.Sleep(2 * time.Second)
 
 	// Update
-	opt = EnvVarOption{Name: "NEW_TEST", Value: "new_test", Public: false}
-	envVar, res, err = integrationClient.EnvVar.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id, &opt)
+	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
+	envVar, res, err = integrationClient.EnvVar.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVar.UpdateByRepoSlug returned unexpected error: %s", err)

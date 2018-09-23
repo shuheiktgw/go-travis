@@ -61,11 +61,11 @@ func TestEnvVarsService_CreateByRepoId(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_vars", testRepoId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
+		testBody(t, r, `{"env_var.name":"TEST","env_var.value":"test","env_var.public":false}`+"\n")
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
 
-	opt := EnvVarOption{Name: "TEST", Value: "test", Public: false}
+	opt := EnvVarBody{Name: "TEST", Value: "test", Public: false}
 	envVar, _, err := client.EnvVars.CreateByRepoId(context.Background(), testRepoId, &opt)
 
 	if err != nil {
@@ -84,11 +84,11 @@ func TestEnvVarsService_CreateByRepoSlug(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_vars", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
+		testBody(t, r, `{"env_var.name":"TEST","env_var.value":"test","env_var.public":false}`+"\n")
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
 
-	opt := EnvVarOption{Name: "TEST", Value: "test", Public: false}
+	opt := EnvVarBody{Name: "TEST", Value: "test", Public: false}
 	envVar, _, err := client.EnvVars.CreateByRepoSlug(context.Background(), testRepoSlug, &opt)
 
 	if err != nil {

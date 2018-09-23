@@ -16,7 +16,7 @@ import (
 func TestRequestService_Integration_CreateAndFindById(t *testing.T) {
 	t.Parallel()
 
-	createdRequest, res, err := integrationClient.Requests.CreateByRepoId(context.TODO(), integrationRepoId, &CreateRequestOption{Message: "test", Branch: "master"})
+	createdRequest, res, err := integrationClient.Requests.CreateByRepoId(context.TODO(), integrationRepoId, &RequestBody{Message: "test", Branch: "master"})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -44,7 +44,7 @@ func TestRequestService_Integration_CreateAndFindById(t *testing.T) {
 func TestRequestService_Integration_CreateAndFindBySlug(t *testing.T) {
 	t.Parallel()
 
-	createdRequest, res, err := integrationClient.Requests.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &CreateRequestOption{Message: "test", Branch: "master"})
+	createdRequest, res, err := integrationClient.Requests.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &RequestBody{Message: "test", Branch: "master"})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)

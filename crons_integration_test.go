@@ -20,7 +20,7 @@ func TestCronService_Integration_FindByRepoId(t *testing.T) {
 		context.TODO(),
 		integrationRepoId,
 		"master",
-		&CronOption{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true},
+		&CronBody{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true},
 	)
 
 	if err != nil {
@@ -73,7 +73,7 @@ func TestCronService_Integration_FindByRepoSlug(t *testing.T) {
 		context.TODO(),
 		integrationRepoId,
 		"master",
-		&CronOption{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true},
+		&CronBody{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true},
 	)
 
 	if err != nil {

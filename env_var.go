@@ -32,15 +32,15 @@ type EnvVar struct {
 	Public bool `json:"public,omitempty"`
 }
 
-// EnvVarOption specifies options for
+// EnvVarBody specifies options for
 // creating and updating env var.
-type EnvVarOption struct {
+type EnvVarBody struct {
 	// The environment variable name, e.g. FOO
-	Name string `url:"env_var.name,omitempty"`
+	Name string `json:"env_var.name,omitempty"`
 	// The environment variable's value, e.g. bar
-	Value string `url:"env_var.value,omitempty"`
+	Value string `json:"env_var.value,omitempty"`
 	// Whether this environment variable should be publicly visible or not
-	Public bool `url:"env_var.public"`
+	Public bool `json:"env_var.public"`
 }
 
 // FindByRepoId fetches environment variable based on the given repository id and env var id
@@ -92,47 +92,47 @@ func (es *EnvVarService) FindByRepoSlug(ctx context.Context, repoSlug string, id
 // UpdateByRepoId updates environment variable based on the given option
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#update
-func (es *EnvVarService) UpdateByRepoId(ctx context.Context, repoId uint, id string, opt *EnvVarOption) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_var/%s", repoId, id), opt)
+func (es *EnvVarService) UpdateByRepoId(ctx context.Context, repoId uint, id string, envVar *EnvVarBody) (*EnvVar, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_var/%s", repoId, id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest(http.MethodPatch, u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodPatch, u, envVar, nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var envVar EnvVar
-	resp, err := es.client.Do(ctx, req, &envVar)
+	var e EnvVar
+	resp, err := es.client.Do(ctx, req, &e)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return &envVar, resp, err
+	return &e, resp, err
 }
 
 // UpdateByRepoSlug updates environment variable based on the given option
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#update
-func (es *EnvVarService) UpdateByRepoSlug(ctx context.Context, repoSlug string, id string, opt *EnvVarOption) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), opt)
+func (es *EnvVarService) UpdateByRepoSlug(ctx context.Context, repoSlug string, id string, envVar *EnvVarBody) (*EnvVar, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := es.client.NewRequest(http.MethodPatch, u, nil, nil)
+	req, err := es.client.NewRequest(http.MethodPatch, u, envVar, nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var envVar EnvVar
-	resp, err := es.client.Do(ctx, req, &envVar)
+	var e EnvVar
+	resp, err := es.client.Do(ctx, req, &e)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return &envVar, resp, err
+	return &e, resp, err
 }
 
 // DeleteByRepoId deletes environment variable based on the given repository id and the env var id

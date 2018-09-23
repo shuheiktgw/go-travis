@@ -16,7 +16,7 @@ import (
 
 func TestCronService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 	// Create a cron by repository id
-	opt := CronOption{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true}
+	opt := CronBody{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true}
 	createdCron, res, err := integrationClient.Cron.CreateByRepoId(context.TODO(), integrationRepoId, "master", &opt)
 
 	if err != nil {

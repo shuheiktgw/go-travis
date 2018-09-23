@@ -63,19 +63,19 @@ func TestEnvVarService_UpdateByRepoId(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/env_var/%s", testRepoId, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPatch)
-		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
+		testBody(t, r, `{"env_var.name":"TEST","env_var.value":"test","env_var.public":false}`+"\n")
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
 
-	opt := EnvVarOption{Name: "TEST", Value: "test", Public: false}
-	envVar, _, err := client.EnvVar.UpdateByRepoId(context.Background(), testRepoId, testEnvVarId, &opt)
+	envVar := EnvVarBody{Name: "TEST", Value: "test", Public: false}
+	e, _, err := client.EnvVar.UpdateByRepoId(context.Background(), testRepoId, testEnvVarId, &envVar)
 
 	if err != nil {
 		t.Errorf("EnvVar.UpdateByRepoId returned error: %v", err)
 	}
 
 	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
-	if !reflect.DeepEqual(envVar, want) {
+	if !reflect.DeepEqual(e, want) {
 		t.Errorf("EnvVar.UpdateByRepoId returned %+v, want %+v", envVar, want)
 	}
 }
@@ -86,20 +86,20 @@ func TestEnvVarService_UpdateByRepoSlug(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/env_var/%s", testRepoSlug, testEnvVarId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPatch)
-		testFormValues(t, r, values{"env_var.name": "TEST", "env_var.value": "test", "env_var.public": "false"})
+		testBody(t, r, `{"env_var.name":"TEST","env_var.value":"test","env_var.public":false}`+"\n")
 		fmt.Fprint(w, `{"id":"test-12345-absde","name":"TEST","value":"test","public":false}`)
 	})
 
-	opt := EnvVarOption{Name: "TEST", Value: "test", Public: false}
-	envVar, _, err := client.EnvVar.UpdateByRepoSlug(context.Background(), testRepoSlug, testEnvVarId, &opt)
+	envVar := EnvVarBody{Name: "TEST", Value: "test", Public: false}
+	e, _, err := client.EnvVar.UpdateByRepoSlug(context.Background(), testRepoSlug, testEnvVarId, &envVar)
 
 	if err != nil {
 		t.Errorf("EnvVar.UpdateByRepoSlug returned error: %v", err)
 	}
 
 	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
-	if !reflect.DeepEqual(envVar, want) {
-		t.Errorf("EnvVar.UpdateByRepoSlug returned %+v, want %+v", envVar, want)
+	if !reflect.DeepEqual(e, want) {
+		t.Errorf("EnvVar.UpdateByRepoSlug returned %+v, want %+v", e, want)
 	}
 }
 

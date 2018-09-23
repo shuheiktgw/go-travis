@@ -42,9 +42,9 @@ type Cron struct {
 	Active bool `json:"active,omitempty"`
 }
 
-// CronOption specifies options for
+// CronBody specifies body for
 // creating cron.
-type CronOption struct {
+type CronBody struct {
 	// Interval at which the cron will run (can be "daily", "weekly" or "monthly")
 	Interval string `json:"cron.interval,omitempty"`
 	// Whether a cron build should run if there has been a build on this branch in the last 24 hours
@@ -60,47 +60,47 @@ const (
 // CreateByRepoId creates a cron based on the provided repository id and branch name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#create
-func (cs *CronService) CreateByRepoId(ctx context.Context, repoId uint, branchName string, opt *CronOption) (*Cron, *http.Response, error) {
+func (cs *CronService) CreateByRepoId(ctx context.Context, repoId uint, branchName string, cron *CronBody) (*Cron, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branch/%s/cron", repoId, branchName), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := cs.client.NewRequest(http.MethodPost, u, opt, nil)
+	req, err := cs.client.NewRequest(http.MethodPost, u, cron, nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var cron Cron
-	resp, err := cs.client.Do(ctx, req, &cron)
+	var c Cron
+	resp, err := cs.client.Do(ctx, req, &c)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return &cron, resp, err
+	return &c, resp, err
 }
 
 // CreateByRepoSlug creates a cron based on the provided repository slug and branch name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#create
-func (cs *CronService) CreateByRepoSlug(ctx context.Context, repoSlug string, branchName string, opt *CronOption) (*Cron, *http.Response, error) {
+func (cs *CronService) CreateByRepoSlug(ctx context.Context, repoSlug string, branchName string, cron *CronBody) (*Cron, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branchName), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req, err := cs.client.NewRequest(http.MethodPost, u, opt, nil)
+	req, err := cs.client.NewRequest(http.MethodPost, u, cron, nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var cron Cron
-	resp, err := cs.client.Do(ctx, req, &cron)
+	var c Cron
+	resp, err := cs.client.Do(ctx, req, &c)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return &cron, resp, err
+	return &c, resp, err
 }
 
 // Find fetches a cron based on the provided id

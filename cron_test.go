@@ -25,7 +25,7 @@ func TestCronService_CreateByRepoId(t *testing.T) {
 		fmt.Fprint(w, `{"id":12345,"interval":"weekly","dont_run_if_recent_build_exists":true,"active":true}`)
 	})
 
-	opt := CronOption{Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true}
+	opt := CronBody{Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true}
 	cron, _, err := client.Cron.CreateByRepoId(context.Background(), testRepoId, "master", &opt)
 
 	if err != nil {
@@ -48,7 +48,7 @@ func TestCronService_CreateByRepoSlug(t *testing.T) {
 		fmt.Fprint(w, `{"id":12345,"interval":"weekly","dont_run_if_recent_build_exists":true,"active":true}`)
 	})
 
-	opt := CronOption{Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true}
+	opt := CronBody{Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true}
 	cron, _, err := client.Cron.CreateByRepoSlug(context.Background(), testRepoSlug, "master", &opt)
 
 	if err != nil {

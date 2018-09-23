@@ -94,7 +94,6 @@ type buildResponse struct {
 	Build MinimalBuild `json:"build,omitempty"`
 }
 
-//
 const (
 	// BuildStateCreated represents the build state `created`
 	BuildStateCreated = "created"

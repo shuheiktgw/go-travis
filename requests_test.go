@@ -63,11 +63,11 @@ func TestRequestsService_CreateByRepoId(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/requests", testRepoId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testFormValues(t, r, values{"config": "testConfig", "message": "testMessage", "branch": "master", "token": "testToken"})
+		testBody(t, r, `{"config":"testConfig","message":"testMessage","branch":"master","token":"testToken"}`+"\n")
 		fmt.Fprint(w, `{"request": {"id":1,"message":"message!"}}`)
 	})
 
-	repo, _, err := client.Requests.CreateByRepoId(context.Background(), testRepoId, &CreateRequestOption{Config: "testConfig", Message: "testMessage", Branch: "master", Token: "testToken"})
+	repo, _, err := client.Requests.CreateByRepoId(context.Background(), testRepoId, &RequestBody{Config: "testConfig", Message: "testMessage", Branch: "master", Token: "testToken"})
 
 	if err != nil {
 		t.Errorf("RequestsService.CreateByRepoId returned error: %v", err)
@@ -85,11 +85,11 @@ func TestRequestsService_CreateByRepoSlug(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/requests", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodPost)
-		testFormValues(t, r, values{"config": "testConfig", "message": "testMessage", "branch": "master", "token": "testToken"})
+		testBody(t, r, `{"config":"testConfig","message":"testMessage","branch":"master","token":"testToken"}`+"\n")
 		fmt.Fprint(w, `{"request": {"id":1,"message":"message!"}}`)
 	})
 
-	repo, _, err := client.Requests.CreateByRepoSlug(context.Background(), testRepoSlug, &CreateRequestOption{Config: "testConfig", Message: "testMessage", Branch: "master", Token: "testToken"})
+	repo, _, err := client.Requests.CreateByRepoSlug(context.Background(), testRepoSlug, &RequestBody{Config: "testConfig", Message: "testMessage", Branch: "master", Token: "testToken"})
 
 	if err != nil {
 		t.Errorf("RequestsService.CreateByRepoSlug returned error: %v", err)
