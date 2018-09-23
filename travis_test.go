@@ -6,6 +6,7 @@
 package travis
 
 import (
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -35,6 +36,12 @@ func setup() (client *Client, mux *http.ServeMux, serverURL string, teardown fun
 	return client, mux, server.URL, server.Close
 }
 
+func testHeader(t *testing.T, r *http.Request, header string, want string) {
+	if got := r.Header.Get(header); got != want {
+		t.Errorf("Header.Get(%q) returned %q, want %q", header, got, want)
+	}
+}
+
 func testMethod(t *testing.T, r *http.Request, want string) {
 	if got := r.Method; got != want {
 		t.Errorf("Request method: %v, want %v", got, want)
@@ -55,9 +62,13 @@ func testFormValues(t *testing.T, r *http.Request, values values) {
 	}
 }
 
-func testHeader(t *testing.T, r *http.Request, header string, want string) {
-	if got := r.Header.Get(header); got != want {
-		t.Errorf("Header.Get(%q) returned %q, want %q", header, got, want)
+func testBody(t *testing.T, r *http.Request, want string) {
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		t.Errorf("Error reading request body: %v", err)
+	}
+	if got := string(b); got != want {
+		t.Errorf("request Body is %s, want %s", got, want)
 	}
 }
 
