@@ -2,6 +2,9 @@
 ## [Unreleased]
 
 
+<a name="v0.0.6"></a>
+## [v0.0.6] - 2018-09-26
+
 <a name="v0.0.5"></a>
 ## [v0.0.5] - 2018-09-24
 
@@ -20,7 +23,8 @@
 - Update import path.
 
 
-[Unreleased]: https://github.com/shuheiktgw/go-travis/compare/v0.0.5...HEAD
+[Unreleased]: https://github.com/shuheiktgw/go-travis/compare/v0.0.6...HEAD
+[v0.0.6]: https://github.com/shuheiktgw/go-travis/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://github.com/shuheiktgw/go-travis/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://github.com/shuheiktgw/go-travis/compare/v0.0.3...v0.0.4
 [v0.0.3]: https://github.com/shuheiktgw/go-travis/compare/v0.0.2...v0.0.3
