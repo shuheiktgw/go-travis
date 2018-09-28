@@ -9,11 +9,60 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"reflect"
 	"testing"
 )
 
+var (
+	testRepoId          uint = 12345
+	testRepoSlug             = "shuheiktgw/go-travis-test"
+	testEscapedRepoSlug      = url.QueryEscape(testRepoSlug)
+)
+
 func TestBranchesService_FindByRepoId(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/repo/%d/branch/%s", testRepoId, "master"), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}`)
+	})
+
+	branch, _, err := client.Branches.FindByRepoId(context.Background(), testRepoId, "master")
+
+	if err != nil {
+		t.Errorf("Branch.FindByRepoId returned error: %v", err)
+	}
+
+	want := &Branch{Name: "master", Repository: MinimalRepository{Id: 1, Name: "test", Slug: "shuheiktgw/test"}, DefaultBranch: true, ExistsOnGithub: true}
+	if !reflect.DeepEqual(branch, want) {
+		t.Errorf("Branch.FindByRepoId returned %+v, want %+v", branch, want)
+	}
+}
+
+func TestBranchesService_FindByRepoSlug(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/repo/%s/branch/%s", testEscapedRepoSlug, "master"), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}`)
+	})
+
+	branch, _, err := client.Branches.FindByRepoSlug(context.Background(), testEscapedRepoSlug, "master")
+
+	if err != nil {
+		t.Errorf("Branch.FindByRepoId returned error: %v", err)
+	}
+
+	want := &Branch{Name: "master", Repository: MinimalRepository{Id: 1, Name: "test", Slug: "shuheiktgw/test"}, DefaultBranch: true, ExistsOnGithub: true}
+	if !reflect.DeepEqual(branch, want) {
+		t.Errorf("Branch.FindByRepoId returned %+v, want %+v", branch, want)
+	}
+}
+
+func TestBranchesService_ListByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -23,7 +72,7 @@ func TestBranchesService_FindByRepoId(t *testing.T) {
 		fmt.Fprint(w, `{"branches": [{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}]}`)
 	})
 
-	branches, _, err := client.Branches.FindByRepoId(context.Background(), testRepoId, &BranchesOption{ExistsOnGithub: true, Limit: 50})
+	branches, _, err := client.Branches.ListByRepoId(context.Background(), testRepoId, &ListBranchesOption{ExistsOnGithub: true, Limit: 50})
 
 	if err != nil {
 		t.Errorf("Branches.FindByRepoId returned error: %v", err)
@@ -35,7 +84,7 @@ func TestBranchesService_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestBranchesService_FindByRepoSlug(t *testing.T) {
+func TestBranchesService_ListByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -45,7 +94,7 @@ func TestBranchesService_FindByRepoSlug(t *testing.T) {
 		fmt.Fprint(w, `{"branches": [{"name":"master","repository":{"id":1,"name":"test","slug":"shuheiktgw/test"},"default_branch":true,"exists_on_github":true}]}`)
 	})
 
-	branches, _, err := client.Branches.FindByRepoSlug(context.Background(), testRepoSlug, &BranchesOption{ExistsOnGithub: true, Limit: 50})
+	branches, _, err := client.Branches.ListByRepoSlug(context.Background(), testRepoSlug, &ListBranchesOption{ExistsOnGithub: true, Limit: 50})
 
 	if err != nil {
 		t.Errorf("Branches.indByRepoSlug returned error: %v", err)

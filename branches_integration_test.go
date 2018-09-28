@@ -14,9 +14,47 @@ import (
 )
 
 func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
-	t.Parallel()
+	branch, res, err := integrationClient.Branches.FindByRepoId(context.TODO(), integrationRepoId, "master")
 
-	cases := []*BranchesOption{
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("#invalid http status: %s", res.Status)
+	}
+
+	if branch.Name != "master" {
+		t.Fatalf("unexpected branch returned: want %s: got %s", "master", branch.Name)
+	}
+
+	if branch.Repository.Id != integrationRepoId {
+		t.Fatalf("unexpected branch returned: want %d: got %d", integrationRepoId, branch.Repository.Id)
+	}
+}
+
+func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
+	branch, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepoSlug, "master")
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("#invalid http status: %s", res.Status)
+	}
+
+	if branch.Name != "master" {
+		t.Fatalf("unexpected branch returned: want %s: got %s", "master", branch.Name)
+	}
+
+	if branch.Repository.Slug != integrationRepoSlug {
+		t.Fatalf("unexpected branch returned: want %s: got %s", integrationRepoSlug, branch.Repository.Slug)
+	}
+}
+
+func TestBranchesService_Integration_ListByRepoId(t *testing.T) {
+	cases := []*ListBranchesOption{
 		{},
 		{Limit: 1},
 		{SortBy: "id"},
@@ -24,7 +62,7 @@ func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		branches, res, err := integrationClient.Branches.FindByRepoId(context.TODO(), integrationRepoId, opt)
+		branches, res, err := integrationClient.Branches.ListByRepoId(context.TODO(), integrationRepoId, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -40,10 +78,8 @@ func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
-	t.Parallel()
-
-	cases := []*BranchesOption{
+func TestBranchesService_Integration_ListByRepoSlug(t *testing.T) {
+	cases := []*ListBranchesOption{
 		{},
 		{Limit: 1},
 		{SortBy: "id"},
@@ -51,7 +87,7 @@ func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		branches, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepoSlug, opt)
+		branches, res, err := integrationClient.Branches.ListByRepoSlug(context.TODO(), integrationRepoSlug, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
