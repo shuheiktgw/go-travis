@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-func TestCachesService_FindByRepoId(t *testing.T) {
+func TestCachesService_ListByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -22,7 +22,7 @@ func TestCachesService_FindByRepoId(t *testing.T) {
 		fmt.Fprint(w, `{"caches": [{"branch":"master","match":"test"}]}`)
 	})
 
-	caches, _, err := client.Caches.FindByRepoId(context.Background(), testRepoId)
+	caches, _, err := client.Caches.ListByRepoId(context.Background(), testRepoId)
 
 	if err != nil {
 		t.Errorf("Caches.FindByRepoId returned error: %v", err)
@@ -34,7 +34,7 @@ func TestCachesService_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestCachesService_FindByRepoSlug(t *testing.T) {
+func TestCachesService_ListByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -43,7 +43,7 @@ func TestCachesService_FindByRepoSlug(t *testing.T) {
 		fmt.Fprint(w, `{"caches": [{"branch":"master","match":"test"}]}`)
 	})
 
-	caches, _, err := client.Caches.FindByRepoSlug(context.Background(), testRepoSlug)
+	caches, _, err := client.Caches.ListByRepoSlug(context.Background(), testRepoSlug)
 
 	if err != nil {
 		t.Errorf("Caches.FindByRepoSlug returned error: %v", err)

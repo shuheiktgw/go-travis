@@ -34,10 +34,10 @@ type cachesResponse struct {
 	Caches []Cache `json:"caches"`
 }
 
-// FindByRepoId fetches caches based on the given repository id
+// ListByRepoId fetches caches based on the given repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#find
-func (cs *CachesService) FindByRepoId(ctx context.Context, repoId uint) ([]Cache, *http.Response, error) {
+func (cs *CachesService) ListByRepoId(ctx context.Context, repoId uint) ([]Cache, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/caches", repoId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -57,10 +57,10 @@ func (cs *CachesService) FindByRepoId(ctx context.Context, repoId uint) ([]Cache
 	return cachesResponse.Caches, resp, err
 }
 
-// FindByRepoSlug fetches caches based on the given repository slug
+// ListByRepoSlug fetches caches based on the given repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#find
-func (cs *CachesService) FindByRepoSlug(ctx context.Context, repoSlug string) ([]Cache, *http.Response, error) {
+func (cs *CachesService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]Cache, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/caches", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err

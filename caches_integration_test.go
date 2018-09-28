@@ -13,8 +13,8 @@ import (
 	"testing"
 )
 
-func TestCachesService_Integration_FindByRepoId(t *testing.T) {
-	_, res, err := integrationClient.Caches.FindByRepoId(context.TODO(), integrationRepoId)
+func TestCachesService_Integration_ListByRepoId(t *testing.T) {
+	_, res, err := integrationClient.Caches.ListByRepoId(context.TODO(), integrationRepoId)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -25,8 +25,8 @@ func TestCachesService_Integration_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestCachesService_Integration_FindByRepoSlug(t *testing.T) {
-	_, res, err := integrationClient.Caches.FindByRepoSlug(context.TODO(), integrationRepoSlug)
+func TestCachesService_Integration_ListByRepoSlug(t *testing.T) {
+	_, res, err := integrationClient.Caches.ListByRepoSlug(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
