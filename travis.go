@@ -50,27 +50,27 @@ type Client struct {
 	UserAgent string
 
 	// Services used to manipulate API entities
-	Active            *ActiveService
-	Authentication    *AuthenticationService
-	Branches          *BranchesService
-	Builds            *BuildsService
-	Caches            *CachesService
-	Crons             *CronsService
-	EmailSubscription *EmailSubscriptionService
-	EnvVar            *EnvVarService
-	EnvVars           *EnvVarsService
-	Installation      *InstallationService
-	Job               *JobService
-	Jobs              *JobsService
-	Lint              *LintService
-	Log               *LogService
-	Owner             *OwnerService
-	Preference        *PreferenceService
-	Preferences       *PreferencesService
-	Repository        *RepositoryService
-	Request           *RequestService
-	Requests          *RequestsService
-	User              *UserService
+	Active             *ActiveService
+	Authentication     *AuthenticationService
+	Branches           *BranchesService
+	Builds             *BuildsService
+	Caches             *CachesService
+	Crons              *CronsService
+	EmailSubscriptions *EmailSubscriptionsService
+	EnvVar             *EnvVarService
+	EnvVars            *EnvVarsService
+	Installation       *InstallationService
+	Job                *JobService
+	Jobs               *JobsService
+	Lint               *LintService
+	Log                *LogService
+	Owner              *OwnerService
+	Preference         *PreferenceService
+	Preferences        *PreferencesService
+	Repository         *RepositoryService
+	Request            *RequestService
+	Requests           *RequestsService
+	User               *UserService
 }
 
 // NewClient returns a new Travis API client.
@@ -98,7 +98,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Builds = &BuildsService{client: c}
 	c.Caches = &CachesService{client: c}
 	c.Crons = &CronsService{client: c}
-	c.EmailSubscription = &EmailSubscriptionService{client: c}
+	c.EmailSubscription = &EmailSubscriptionsService{client: c}
 	c.EnvVar = &EnvVarService{client: c}
 	c.EnvVars = &EnvVarsService{client: c}
 	c.Installation = &InstallationService{client: c}

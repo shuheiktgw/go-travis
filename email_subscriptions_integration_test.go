@@ -14,20 +14,20 @@ import (
 )
 
 func TestEmailSubscriptionService_Integration_UnsubscribeAndSubscribeByRepoSlug(t *testing.T) {
-	res, err := integrationClient.EmailSubscription.UnsubscribeByRepoSlug(context.TODO(), integrationRepoSlug)
+	res, err := integrationClient.EmailSubscriptions.UnsubscribeByRepoSlug(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
-		t.Fatalf("EmailSubscription.UnsubscribeByRepoSlug unexpected error occured: %s", err)
+		t.Fatalf("EmailSubscriptions.UnsubscribeByRepoSlug unexpected error occured: %s", err)
 	}
 
 	if res.StatusCode != http.StatusNoContent {
-		t.Fatalf("EmailSubscription.UnsubscribeByRepoSlug invalid http status: %s", res.Status)
+		t.Fatalf("EmailSubscriptions.UnsubscribeByRepoSlug invalid http status: %s", res.Status)
 	}
 
-	res, err = integrationClient.EmailSubscription.SubscribeByRepoSlug(context.TODO(), integrationRepoSlug)
+	res, err = integrationClient.EmailSubscriptions.SubscribeByRepoSlug(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
-		t.Fatalf("EmailSubscription.SubscribeByRepoSlug unexpected error occured: %s", err)
+		t.Fatalf("EmailSubscriptions.SubscribeByRepoSlug unexpected error occured: %s", err)
 	}
 
 	// This seems very wired so I created a PR and hope it will be merged soon
@@ -39,24 +39,24 @@ func TestEmailSubscriptionService_Integration_UnsubscribeAndSubscribeByRepoSlug(
 }
 
 func TestEmailSubscriptionService_Integration_UnsubscribeAndSubscribeByRepoId(t *testing.T) {
-	res, err := integrationClient.EmailSubscription.UnsubscribeByRepoId(context.TODO(), integrationRepoId)
+	res, err := integrationClient.EmailSubscriptions.UnsubscribeByRepoId(context.TODO(), integrationRepoId)
 
 	if err != nil {
-		t.Fatalf("EmailSubscription.UnsubscribeByRepoId unexpected error occured: %s", err)
+		t.Fatalf("EmailSubscriptions.UnsubscribeByRepoId unexpected error occured: %s", err)
 	}
 
 	if res.StatusCode != http.StatusNoContent {
-		t.Fatalf("EmailSubscription.UnsubscribeByRepoId invalid http status: %s", res.Status)
+		t.Fatalf("EmailSubscriptions.UnsubscribeByRepoId invalid http status: %s", res.Status)
 	}
 
-	res, err = integrationClient.EmailSubscription.SubscribeByRepoId(context.TODO(), integrationRepoId)
+	res, err = integrationClient.EmailSubscriptions.SubscribeByRepoId(context.TODO(), integrationRepoId)
 
 	if err != nil {
-		t.Fatalf("EmailSubscription.SubscribeByRepoId unexpected error occured: %s", err)
+		t.Fatalf("EmailSubscriptions.SubscribeByRepoId unexpected error occured: %s", err)
 	}
 
 	// TODO: Fix the status code once the PR is merged
 	if res.StatusCode != http.StatusNoContent {
-		t.Fatalf("EmailSubscription.SubscribeByRepoId invalid http status: %s", res.Status)
+		t.Fatalf("EmailSubscriptions.SubscribeByRepoId invalid http status: %s", res.Status)
 	}
 }

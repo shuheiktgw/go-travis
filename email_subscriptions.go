@@ -14,14 +14,14 @@ import (
 
 // EmailSubscriptionService handles communication with the
 // email subscription related methods of the Travis CI API.
-type EmailSubscriptionService struct {
+type EmailSubscriptionsService struct {
 	client *Client
 }
 
 // SubscribeByRepoId enables an email subscription of the repository based on the provided repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#resubscribe
-func (es *EmailSubscriptionService) SubscribeByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
+func (es *EmailSubscriptionsService) SubscribeByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/email_subscription", repoId), nil)
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (es *EmailSubscriptionService) SubscribeByRepoId(ctx context.Context, repoI
 // SubscribeByRepoSlug enables an email subscription of the repository based on the provided repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#resubscribe
-func (es *EmailSubscriptionService) SubscribeByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
+func (es *EmailSubscriptionsService) SubscribeByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/email_subscription", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (es *EmailSubscriptionService) SubscribeByRepoSlug(ctx context.Context, rep
 // UnsubscribeByRepoId disables an email subscription of the repository based on the provided repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#unsubscribe
-func (es *EmailSubscriptionService) UnsubscribeByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
+func (es *EmailSubscriptionsService) UnsubscribeByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/email_subscription", repoId), nil)
 	if err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ func (es *EmailSubscriptionService) UnsubscribeByRepoId(ctx context.Context, rep
 // UnsubscribeByRepoSlug disables an email subscription of the repository based on the provided repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#unsubscribe
-func (es *EmailSubscriptionService) UnsubscribeByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
+func (es *EmailSubscriptionsService) UnsubscribeByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/email_subscription", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, err

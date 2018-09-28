@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func TestEmailSubscriptionService_SubscribeByRepoId(t *testing.T) {
+func TestEmailSubscriptionsService_SubscribeByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -20,14 +20,14 @@ func TestEmailSubscriptionService_SubscribeByRepoId(t *testing.T) {
 		testMethod(t, r, http.MethodPost)
 	})
 
-	_, err := client.EmailSubscription.SubscribeByRepoId(context.Background(), testRepoId)
+	_, err := client.EmailSubscriptions.SubscribeByRepoId(context.Background(), testRepoId)
 
 	if err != nil {
-		t.Errorf("EmailSubscription.SubscribeByRepoId returned error: %v", err)
+		t.Errorf("EmailSubscriptions.SubscribeByRepoId returned error: %v", err)
 	}
 }
 
-func TestEmailSubscriptionService_SubscribeByRepoSlug(t *testing.T) {
+func TestEmailSubscriptionsService_SubscribeByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -35,14 +35,14 @@ func TestEmailSubscriptionService_SubscribeByRepoSlug(t *testing.T) {
 		testMethod(t, r, http.MethodPost)
 	})
 
-	_, err := client.EmailSubscription.SubscribeByRepoSlug(context.Background(), testRepoSlug)
+	_, err := client.EmailSubscriptions.SubscribeByRepoSlug(context.Background(), testRepoSlug)
 
 	if err != nil {
-		t.Errorf("EmailSubscription.SubscribeByRepoSlug returned error: %v", err)
+		t.Errorf("EmailSubscriptions.SubscribeByRepoSlug returned error: %v", err)
 	}
 }
 
-func TestEmailSubscriptionService_UnsubscribeByRepoId(t *testing.T) {
+func TestEmailSubscriptionsService_UnsubscribeByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -50,14 +50,14 @@ func TestEmailSubscriptionService_UnsubscribeByRepoId(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.EmailSubscription.UnsubscribeByRepoId(context.Background(), testRepoId)
+	_, err := client.EmailSubscriptions.UnsubscribeByRepoId(context.Background(), testRepoId)
 
 	if err != nil {
-		t.Errorf("EmailSubscription.UnsubscribeByRepoId returned error: %v", err)
+		t.Errorf("EmailSubscriptions.UnsubscribeByRepoId returned error: %v", err)
 	}
 }
 
-func TestEmailSubscriptionService_UnsubscribeByRepoSlug(t *testing.T) {
+func TestEmailSubscriptionsService_UnsubscribeByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -65,9 +65,9 @@ func TestEmailSubscriptionService_UnsubscribeByRepoSlug(t *testing.T) {
 		testMethod(t, r, http.MethodDelete)
 	})
 
-	_, err := client.EmailSubscription.UnsubscribeByRepoSlug(context.Background(), testRepoSlug)
+	_, err := client.EmailSubscriptions.UnsubscribeByRepoSlug(context.Background(), testRepoSlug)
 
 	if err != nil {
-		t.Errorf("EmailSubscription.UnsubscribeByRepoId returned error: %v", err)
+		t.Errorf("EmailSubscriptions.UnsubscribeByRepoId returned error: %v", err)
 	}
 }
