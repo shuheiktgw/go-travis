@@ -58,7 +58,7 @@ type Client struct {
 	Crons              *CronsService
 	EmailSubscriptions *EmailSubscriptionsService
 	EnvVars            *EnvVarsService
-	Installation       *InstallationService
+	Installations      *InstallationsService
 	Job                *JobService
 	Jobs               *JobsService
 	Lint               *LintService
@@ -99,7 +99,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Crons = &CronsService{client: c}
 	c.EmailSubscriptions = &EmailSubscriptionsService{client: c}
 	c.EnvVars = &EnvVarsService{client: c}
-	c.Installation = &InstallationService{client: c}
+	c.Installations = &InstallationsService{client: c}
 	c.Job = &JobService{client: c}
 	c.Jobs = &JobsService{client: c}
 	c.Lint = &LintService{client: c}

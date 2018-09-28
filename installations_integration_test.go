@@ -13,8 +13,8 @@ import (
 	"testing"
 )
 
-func TestInstallation_Integration_Find(t *testing.T) {
-	_, res, err := integrationClient.Installation.Find(context.TODO(), 111)
+func TestInstallations_Integration_Find(t *testing.T) {
+	_, res, err := integrationClient.Installations.Find(context.TODO(), 111)
 
 	if err == nil {
 		t.Error("error is not supposed to be nil")

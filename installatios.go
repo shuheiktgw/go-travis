@@ -11,9 +11,9 @@ import (
 	"net/http"
 )
 
-// InstallationService handles communication with
+// InstallationsService handles communication with
 // the installation related methods of the Travis CI API.
-type InstallationService struct {
+type InstallationsService struct {
 	client *Client
 }
 
@@ -32,7 +32,7 @@ type Installation struct {
 // Find fetches a single GitHub installation based on the provided id.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/installation#find
-func (is *InstallationService) Find(ctx context.Context, id uint) (*Installation, *http.Response, error) {
+func (is *InstallationsService) Find(ctx context.Context, id uint) (*Installation, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/installation/%d", id), nil)
 	if err != nil {
 		return nil, nil, err

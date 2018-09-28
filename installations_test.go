@@ -15,7 +15,7 @@ import (
 
 const testInstallationId = 111
 
-func TestInstallationService_Find(t *testing.T) {
+func TestInstallationsService_Find(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -24,7 +24,7 @@ func TestInstallationService_Find(t *testing.T) {
 		fmt.Fprintf(w, `{"id":%d,"github_id":%d}`, testInstallationId, testGitHubId)
 	})
 
-	installation, _, err := client.Installation.Find(context.Background(), testInstallationId)
+	installation, _, err := client.Installations.Find(context.Background(), testInstallationId)
 
 	if err != nil {
 		t.Errorf("Installation.Find returned error: %v", err)
