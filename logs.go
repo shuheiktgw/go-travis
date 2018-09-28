@@ -11,9 +11,9 @@ import (
 	"net/http"
 )
 
-// LogService handles communication with the logs
+// LogsService handles communication with the logs
 // related methods of the Travis CI API.
-type LogService struct {
+type LogsService struct {
 	client *Client
 }
 
@@ -37,7 +37,7 @@ type LogPart struct {
 // FindByJob fetches a job's log based on it's provided id.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/log#find
-func (ls *LogService) FindByJob(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
+func (ls *LogsService) FindByJob(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/log", jobId), nil)
 	if err != nil {
 		return nil, nil, err

@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-func TestLogService_FindByJob(t *testing.T) {
+func TestLogsService_FindByJob(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -22,7 +22,7 @@ func TestLogService_FindByJob(t *testing.T) {
 		fmt.Fprint(w, `{"id":1,"content":"test"}`)
 	})
 
-	log, _, err := client.Log.FindByJob(context.Background(), testJobId)
+	log, _, err := client.Logs.FindByJob(context.Background(), testJobId)
 
 	if err != nil {
 		t.Errorf("Log.FindByJob returned error: %v", err)

@@ -13,8 +13,8 @@ import (
 	"testing"
 )
 
-func TestLogService_Integration_FindByJob(t *testing.T) {
-	_, res, err := integrationClient.Log.FindByJob(context.TODO(), integrationJobId)
+func TestLogsService_Integration_FindByJob(t *testing.T) {
+	_, res, err := integrationClient.Logs.FindByJob(context.TODO(), integrationJobId)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
