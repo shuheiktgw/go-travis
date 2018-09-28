@@ -15,8 +15,42 @@ import (
 	"time"
 )
 
+const integrationEnvVarId = "88ee9d56-62bb-4093-a278-0c5cfd1e5cd5"
+
 func TestEnvVarsService_Integration_FindByRepoId(t *testing.T) {
-	vars, res, err := integrationClient.EnvVars.FindByRepoId(context.TODO(), integrationRepoId)
+	envVar, res, err := integrationClient.EnvVars.FindByRepoId(context.TODO(), integrationRepoId, integrationEnvVarId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if envVar.Id != integrationEnvVarId {
+		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, envVar.Id)
+	}
+}
+
+func TestEnvVarsService_Integration_FindByRepoSlug(t *testing.T) {
+	envVar, res, err := integrationClient.EnvVars.FindByRepoSlug(context.TODO(), integrationRepoSlug, integrationEnvVarId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if envVar.Id != integrationEnvVarId {
+		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, envVar.Id)
+	}
+}
+
+func TestEnvVarsService_Integration_ListByRepoId(t *testing.T) {
+	vars, res, err := integrationClient.EnvVars.ListByRepoId(context.TODO(), integrationRepoId)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -31,8 +65,8 @@ func TestEnvVarsService_Integration_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestEnvVarsService_Integration_FindByRepoSlug(t *testing.T) {
-	vars, res, err := integrationClient.EnvVars.FindByRepoSlug(context.TODO(), integrationRepoSlug)
+func TestEnvVarsService_Integration_ListByRepoSlug(t *testing.T) {
+	vars, res, err := integrationClient.EnvVars.ListByRepoSlug(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -70,14 +104,14 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 
 	// Update
 	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
-	envVar, res, err = integrationClient.EnvVar.UpdateByRepoId(context.TODO(), integrationRepoId, envVar.Id, &body)
+	envVar, res, err = integrationClient.EnvVars.UpdateByRepoId(context.TODO(), integrationRepoId, envVar.Id, &body)
 
 	if err != nil {
-		t.Fatalf("EnvVar.UpdateByRepoId returned unexpected error: %s", err)
+		t.Fatalf("EnvVars.UpdateByRepoId returned unexpected error: %s", err)
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("EnvVar.UpdateByRepoId returned invalid http status: %s", res.Status)
+		t.Fatalf("EnvVars.UpdateByRepoId returned invalid http status: %s", res.Status)
 	}
 
 	want = &EnvVar{Id: envVar.Id, Name: "NEW_TEST", Value: "", Public: false}
@@ -89,14 +123,14 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 	time.Sleep(2 * time.Second)
 
 	// Delete
-	res, err = integrationClient.EnvVar.DeleteByRepoId(context.TODO(), integrationRepoId, envVar.Id)
+	res, err = integrationClient.EnvVars.DeleteByRepoId(context.TODO(), integrationRepoId, envVar.Id)
 
 	if err != nil {
-		t.Fatalf("EnvVar.DeleteByRepoId returned unexpected error: %s", err)
+		t.Fatalf("EnvVars.DeleteByRepoId returned unexpected error: %s", err)
 	}
 
 	if res.StatusCode != http.StatusNoContent {
-		t.Fatalf("EnvVar.DeleteByRepoId returned invalid http status: %s", res.Status)
+		t.Fatalf("EnvVars.DeleteByRepoId returned invalid http status: %s", res.Status)
 	}
 }
 
@@ -123,7 +157,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 
 	// Update
 	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
-	envVar, res, err = integrationClient.EnvVar.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id, &body)
+	envVar, res, err = integrationClient.EnvVars.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVar.UpdateByRepoSlug returned unexpected error: %s", err)
@@ -142,13 +176,13 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 	time.Sleep(2 * time.Second)
 
 	// Delete
-	res, err = integrationClient.EnvVar.DeleteByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id)
+	res, err = integrationClient.EnvVars.DeleteByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id)
 
 	if err != nil {
-		t.Fatalf("EnvVar.DeleteByRepoSlug returned unexpected error: %s", err)
+		t.Fatalf("EnvVars.DeleteByRepoSlug returned unexpected error: %s", err)
 	}
 
 	if res.StatusCode != http.StatusNoContent {
-		t.Fatalf("EnvVar.DeleteByRepoSlug returned invalid http status: %s", res.Status)
+		t.Fatalf("EnvVars.DeleteByRepoSlug returned invalid http status: %s", res.Status)
 	}
 }
