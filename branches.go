@@ -60,7 +60,7 @@ type getBranchesResponse struct {
 	Branches []Branch `json:"branches"`
 }
 
-// Find fetches a branch based on the provided repository id and branch name
+// FindByRepoId fetches a branch based on the provided repository id and branch name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branch#find
 func (bs *BranchesService) FindByRepoId(ctx context.Context, repoId uint, branchName string) (*Branch, *http.Response, error) {
@@ -83,7 +83,7 @@ func (bs *BranchesService) FindByRepoId(ctx context.Context, repoId uint, branch
 	return &branch, resp, err
 }
 
-// Find fetches a branch based on the provided repository slug and branch name
+// FindByRepoSlug fetches a branch based on the provided repository slug and branch name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branch#find
 func (bs *BranchesService) FindByRepoSlug(ctx context.Context, repoSlug string, branchName string) (*Branch, *http.Response, error) {

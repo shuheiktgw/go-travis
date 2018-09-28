@@ -11,9 +11,26 @@ import (
 	"context"
 	"net/http"
 	"testing"
+	"time"
 )
 
-func TestBuildsService_Integration_Find(t *testing.T) {
+func TestBuildService_Integration_Find(t *testing.T) {
+	build, res, err := integrationClient.Builds.Find(context.TODO(), integrationBuildId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if build.Id != integrationBuildId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
+	}
+}
+
+func TestBuildsService_Integration_List(t *testing.T) {
 	cases := []*BuildsOption{
 		{},
 		{Limit: 1},
@@ -22,7 +39,7 @@ func TestBuildsService_Integration_Find(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		builds, res, err := integrationClient.Builds.Find(context.TODO(), opt)
+		builds, res, err := integrationClient.Builds.List(context.TODO(), opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -38,7 +55,7 @@ func TestBuildsService_Integration_Find(t *testing.T) {
 	}
 }
 
-func TestBuildsService_Integration_FindByRepoId(t *testing.T) {
+func TestBuildsService_Integration_ListByRepoId(t *testing.T) {
 	cases := []*BuildsByRepositoryOption{
 		{},
 		{Limit: 1},
@@ -51,7 +68,7 @@ func TestBuildsService_Integration_FindByRepoId(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		builds, res, err := integrationClient.Builds.FindByRepoId(context.TODO(), integrationRepoId, opt)
+		builds, res, err := integrationClient.Builds.ListByRepoId(context.TODO(), integrationRepoId, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -67,7 +84,7 @@ func TestBuildsService_Integration_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestBuildsService_Integration_FindByRepoSlug(t *testing.T) {
+func TestBuildsService_Integration_ListByRepoSlug(t *testing.T) {
 	cases := []*BuildsByRepositoryOption{
 		{},
 		{Limit: 1},
@@ -80,7 +97,7 @@ func TestBuildsService_Integration_FindByRepoSlug(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		builds, res, err := integrationClient.Builds.FindByRepoSlug(context.TODO(), integrationRepoSlug, opt)
+		builds, res, err := integrationClient.Builds.ListByRepoSlug(context.TODO(), integrationRepoSlug, opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -93,5 +110,38 @@ func TestBuildsService_Integration_FindByRepoSlug(t *testing.T) {
 		if len(builds) == 0 {
 			t.Fatalf("#%d returned empty builds", i)
 		}
+	}
+}
+
+func TestBuildService_Integration_RestartAndCancel(t *testing.T) {
+	build, res, err := integrationClient.Builds.Restart(context.TODO(), integrationBuildId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusAccepted {
+		t.Fatalf("#invalid http status: %s", res.Status)
+	}
+
+	if build.Id != integrationBuildId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
+	}
+
+	// Wait till the build has successfully processed
+	time.Sleep(2 * time.Second)
+
+	build, res, err = integrationClient.Builds.Cancel(context.TODO(), integrationBuildId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusAccepted {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if build.Id != integrationBuildId {
+		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
 	}
 }
