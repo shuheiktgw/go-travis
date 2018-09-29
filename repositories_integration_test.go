@@ -13,8 +13,8 @@ import (
 	"testing"
 )
 
-func TestRepositoryService_Integration_Find(t *testing.T) {
-	repo, res, err := integrationClient.Repository.Find(context.TODO(), integrationRepoSlug)
+func TestRepositoriesService_Integration_Find(t *testing.T) {
+	repo, res, err := integrationClient.Repositories.Find(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -29,10 +29,10 @@ func TestRepositoryService_Integration_Find(t *testing.T) {
 	}
 }
 
-func TestRepositoryService_Integration_Activation(t *testing.T) {
+func TestRepositoriesService_Integration_Activation(t *testing.T) {
 	t.Parallel()
 
-	repo, res, err := integrationClient.Repository.Deactivate(context.TODO(), integrationRepoSlug)
+	repo, res, err := integrationClient.Repositories.Deactivate(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -46,7 +46,7 @@ func TestRepositoryService_Integration_Activation(t *testing.T) {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
-	repo, res, err = integrationClient.Repository.Activate(context.TODO(), integrationRepoSlug)
+	repo, res, err = integrationClient.Repositories.Activate(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -61,10 +61,10 @@ func TestRepositoryService_Integration_Activation(t *testing.T) {
 	}
 }
 
-func TestRepositoryService_Integration_Star(t *testing.T) {
+func TestRepositoriesService_Integration_Star(t *testing.T) {
 	t.Parallel()
 
-	repo, res, err := integrationClient.Repository.Star(context.TODO(), integrationRepoSlug)
+	repo, res, err := integrationClient.Repositories.Star(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -78,7 +78,7 @@ func TestRepositoryService_Integration_Star(t *testing.T) {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
-	repo, res, err = integrationClient.Repository.Unstar(context.TODO(), integrationRepoSlug)
+	repo, res, err = integrationClient.Repositories.Unstar(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)

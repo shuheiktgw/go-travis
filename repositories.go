@@ -13,9 +13,9 @@ import (
 	"net/url"
 )
 
-// RepositoryService handles communication with the builds
+// RepositoriesService handles communication with the builds
 // related methods of the Travis CI API.
-type RepositoryService struct {
+type RepositoriesService struct {
 	client *Client
 }
 
@@ -66,7 +66,7 @@ type MinimalRepository struct {
 // Find fetches a repository based on the provided slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#find
-func (rs *RepositoryService) Find(ctx context.Context, slug string) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) Find(ctx context.Context, slug string) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
@@ -89,7 +89,7 @@ func (rs *RepositoryService) Find(ctx context.Context, slug string) (*Repository
 // Activate activates Travis CI on the specified repository
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#activate
-func (rs *RepositoryService) Activate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) Activate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/activate", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
@@ -112,7 +112,7 @@ func (rs *RepositoryService) Activate(ctx context.Context, slug string) (*Reposi
 // Deactivate deactivates Travis CI on the specified repository
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#deactivate
-func (rs *RepositoryService) Deactivate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) Deactivate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/deactivate", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
@@ -135,7 +135,7 @@ func (rs *RepositoryService) Deactivate(ctx context.Context, slug string) (*Repo
 // Star stars a repository based on the currently logged in user
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#star
-func (rs *RepositoryService) Star(ctx context.Context, slug string) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) Star(ctx context.Context, slug string) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/star", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
@@ -158,7 +158,7 @@ func (rs *RepositoryService) Star(ctx context.Context, slug string) (*Repository
 // Unstar unstars a repository based on the currently logged in user
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#unstar
-func (rs *RepositoryService) Unstar(ctx context.Context, slug string) (*Repository, *http.Response, error) {
+func (rs *RepositoriesService) Unstar(ctx context.Context, slug string) (*Repository, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/unstar", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
