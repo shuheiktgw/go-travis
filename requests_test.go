@@ -13,7 +13,51 @@ import (
 	"testing"
 )
 
+const testRequestId = 12345
+
 func TestRequestsService_FindByRepoId(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/repo/%d/request/%d", testRepoId, testRequestId), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"id":1,"state":"processed","result":"rejected"}`)
+	})
+
+	repo, _, err := client.Requests.FindByRepoId(context.Background(), testRepoId, testRequestId)
+
+	if err != nil {
+		t.Errorf("RequestService.FindByRepoId returned error: %v", err)
+	}
+
+	want := &Request{Id: 1, State: "processed", Result: "rejected"}
+	if !reflect.DeepEqual(repo, want) {
+		t.Errorf("RequestService.FindByRepoId returned %+v, want %+v", repo, want)
+	}
+}
+
+func TestRequestsService_FindByRepoSlug(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/repo/%s/request/%d", testRepoSlug, testRequestId), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		fmt.Fprint(w, `{"id":1,"state":"processed","result":"rejected"}`)
+	})
+
+	repo, _, err := client.Requests.FindByRepoSlug(context.Background(), testRepoSlug, testRequestId)
+
+	if err != nil {
+		t.Errorf("RequestService.FindByRepoId returned error: %v", err)
+	}
+
+	want := &Request{Id: 1, State: "processed", Result: "rejected"}
+	if !reflect.DeepEqual(repo, want) {
+		t.Errorf("RequestService.FindByRepoId returned %+v, want %+v", repo, want)
+	}
+}
+
+func TestRequestsService_ListByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -23,7 +67,7 @@ func TestRequestsService_FindByRepoId(t *testing.T) {
 		fmt.Fprint(w, `{"requests": [{"id":1,"state":"processed","result":"rejected"}]}`)
 	})
 
-	repos, _, err := client.Requests.FindByRepoId(context.Background(), testRepoId, &FindRequestsOption{Limit: 5, Offset: 5})
+	repos, _, err := client.Requests.ListByRepoId(context.Background(), testRepoId, &ListRequestsOption{Limit: 5, Offset: 5})
 
 	if err != nil {
 		t.Errorf("RequestsService.FindByRepoId returned error: %v", err)
@@ -35,7 +79,7 @@ func TestRequestsService_FindByRepoId(t *testing.T) {
 	}
 }
 
-func TestRequestsService_FindByRepoSlug(t *testing.T) {
+func TestRequestsService_ListByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -45,7 +89,7 @@ func TestRequestsService_FindByRepoSlug(t *testing.T) {
 		fmt.Fprint(w, `{"requests": [{"id":1,"state":"processed","result":"rejected"}]}`)
 	})
 
-	repos, _, err := client.Requests.FindByRepoSlug(context.Background(), testRepoSlug, &FindRequestsOption{Limit: 5, Offset: 5})
+	repos, _, err := client.Requests.ListByRepoSlug(context.Background(), testRepoSlug, &ListRequestsOption{Limit: 5, Offset: 5})
 
 	if err != nil {
 		t.Errorf("RequestsService.FindByRepoSlug returned error: %v", err)
