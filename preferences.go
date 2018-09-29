@@ -25,6 +25,7 @@ type Preference struct {
 	Name string `json:"name,omitempty"`
 	// The preference's value
 	Value bool `json:"value"`
+	Metadata
 }
 
 type getPreferencesResponse struct {

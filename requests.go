@@ -45,6 +45,7 @@ type Request struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// Origin of request (push, pull request, api)
 	EventType string `json:"event_type,omitempty"`
+	Metadata
 }
 
 // MinimalRequest is a minimal representation a Travis CI request.

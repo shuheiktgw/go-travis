@@ -40,6 +40,7 @@ type Cron struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// Whether the cron is active or not
 	Active bool `json:"active,omitempty"`
+	Metadata
 }
 
 // CronBody specifies body for

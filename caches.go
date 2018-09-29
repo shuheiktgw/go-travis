@@ -26,6 +26,7 @@ type Cache struct {
 	Branch string `json:"branch,omitempty"`
 	// The string to match against the cache name
 	Match string `json:"match,omitempty"`
+	Metadata
 }
 
 // cachesResponse represents the response of a call

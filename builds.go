@@ -60,6 +60,7 @@ type Build struct {
 	Stages []MinimalStage `json:"stages,omitempty"`
 	// The User or Organization that created the build
 	CreatedBy MinimalOwner `json:"owner,omitempty"`
+	Metadata
 }
 
 // MinimalBuild is a minimal representation of a Travis CI build

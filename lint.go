@@ -27,6 +27,7 @@ type TravisYml struct {
 type Warning struct {
 	Key     []string `json:"key,omitempty"`
 	Message string   `json:"message,omitempty"`
+	Metadata
 }
 
 type lintResponse struct {

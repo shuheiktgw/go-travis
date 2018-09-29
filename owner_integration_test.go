@@ -23,7 +23,7 @@ func TestOwnerService_Integration_FindByLogin(t *testing.T) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
+		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
 	if owner.Login != integrationGitHubOwner {
@@ -41,7 +41,7 @@ func TestOwnerService_Integration_FindByGitHubId(t *testing.T) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
+		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
 	if owner.GitHubId != integrationGitHubOwnerId {

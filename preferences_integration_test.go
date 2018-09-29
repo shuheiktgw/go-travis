@@ -27,7 +27,12 @@ func TestPreferencesService_Integration_Find(t *testing.T) {
 		t.Fatalf("Preference.Find invalid http status: %s", res.Status)
 	}
 
-	want := &Preference{Name: integrationPreferenceName, Value: true}
+	want := &Preference{
+		Name:     integrationPreferenceName,
+		Value:    true,
+		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+	}
+
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Find returned %+v, want %+v", preference, want)
 	}
@@ -44,7 +49,12 @@ func TestPreferencesService_Integration_List(t *testing.T) {
 		t.Fatalf("Preferences.Find invalid http status: %s", res.Status)
 	}
 
-	want := []Preference{{Name: "build_emails", Value: true}}
+	want := []Preference{{
+		Name:     "build_emails",
+		Value:    true,
+		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+	}}
+
 	if !reflect.DeepEqual(preferences, want) {
 		t.Errorf("Preferences.Find returned %+v, want %+v", preferences, want)
 	}
@@ -62,7 +72,12 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 		t.Fatalf("Preference.Update invalid http status: %s", res.Status)
 	}
 
-	want := &Preference{Name: integrationPreferenceName, Value: false}
+	want := &Preference{
+		Name:     integrationPreferenceName,
+		Value:    false,
+		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+	}
+
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Update returned %+v, want %+v", preference, want)
 	}
@@ -78,7 +93,11 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 		t.Fatalf("Preference.Update invalid http status: %s", res.Status)
 	}
 
-	want = &Preference{Name: integrationPreferenceName, Value: true}
+	want = &Preference{
+		Name:     integrationPreferenceName,
+		Value:    true,
+		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+	}
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Update returned %+v, want %+v", preference, want)
 	}

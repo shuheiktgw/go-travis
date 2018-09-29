@@ -51,6 +51,7 @@ type Job struct {
 	UpdatedAt string `json:"updated_at,omitempty"`
 	// Whether or not the job is private
 	Private bool `json:"private,omitempty"`
+	Metadata
 }
 
 // MinimalJob is a minimal representation of a Travis CI job

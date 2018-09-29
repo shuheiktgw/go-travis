@@ -32,6 +32,7 @@ type Branch struct {
 	ExistsOnGithub bool `json:"exists_on_github,omitempty"`
 	// Last build on the branch
 	LastBuild MinimalBuild `json:"last_build,omitempty"`
+	Metadata
 }
 
 // MinimalBranch included when the resource is returned as part of another resource

@@ -30,6 +30,7 @@ type EnvVar struct {
 	Value string `json:"value,omitempty"`
 	// Whether this environment variable should be publicly visible or not
 	Public bool `json:"public,omitempty"`
+	Metadata
 }
 
 // EnvVarBody specifies options for

@@ -33,6 +33,7 @@ type Owner struct {
 	AvatarUrl string `json:"avatar_url"`
 	// Whether or not the owner has an education account
 	Education bool `json:"education"`
+	Metadata
 }
 
 // MinimalOwner represents a minimal GitHub Owner

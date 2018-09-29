@@ -49,6 +49,7 @@ type Repository struct {
 	ManagedByInstallation bool `json:"managed_by_installation"`
 	// Whether or not this repository runs builds on travis-ci.org (may also be null)
 	ActiveOnOrg bool `json:"active_on_org"`
+	Metadata
 }
 
 // MinimalRepository is a minimal representation of a Travis CI repository

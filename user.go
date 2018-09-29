@@ -37,6 +37,7 @@ type User struct {
 	IsSyncing bool `json:"is_syncing,omitempty"`
 	// The last time the user was synced with GitHub
 	SyncedAt string `json:"synced_at,omitempty"`
+	Metadata
 }
 
 // Current fetches the currently authenticated user from Travis CI API.
