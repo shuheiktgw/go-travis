@@ -66,6 +66,7 @@ type Client struct {
 	Preferences        *PreferencesService
 	Repositories       *RepositoriesService
 	Requests           *RequestsService
+	Settings           *SettingsService
 	User               *UserService
 }
 
@@ -104,6 +105,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Preferences = &PreferencesService{client: c}
 	c.Repositories = &RepositoriesService{client: c}
 	c.Requests = &RequestsService{client: c}
+	c.Settings = &SettingsService{client: c}
 	c.User = &UserService{client: c}
 
 	if travisToken != "" {
