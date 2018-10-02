@@ -301,4 +301,9 @@ type Metadata struct {
 	Href string `json:"@href,omitempty"`
 	// The representation of data returned from the API, standard or minimal
 	Representation string `json:"@representation,omitempty"`
+	// The permissions of data returned from the API
+	Permissions Permissions `json:"@permissions,omitempty"`
 }
+
+// Permissions represents permissions of Travis CI API
+type Permissions map[string]bool

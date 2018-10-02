@@ -9,6 +9,7 @@ package travis
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"reflect"
 	"testing"
@@ -94,7 +95,18 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		t.Fatalf("EnvVars.CreateByRepoId returned invalid http status: %s", res.Status)
 	}
 
-	want := &EnvVar{Id: envVar.Id, Name: "TEST", Value: "test", Public: true}
+	want := &EnvVar{
+		Id:     envVar.Id,
+		Name:   "TEST",
+		Value:  "test",
+		Public: true,
+		Metadata: Metadata{
+			Type:           "env_var",
+			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
+			Representation: "standard",
+			Permissions:    Permissions{"read": true, "write": true},
+		},
+	}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.CreateByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -114,7 +126,18 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		t.Fatalf("EnvVars.UpdateByRepoId returned invalid http status: %s", res.Status)
 	}
 
-	want = &EnvVar{Id: envVar.Id, Name: "NEW_TEST", Value: "", Public: false}
+	want = &EnvVar{
+		Id:     envVar.Id,
+		Name:   "NEW_TEST",
+		Value:  "",
+		Public: false,
+		Metadata: Metadata{
+			Type:           "env_var",
+			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
+			Representation: "standard",
+			Permissions:    Permissions{"read": true, "write": true},
+		},
+	}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.UpdateByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -147,7 +170,18 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		t.Fatalf("EnvVars.CreateByRepoSlug returned invalid http status: %s", res.Status)
 	}
 
-	want := &EnvVar{Id: envVar.Id, Name: "TEST", Value: "test", Public: true}
+	want := &EnvVar{
+		Id:     envVar.Id,
+		Name:   "TEST",
+		Value:  "test",
+		Public: true,
+		Metadata: Metadata{
+			Type:           "env_var",
+			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
+			Representation: "standard",
+			Permissions:    Permissions{"read": true, "write": true},
+		},
+	}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.CreateByRepoSlug returned %+v, want %+v", envVar, want)
 	}
@@ -167,7 +201,18 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		t.Fatalf("EnvVar.UpdateByRepoSlug returned invalid http status: %s", res.Status)
 	}
 
-	want = &EnvVar{Id: envVar.Id, Name: "NEW_TEST", Value: "", Public: false}
+	want = &EnvVar{
+		Id:     envVar.Id,
+		Name:   "NEW_TEST",
+		Value:  "",
+		Public: false,
+		Metadata: Metadata{
+			Type:           "env_var",
+			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
+			Representation: "standard",
+			Permissions:    Permissions{"read": true, "write": true},
+		},
+	}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.UpdateByRepoSlug returned %+v, want %+v", envVar, want)
 	}

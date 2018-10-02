@@ -21,7 +21,7 @@ func TestLintService_Integration_Lint(t *testing.T) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
+		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
 	if len(warnings) == 0 {

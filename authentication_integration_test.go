@@ -13,8 +13,6 @@ import (
 )
 
 func TestAuthenticationService_UsingGithubToken(t *testing.T) {
-	t.Parallel()
-
 	token, res, err := integrationClient.Authentication.UsingGithubToken(context.TODO(), integrationGitHubToken)
 
 	if err != nil {
