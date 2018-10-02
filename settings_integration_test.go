@@ -67,6 +67,38 @@ func TestSettingsService_Integration_FindByRepoSlug(t *testing.T) {
 	}
 }
 
+func TestSettingsService_Integration_ListByRepoId(t *testing.T) {
+	settings, res, err := integrationClient.Settings.ListByRepoId(context.TODO(), integrationRepoId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if len(settings) == 0 {
+		t.Fatalf("Settings.ListByRepoId settings cannot be empty")
+	}
+}
+
+func TestSettingsService_Integration_ListByRepoSlug(t *testing.T) {
+	settings, res, err := integrationClient.Settings.ListByRepoSlug(context.TODO(), integrationRepoSlug)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if len(settings) == 0 {
+		t.Fatalf("Settings.ListByRepoSlug settings cannot be empty")
+	}
+}
+
 func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
 	s := Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
 	setting, res, err := integrationClient.Settings.UpdateByRepoId(context.TODO(), integrationRepoId, &s)

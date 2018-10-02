@@ -30,11 +30,18 @@ type Setting struct {
 	Metadata
 }
 
+// getSettingsResponse represents response from the settings endpoints
+type getSettingsResponse struct {
+	Settings []Setting `json:"settings,omitempty"`
+}
+
 const (
 	// BuildsOnlyWithTravisYmlSetting is a setting name for builds_only_with_travis_yml
 	BuildsOnlyWithTravisYmlSetting = "builds_only_with_travis_yml"
 	// BuildPushesSetting is a setting name for build_pushes
 	BuildPushesSetting = "build_pushes"
+	// BuildPullRequestsSetting is a setting name for build_pull_requests
+	BuildPullRequestsSetting = "build_pull_requests"
 	// MaximumNumberOfBuildsSetting is a setting name for maximum_number_of_builds
 	MaximumNumberOfBuildsSetting = "maximum_number_of_builds"
 	// AutoCancelPushesSetting is a setting name for auto_cancel_pushes
@@ -87,6 +94,52 @@ func (ss *SettingsService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 	}
 
 	return &setting, resp, err
+}
+
+// ListByRepoId fetches a list of settings of given repository id
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/settings#for_repository
+func (ss *SettingsService) ListByRepoId(ctx context.Context, repoId uint) ([]Setting, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/settings", repoId), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := ss.client.NewRequest(http.MethodGet, u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var getSettingsResponse getSettingsResponse
+	resp, err := ss.client.Do(ctx, req, &getSettingsResponse)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return getSettingsResponse.Settings, resp, err
+}
+
+// ListByRepoSlug fetches a list of settings of given repository slug
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/settings#for_repository
+func (ss *SettingsService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]Setting, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/settings", url.QueryEscape(repoSlug)), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := ss.client.NewRequest(http.MethodGet, u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var getSettingsResponse getSettingsResponse
+	resp, err := ss.client.Do(ctx, req, &getSettingsResponse)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return getSettingsResponse.Settings, resp, err
 }
 
 // UpdateByRepoId updates a setting with setting property
