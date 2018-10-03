@@ -30,8 +30,6 @@ func TestRepositoriesService_Integration_Find(t *testing.T) {
 }
 
 func TestRepositoriesService_Integration_Activation(t *testing.T) {
-	t.Parallel()
-
 	repo, res, err := integrationClient.Repositories.Deactivate(context.TODO(), integrationRepoSlug)
 
 	if err != nil {
@@ -62,8 +60,6 @@ func TestRepositoriesService_Integration_Activation(t *testing.T) {
 }
 
 func TestRepositoriesService_Integration_Star(t *testing.T) {
-	t.Parallel()
-
 	repo, res, err := integrationClient.Repositories.Star(context.TODO(), integrationRepoSlug)
 
 	if err != nil {

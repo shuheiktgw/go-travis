@@ -16,8 +16,6 @@ import (
 const integrationUserId uint = 1362503
 
 func TestUserService_Integration_Current(t *testing.T) {
-	t.Parallel()
-
 	user, res, err := integrationClient.User.Current(context.TODO())
 
 	if err != nil {
@@ -34,8 +32,6 @@ func TestUserService_Integration_Current(t *testing.T) {
 }
 
 func TestUserService_Integration_Find(t *testing.T) {
-	t.Parallel()
-
 	user, res, err := integrationClient.User.Find(context.TODO(), integrationUserId)
 
 	if err != nil {
@@ -52,8 +48,6 @@ func TestUserService_Integration_Find(t *testing.T) {
 }
 
 func TestUserService_Integration_Sync(t *testing.T) {
-	t.Parallel()
-
 	user, res, err := integrationClient.User.Sync(context.TODO(), integrationUserId)
 
 	if err != nil {

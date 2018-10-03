@@ -14,8 +14,6 @@ import (
 )
 
 func TestOwnerService_Integration_FindByLogin(t *testing.T) {
-	t.Parallel()
-
 	owner, res, err := integrationClient.Owner.FindByLogin(context.TODO(), integrationGitHubOwner)
 
 	if err != nil {
