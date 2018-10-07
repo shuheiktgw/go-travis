@@ -53,6 +53,7 @@ type Client struct {
 	Active             *ActiveService
 	Authentication     *AuthenticationService
 	Branches           *BranchesService
+	Broadcasts         *BroadcastsService
 	Builds             *BuildsService
 	Caches             *CachesService
 	Crons              *CronsService
@@ -92,6 +93,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Active = &ActiveService{client: c}
 	c.Authentication = &AuthenticationService{client: c}
 	c.Branches = &BranchesService{client: c}
+	c.Broadcasts = &BroadcastsService{client: c}
 	c.Builds = &BuildsService{client: c}
 	c.Caches = &CachesService{client: c}
 	c.Crons = &CronsService{client: c}
