@@ -1,0 +1,60 @@
+// Copyright (c) 2015 Ableton AG, Berlin. All rights reserved.
+//
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+package travis
+
+import (
+	"context"
+	"fmt"
+	"net/http"
+)
+
+// OrganizationsService handles communication with the
+// organization related methods of the Travis CI API.
+type OrganizationsService struct {
+	client *Client
+}
+
+// Organization is a standard representation of an individual organization
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/organization#standard-representation
+type Organization struct {
+	// Value uniquely identifying the organization
+	Id uint `json:"id,omitempty"`
+	// Login set on GitHub
+	Login string `json:"login,omitempty"`
+	// Name set on GitHub
+	Name string `json:"name,omitempty"`
+	// Id set on GitHub
+	GithubId uint `json:"github_id,omitempty"`
+	// Avatar_url set on GitHub
+	AvatarUrl string `json:"avatar_url,omitempty"`
+	// Whether or not the organization has an education account
+	Education bool `json:"education,omitempty"`
+	Metadata
+}
+
+// Find fetches an organization with the given id
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/organization#find
+func (os *OrganizationsService) Find(ctx context.Context, id uint) (*Organization, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/org/%d", id), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := os.client.NewRequest(http.MethodGet, u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var org Organization
+	resp, err := os.client.Do(ctx, req, &org)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &org, resp, err
+}

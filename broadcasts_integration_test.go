@@ -9,7 +9,6 @@ package travis
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 	"time"
@@ -23,7 +22,7 @@ func TestBroadcastsService_Integration_List(t *testing.T) {
 	}
 
 	for i, opt := range cases {
-		broadcasts, res, err := integrationClient.Broadcasts.List(context.TODO(), opt)
+		_, res, err := integrationClient.Broadcasts.List(context.TODO(), opt)
 
 		if err != nil {
 			t.Fatalf("#%d unexpected error occured: %s", i, err)
@@ -32,8 +31,6 @@ func TestBroadcastsService_Integration_List(t *testing.T) {
 		if res.StatusCode != http.StatusOK {
 			t.Fatalf("#%d invalid http status: %s", i, res.Status)
 		}
-
-		fmt.Println(broadcasts)
 
 		// Be nice to the API
 		time.Sleep(2 * time.Second)
