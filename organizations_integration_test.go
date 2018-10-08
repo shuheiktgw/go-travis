@@ -46,3 +46,16 @@ func TestOrganizationsService_Integration_Find(t *testing.T) {
 		t.Errorf("Organizations.Find returned %+v, want %+v", org, want)
 	}
 }
+
+func TestOrganizationsService_Integration_List(t *testing.T) {
+	opt := OrganizationsOption{Limit: 50, Offset: 50, SortBy: "id"}
+	_, res, err := integrationClient.Organizations.List(context.TODO(), &opt)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+}

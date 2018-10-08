@@ -36,6 +36,22 @@ type Organization struct {
 	Metadata
 }
 
+// OrganizationsOption specifies the optional parameters for organizations endpoint
+type OrganizationsOption struct {
+	// How many organizations to include in the response
+	Limit int `url:"limit,omitempty"`
+	// How many organizations to skip before the first entry in the response
+	Offset int `url:"offset,omitempty"`
+	// Attributes to sort organizations by
+	SortBy string `url:"sort_by,omitempty"`
+}
+
+// getOrganizationsResponse represents a response
+// from organizations endpoints
+type getOrganizationsResponse struct {
+	Organizations []Organization `json:"organizations,omitempty"`
+}
+
 // Find fetches an organization with the given id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/organization#find
@@ -57,4 +73,27 @@ func (os *OrganizationsService) Find(ctx context.Context, id uint) (*Organizatio
 	}
 
 	return &org, resp, err
+}
+
+// List fetches a list of organizations the current user is a member of
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/organizations#for_current_user
+func (os *OrganizationsService) List(ctx context.Context, opt *OrganizationsOption) ([]Organization, *http.Response, error) {
+	u, err := urlWithOptions("/orgs", opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := os.client.NewRequest(http.MethodGet, u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var getOrganizationsResponse getOrganizationsResponse
+	resp, err := os.client.Do(ctx, req, &getOrganizationsResponse)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return getOrganizationsResponse.Organizations, resp, err
 }
