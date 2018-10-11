@@ -62,3 +62,26 @@ func (bs *BetaFeaturesService) List(ctx context.Context, userId uint) ([]BetaFea
 
 	return getBetaFeaturesResponse.BetaFeatures, resp, err
 }
+
+// Update updates a user's beta_feature
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/beta_feature#update
+func (bs *BetaFeaturesService) Update(ctx context.Context, userId uint, id uint, enabled bool) (*BetaFeature, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_feature/%d", userId, id), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := bs.client.NewRequest(http.MethodPatch, u, map[string]bool{"enabled": enabled}, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var feature BetaFeature
+	resp, err := bs.client.Do(ctx, req, &feature)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &feature, resp, err
+}
