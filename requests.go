@@ -75,7 +75,7 @@ type ListRequestsOption struct {
 // creating request.
 type RequestBody struct {
 	// Build configuration (as parsed from .travis.yml)
-	Config string `json:"config,omitempty"`
+	Config interface{} `json:"config,omitempty"`
 	// Travis-ci status message attached to the request
 	Message string `json:"message,omitempty"`
 	// Branch requested to be built
