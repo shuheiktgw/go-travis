@@ -103,6 +103,8 @@ type BuildsOption struct {
 
 // BuildsByRepositoryOption specifies the optional parameters for builds endpoint
 type BuildsByRepositoryOption struct {
+	// Filters builds by name of the git branch
+	BranchName string `url:"branch.name,omitempty"`
 	// The User or Organization that created the build
 	CreatedBy []string `url:"created_by,omitempty,brackets"`
 	// Event that triggered the build
