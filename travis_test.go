@@ -77,13 +77,13 @@ func TestClient_NewDefaultClient(t *testing.T) {
 
 	assert(
 		t,
-		c.BaseURL.String() == defaultBaseURL,
-		"Client.BaseURL = %s; expected %s", c.BaseURL.String(), defaultBaseURL,
+		c.BaseURL.String() == ApiOrgUrl,
+		"Client.BaseURL = %s; expected %s", c.BaseURL.String(), ApiOrgUrl,
 	)
 }
 
 func TestClient_NewRequest(t *testing.T) {
-	c := NewClient(defaultBaseURL, "")
+	c := NewClient(ApiOrgUrl, "")
 
 	req, err := c.NewRequest(http.MethodGet, "/test", nil, nil)
 	if err != nil {
@@ -98,15 +98,15 @@ func TestClient_NewRequest(t *testing.T) {
 
 	assert(
 		t,
-		req.URL.String() == defaultBaseURL+"test",
+		req.URL.String() == ApiOrgUrl+"test",
 		"Wrong Request URL set",
 	)
 
 }
 
 func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
-	baseUrl, _ := url.Parse(defaultBaseURL)
-	c := NewClient(defaultBaseURL, "")
+	baseUrl, _ := url.Parse(ApiOrgUrl)
+	c := NewClient(ApiOrgUrl, "")
 
 	req, err := c.NewRequest(http.MethodGet, "/users", nil, nil)
 	if err != nil {
@@ -133,8 +133,8 @@ func TestClient_NewRequest_with_nil_headers_provided(t *testing.T) {
 }
 
 func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
-	baseUrl, _ := url.Parse(defaultBaseURL)
-	c := NewClient(defaultBaseURL, "")
+	baseUrl, _ := url.Parse(ApiOrgUrl)
+	c := NewClient(ApiOrgUrl, "")
 	h := map[string]string{
 		"Abc": "123",
 	}
@@ -170,7 +170,7 @@ func TestClient_NewRequest_with_non_overriding_headers_provided(t *testing.T) {
 }
 
 func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
-	c := NewClient(defaultBaseURL, "")
+	c := NewClient(ApiOrgUrl, "")
 	h := map[string]string{
 		"Host": "api.travis-ci.com",
 	}

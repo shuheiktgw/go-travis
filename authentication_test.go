@@ -14,7 +14,7 @@ import (
 )
 
 func TestAuthenticationService_UsingGithubToken_without_token(t *testing.T) {
-	as := &AuthenticationService{client: NewClient(defaultBaseURL, "")}
+	as := &AuthenticationService{client: NewClient(ApiOrgUrl, "")}
 
 	_, _, err := as.UsingGithubToken(context.TODO(), "")
 
@@ -46,7 +46,7 @@ func TestAuthenticationService_UsingGithubToken_with_token(t *testing.T) {
 }
 
 func TestAuthenticationService_UsingTravisToken_without_token(t *testing.T) {
-	as := &AuthenticationService{client: NewClient(defaultBaseURL, "")}
+	as := &AuthenticationService{client: NewClient(ApiOrgUrl, "")}
 
 	err := as.UsingTravisToken("")
 	if err == nil {
@@ -56,7 +56,7 @@ func TestAuthenticationService_UsingTravisToken_without_token(t *testing.T) {
 
 func TestAuthenticationService_UsingTravisToken_with_token(t *testing.T) {
 	token := "abc123easyasdoremi"
-	as := &AuthenticationService{client: NewClient(defaultBaseURL, token)}
+	as := &AuthenticationService{client: NewClient(ApiOrgUrl, token)}
 
 	err := as.UsingTravisToken(token)
 	if err != nil {

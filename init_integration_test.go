@@ -21,7 +21,7 @@ var (
 	integrationBuildId       uint = 426024083
 	integrationJobId         uint = 426024084
 	integrationTravisToken        = os.Getenv("TRAVIS_API_AUTH_TOKEN")
-	integrationUrl                = defaultBaseURL
+	integrationUrl                = ApiOrgUrl
 )
 
 func init() {

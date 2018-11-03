@@ -21,9 +21,10 @@ import (
 )
 
 const (
-	defaultBaseURL = "https://api.travis-ci.org/"
-	userAgent      = "go-travis/" + version
+	ApiOrgUrl = "https://api.travis-ci.org/"
+	ApiComUrl = "https://api.travis-ci.org/"
 
+	userAgent          = "go-travis/" + version
 	defaultContentType = "application/json"
 
 	apiVersion3 = "3"
@@ -125,7 +126,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 // If travisToken is not provided, the client can be authenticated at any time,
 // using it's Authentication exposed service.
 func NewDefaultClient(travisToken string) *Client {
-	return NewClient(defaultBaseURL, travisToken)
+	return NewClient(ApiOrgUrl, travisToken)
 }
 
 // NewRequest creates an API request. A relative URL can be provided in urlStr,
