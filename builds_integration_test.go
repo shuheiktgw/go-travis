@@ -56,7 +56,7 @@ func TestBuildsService_Integration_List(t *testing.T) {
 }
 
 func TestBuildsService_Integration_ListByRepoId(t *testing.T) {
-	cases := []*BuildsByRepositoryOption{
+	cases := []*BuildsByRepoOption{
 		{},
 		{Limit: 1},
 		{SortBy: "id"},
@@ -86,7 +86,7 @@ func TestBuildsService_Integration_ListByRepoId(t *testing.T) {
 }
 
 func TestBuildsService_Integration_ListByRepoSlug(t *testing.T) {
-	cases := []*BuildsByRepositoryOption{
+	cases := []*BuildsByRepoOption{
 		{},
 		{Limit: 1},
 		{SortBy: "id"},

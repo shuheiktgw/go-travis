@@ -68,7 +68,7 @@ func TestBuildsService_ListByRepoId(t *testing.T) {
 		fmt.Fprint(w, `{"builds": [{"id":1,"number":"1","state":"created","duration":10}]}`)
 	})
 
-	builds, _, err := client.Builds.ListByRepoId(context.Background(), testRepoId, &BuildsByRepositoryOption{Limit: 50, SortBy: "id"})
+	builds, _, err := client.Builds.ListByRepoId(context.Background(), testRepoId, &BuildsByRepoOption{Limit: 50, SortBy: "id"})
 
 	if err != nil {
 		t.Errorf("Builds.FindByRepoId returned error: %v", err)
@@ -90,7 +90,7 @@ func TestBuildsService_ListByRepoSlug(t *testing.T) {
 		fmt.Fprint(w, `{"builds": [{"id":1,"number":"1","state":"created","duration":10}]}`)
 	})
 
-	builds, _, err := client.Builds.ListByRepoSlug(context.Background(), testRepoSlug, &BuildsByRepositoryOption{Limit: 50, SortBy: "id"})
+	builds, _, err := client.Builds.ListByRepoSlug(context.Background(), testRepoSlug, &BuildsByRepoOption{Limit: 50, SortBy: "id"})
 
 	if err != nil {
 		t.Errorf("Builds.FindByRepoSlug returned error: %v", err)

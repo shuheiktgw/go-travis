@@ -101,8 +101,8 @@ type BuildsOption struct {
 	SortBy string `url:"sort_by,omitempty"`
 }
 
-// BuildsByRepositoryOption specifies the optional parameters for builds endpoint
-type BuildsByRepositoryOption struct {
+// BuildsByRepoOption specifies the optional parameters for builds endpoint
+type BuildsByRepoOption struct {
 	// Filters builds by name of the git branch
 	BranchName []string `url:"branch.name,omitempty,comma"`
 	// The User or Organization that created the build
@@ -203,7 +203,7 @@ func (bs *BuildsService) List(ctx context.Context, opt *BuildsOption) ([]Build, 
 // ListByRepoId fetches current user's builds based on the repository id and options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#find
-func (bs *BuildsService) ListByRepoId(ctx context.Context, repoId uint, opt *BuildsByRepositoryOption) ([]Build, *http.Response, error) {
+func (bs *BuildsService) ListByRepoId(ctx context.Context, repoId uint, opt *BuildsByRepoOption) ([]Build, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/builds", repoId), opt)
 	if err != nil {
 		return nil, nil, err
@@ -226,7 +226,7 @@ func (bs *BuildsService) ListByRepoId(ctx context.Context, repoId uint, opt *Bui
 // ListByRepoSlug fetches current user's builds based on the repository slug and options
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#find
-func (bs *BuildsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *BuildsByRepositoryOption) ([]Build, *http.Response, error) {
+func (bs *BuildsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *BuildsByRepoOption) ([]Build, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/builds", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
