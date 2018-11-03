@@ -21,64 +21,90 @@ Interaction with the Travis CI API is done through a `Client` instance.
 ```go
 import travis "github.com/shuheiktgw/go-travis"
 
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "myTravisToken")
+client := travis.NewClient(travis.ApiOrgUrl, "TravisApiToken")
 
-// list all builds of current user
+// List all the builds which belongs to the current user
 builds, res, err := client.Builds.Find(context.Background(), nil)
 ```
 
-Constructing it with the ``NewClient`` helper requires two arguments:
-* The Travis CI API URL you wish to communicate with. Different Travis CI plans are accessed through different URLs. go-travis exposes constants for these URLs:
-  * ``TRAVIS_API_DEFAULT_URL``: default *api.travis-ci.org* endpoint for the free Travis "Open Source" plan.
-  * ``TRAVIS_API_PRO_URL``: the *api.travis-ci.com* endpoint for the paid Travis pro plans.
-* A Travis CI token with which to authenticate. If you wish to run requests unauthenticated, pass an empty string. It is possible at any time to authenticate the Client instance with a Travis token or a Github personal access token. For more information see [Authentication](#Authentication).
+### URL
+Currently, there are two possible options for Travis CI API URL.
+
+- `https://api.travis-ci.org/`
+- `https://api.travis-ci.com/`
+
+You should know which URL your project belongs to, and hand it in to `NewClient` method as an argument. We provide two constants, `ApiOrgUrl` for `https://api.travis-ci.org/` and `ApiComUrl` for `https://api.travis-ci.com/`, so please choose one of them.
+
+Travis CI is migrating projects in `https://api.travis-ci.org/` to `https://api.travis-ci.com/`, and please visit [their documentation page](https://docs.travis-ci.com/user/open-source-on-travis-ci-com#existing-private-repositories-on-travis-cicom) for more information on the migration.  
+
 
 ### Authentication
 
-The Client instance supports both authenticated and unauthenticated interaction with the Travis CI API. **Note** that both Pro and Enterprise plans will require almost all API calls to be authenticated.
+There two ways to authenticator your Travis CI client.
 
-#### Authenticated
+- Authentication with Travis API token
+- Authentication with GitHub personal access token
 
-The Client instance supports authentication with both Travis token and Github personal access token.
-
-##### Authentication with Travis token
+##### Authentication with Travis API token
 
 ```go
-// client.IsAuthenticated() returns true
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "myTravisToken")
+client := travis.NewClient(travis.ApiOrgUrl, "TravisApiToken")
 
-// Job.Cancel will success
-_, err := client.Job.Cancel(context.Background(), 12345)
+// Jobs.Cancel will success
+_, err := client.Jobs.Cancel(context.Background(), 12345)
 ```
+
+You can issue Travis API token and hand it in to `NewClient` method directly. You can issue your token by visiting your Travis CI [Profile page](https://travis-ci.com/profile) or using Travis CI [command line tool](https://github.com/travis-ci/travis.rb#readme). 
+
+For more information on how to issue Travis CI API token, please visit [their documentation](https://docs.travis-ci.com/user/triggering-builds/).
+
+
 
 ##### Authentication with GitHub personal access token
 Authentication with a Github personal access token will require some extra steps. [This GitHub help page](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) guides you thorough how to create one. 
 
 ```go
-// client.IsAuthenticated() returns false
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+client := travis.NewClient(travis.ApiOrgUrl, "")
 
-// client.IsAuthenticated() returns true
-err := client.Authentication.UsingGithubToken("myGitHubToken")
+err := client.Authentication.UsingGithubToken("GitHubToken")
 
-// Job.Cancel will success
-_, err := client.Job.Cancel(context.Background(), 12345)
+// Jobs.Cancel will success
+_, err := client.Jobs.Cancel(context.Background(), 12345)
 ```
 
-#### Unauthenticated
+#### Unauthenticated client
 
-It is possible to use the client unauthenticated. However some resources won't be accessible.
+It is possible to interact with the API without authentication. However some resources are not accessible.
 
 ```go
-client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, "")
+client := travis.NewClient(travis.ApiOrgUrl, "")
 
 // Builds.FindByRepoSlug is available without authentication
 builds, resp, err := client.Builds.FindByRepoSlug(context.Background(), "shuheiktgw/go-travis", nil)
 
-// Job.Cancel is unavailable without authentication
-_, err := client.Job.Cancel(context.Background(), 12345)
+// Jobs.Cancel is unavailable without authentication
+_, err := client.Jobs.Cancel(context.Background(), 12345)
 ```
 
+## Supported / Unsupported features
+
+### Supported features
+- Covers all the [Travis CI API v3 public endpoints](https://developer.travis-ci.com/)! :tada:
+
+### Unsupported features
+- [Eager loading](https://developer.travis-ci.com/eager-loading#eager%20loading) is not supported so far
+
+## Contribution
+Contributions are of course always welcome!
+
+1. Fork shuheiktgw/go-travis (https://github.com/shuheiktgw/go-travis/fork)
+2. Run `dep ensure` to install dependencies
+3. Create a feature branch
+4. Commit your changes
+5. Run test using `go test`
+6. Create a Pull Request
+
+See [`CONTRIBUTING.md`](https://github.com/shuheiktgw/go-travis/blob/master/CONTRIBUTING.md) for details.
 
 ## Acknowledgements
 
