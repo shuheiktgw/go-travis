@@ -63,11 +63,11 @@ func TestJobsService_List(t *testing.T) {
 
 	mux.HandleFunc("/jobs", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"limit": "50", "state[]": "created"})
+		testFormValues(t, r, values{"limit": "50", "state": "created,queued"})
 		fmt.Fprint(w, `{"jobs":[{"id":1,"allow_failure":true,"number":"1","state":"created"}]}`)
 	})
 
-	job, _, err := client.Jobs.List(context.Background(), &JobsOption{Limit: 50, State: []string{"created"}})
+	job, _, err := client.Jobs.List(context.Background(), &JobsOption{Limit: 50, State: []string{"created", "queued"}})
 
 	if err != nil {
 		t.Errorf("Jobs.List returned error: %v", err)

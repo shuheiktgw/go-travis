@@ -104,15 +104,15 @@ type BuildsOption struct {
 // BuildsByRepositoryOption specifies the optional parameters for builds endpoint
 type BuildsByRepositoryOption struct {
 	// Filters builds by name of the git branch
-	BranchName string `url:"branch.name,omitempty"`
+	BranchName []string `url:"branch.name,omitempty,comma"`
 	// The User or Organization that created the build
-	CreatedBy []string `url:"created_by,omitempty,brackets"`
+	CreatedBy []string `url:"created_by,omitempty,comma"`
 	// Event that triggered the build
-	EventType []string `url:"event_type,omitempty,brackets"`
+	EventType []string `url:"event_type,omitempty,comma"`
 	// State of the previous build (useful to see if state changed)
-	PreviousState []string `url:"previous_state,omitempty,brackets"`
+	PreviousState []string `url:"previous_state,omitempty,comma"`
 	// Current state of the build
-	State []string `url:"state,omitempty,brackets"`
+	State []string `url:"state,omitempty,comma"`
 	// How many builds to include in the response
 	Limit int `url:"limit,omitempty"`
 	// How many builds to skip before the first entry in the response

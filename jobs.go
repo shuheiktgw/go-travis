@@ -70,9 +70,9 @@ type JobsOption struct {
 	// How many jobs to skip before the first entry in the response
 	Offset int `url:"offset,omitempty"`
 	// Attributes to sort jobs by
-	SortBy []string `url:"sort_by,omitempty,brackets"`
+	SortBy []string `url:"sort_by,omitempty,comma"`
 	// // Current state of the job
-	State []string `url:"state,omitempty,brackets"`
+	State []string `url:"state,omitempty,comma"`
 }
 
 type getJobsResponse struct {

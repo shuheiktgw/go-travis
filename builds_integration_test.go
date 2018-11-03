@@ -65,7 +65,7 @@ func TestBuildsService_Integration_ListByRepoId(t *testing.T) {
 		{PreviousState: []string{BuildStatePassed}},
 		{EventType: []string{BuildEventTypePush}},
 		{CreatedBy: []string{"shuheiktgwtest"}},
-		{BranchName: "master"},
+		{BranchName: []string{"master", "test"}},
 	}
 
 	for i, opt := range cases {
