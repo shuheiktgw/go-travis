@@ -19,7 +19,7 @@ $ go get github.com/shuheiktgw/go-travis
 Interaction with the Travis CI API is done through a `Client` instance.
 
 ```go
-import travis "github.com/shuheiktgw/go-travis"
+import "github.com/shuheiktgw/go-travis"
 
 client := travis.NewClient(travis.ApiOrgUrl, "TravisApiToken")
 
