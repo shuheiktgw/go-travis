@@ -22,7 +22,7 @@ import (
 
 const (
 	ApiOrgUrl = "https://api.travis-ci.org/"
-	ApiComUrl = "https://api.travis-ci.org/"
+	ApiComUrl = "https://api.travis-ci.com/"
 
 	userAgent          = "go-travis/" + version
 	defaultContentType = "application/json"
