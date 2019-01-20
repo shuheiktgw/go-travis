@@ -198,3 +198,17 @@ func TestClient_NewRequest_with_overriding_headers_provided(t *testing.T) {
 		"Wrong Request Host header set",
 	)
 }
+
+func TestClient_NewRequest_with_overriding_userAgent(t *testing.T) {
+	c := NewClient(ApiOrgUrl, "")
+	c.UserAgent = "Test-User-Agent"
+
+	req, err := c.NewRequest(http.MethodGet, "/users", nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got, want := req.Header.Get("User-Agent"), "Test-User-Agent"; got != want {
+		t.Fatalf("Wrong User-Agent: got: %s, want: %s", got, want)
+	}
+}

@@ -170,6 +170,8 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map
 		req.Header.Set(k, v)
 	}
 
+	req.Header.Set("User-Agent", c.UserAgent)
+
 	return req, nil
 }
 
