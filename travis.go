@@ -34,7 +34,7 @@ const (
 // A Client manages communication with the Travis CI API.
 type Client struct {
 	// HTTP client used to communicate with the API
-	client *http.Client
+	HTTPClient *http.Client
 
 	// Headers to attach to every requests made with the client.
 	// As a default, Headers will be used to provide Travis API authentication
@@ -87,10 +87,10 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	}
 
 	c := &Client{
-		client:    http.DefaultClient,
-		Headers:   bh,
-		BaseURL:   bu,
-		UserAgent: userAgent,
+		HTTPClient: http.DefaultClient,
+		Headers:    bh,
+		BaseURL:    bu,
+		UserAgent:  userAgent,
 	}
 
 	c.Active = &ActiveService{client: c}
@@ -184,7 +184,7 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}, headers map
 func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
 	req = withContext(ctx, req)
 
-	resp, err := c.client.Do(req)
+	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
 		// If we got an error, and the context has been canceled,
 		// the context's error is probably more useful.
