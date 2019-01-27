@@ -51,7 +51,7 @@ type Build struct {
 	// The branch the build is associated with
 	Branch MinimalBranch `json:"branch,omitempty"`
 	// The build's tag
-	Tag string `json:"tag,omitempty"`
+	Tag MinimalTag `json:"tag,omitempty"`
 	// The commit the build is associated with
 	Commit MinimalCommit `json:"commit,omitempty"`
 	// List of jobs that are part of the build's matrix
