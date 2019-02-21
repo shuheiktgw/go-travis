@@ -34,7 +34,7 @@ type Repository struct {
 	// The repository's id on GitHub
 	GitHubId uint `json:"github_id"`
 	// The main programming language used according to GitHub
-	GitHubLanguage uint `json:"github_language"`
+	GitHubLanguage string `json:"github_language"`
 	// Whether or not this repository is currently enabled on Travis CI
 	Active bool `json:"active"`
 	// Whether or not this repository is private
