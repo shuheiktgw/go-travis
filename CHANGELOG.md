@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="v0.1.9"></a>
+## [v0.1.9] - 2019-02-21
+### Fix
+- GithubLanguage from uint to string
+
+
 <a name="v0.1.8"></a>
 ## [v0.1.8] - 2019-01-27
 
@@ -59,7 +65,8 @@
 - Update import path.
 
 
-[Unreleased]: https://github.com/shuheiktgw/go-travis/compare/v0.1.8...HEAD
+[Unreleased]: https://github.com/shuheiktgw/go-travis/compare/v0.1.9...HEAD
+[v0.1.9]: https://github.com/shuheiktgw/go-travis/compare/v0.1.8...v0.1.9
 [v0.1.8]: https://github.com/shuheiktgw/go-travis/compare/v0.1.7...v0.1.8
 [v0.1.7]: https://github.com/shuheiktgw/go-travis/compare/v0.1.6...v0.1.7
 [v0.1.6]: https://github.com/shuheiktgw/go-travis/compare/v0.1.5...v0.1.6
