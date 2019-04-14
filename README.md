@@ -89,7 +89,8 @@ _, err := client.Jobs.Cancel(context.Background(), 12345)
 ## Supported / Unsupported features
 
 ### Supported features
-- Covers all the [Travis CI API v3 public endpoints](https://developer.travis-ci.com/)! :tada:
+- ~~Covers all the [Travis CI API v3 public endpoints](https://developer.travis-ci.com/)! :tada:~~
+- As of April 14. 2019, there are several changes on the API we have not yet handled yet. Check https://github.com/shuheiktgw/go-travis/issues/19 and help us fix the problems! :+1:
 
 ### Unsupported features
 - [Eager loading](https://developer.travis-ci.com/eager-loading#eager%20loading) is not supported so far
