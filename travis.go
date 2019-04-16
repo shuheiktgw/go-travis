@@ -304,17 +304,5 @@ func withContext(ctx context.Context, req *http.Request) *http.Request {
 	return req.WithContext(ctx)
 }
 
-// Metadata is a metadata returned from the Travis CI API
-type Metadata struct {
-	// The type of data returned from the API
-	Type string `json:"@type,omitempty"`
-	// The link for data returned from the API
-	Href string `json:"@href,omitempty"`
-	// The representation of data returned from the API, standard or minimal
-	Representation string `json:"@representation,omitempty"`
-	// The permissions of data returned from the API
-	Permissions Permissions `json:"@permissions,omitempty"`
-}
-
 // Permissions represents permissions of Travis CI API
 type Permissions map[string]bool
