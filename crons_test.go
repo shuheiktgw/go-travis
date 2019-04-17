@@ -95,7 +95,7 @@ func TestCronsService_ListByRepoId(t *testing.T) {
 		t.Errorf("Crons.FindByRepoId returned error: %v", err)
 	}
 
-	want := []Cron{{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}}
+	want := []*Cron{{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}}
 	if !reflect.DeepEqual(crons, want) {
 		t.Errorf("Crons.FindByRepoId returned %+v, want %+v", crons, want)
 	}
@@ -118,7 +118,7 @@ func TestCronsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Crons.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []Cron{{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}}
+	want := []*Cron{{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}}
 	if !reflect.DeepEqual(crons, want) {
 		t.Errorf("Crons.FindByRepoSlug returned %+v, want %+v", crons, want)
 	}

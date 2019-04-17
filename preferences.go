@@ -24,12 +24,12 @@ type Preference struct {
 	// The preference's name
 	Name string `json:"name,omitempty"`
 	// The preference's value
-	Value bool `json:"value"`
-	Metadata
+	Value interface{} `json:"value"`
+	*Metadata
 }
 
 type getPreferencesResponse struct {
-	Preferences []Preference `json:"preferences,omitempty"`
+	Preferences []*Preference `json:"preferences,omitempty"`
 }
 
 // Find fetches the current user's preference based on
@@ -59,7 +59,7 @@ func (ps *PreferencesService) Find(ctx context.Context, name string) (*Preferenc
 // List fetches the current user's preferences
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/preferences#for_user
-func (ps *PreferencesService) List(ctx context.Context) ([]Preference, *http.Response, error) {
+func (ps *PreferencesService) List(ctx context.Context) ([]*Preference, *http.Response, error) {
 	u, err := urlWithOptions("/preferences", nil)
 	if err != nil {
 		return nil, nil, err

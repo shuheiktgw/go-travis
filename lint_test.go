@@ -29,7 +29,7 @@ func TestLintService_Lint(t *testing.T) {
 		t.Errorf("Lint.Lint returned error: %v", err)
 	}
 
-	want := []Warning{{Key: []string{"test"}, Message: "test!"}}
+	want := []*Warning{{Key: []string{"test"}, Message: "test!"}}
 	if !reflect.DeepEqual(warnings, want) {
 		t.Errorf("Lint.Lint returned %+v, want %+v", warnings, want)
 	}

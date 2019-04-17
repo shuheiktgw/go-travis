@@ -32,7 +32,7 @@ type Broadcast struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// Either a user, organization or repository, or null for global
 	Recipient interface{} `json:"recipient,omitempty"`
-	Metadata
+	*Metadata
 }
 
 // BroadcastsOption specifies the optional parameters for broadcasts endpoint
@@ -44,13 +44,13 @@ type BroadcastsOption struct {
 // getBroadcastsResponse represents a response
 // from broadcast endpoints
 type getBroadcastsResponse struct {
-	Broadcasts []Broadcast `json:"broadcasts,omitempty"`
+	Broadcasts []*Broadcast `json:"broadcasts,omitempty"`
 }
 
 // List fetches a list of broadcasts for the current user
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/broadcasts#for_current_user
-func (bs *BroadcastsService) List(ctx context.Context, opt *BroadcastsOption) ([]Broadcast, *http.Response, error) {
+func (bs *BroadcastsService) List(ctx context.Context, opt *BroadcastsOption) ([]*Broadcast, *http.Response, error) {
 	u, err := urlWithOptions("/broadcasts", opt)
 	if err != nil {
 		return nil, nil, err

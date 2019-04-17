@@ -21,10 +21,11 @@ func TestBuildsService_Find(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/build/%d", testBuildId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "build.commit,build.branch"})
 		fmt.Fprint(w, `{"id":1,"number":"1","state":"created","duration":10}`)
 	})
 
-	build, _, err := client.Builds.Find(context.Background(), testBuildId)
+	build, _, err := client.Builds.Find(context.Background(), testBuildId, &BuildOption{Include: []string{"build.commit", "build.branch"}})
 
 	if err != nil {
 		t.Errorf("Build.Find returned error: %v", err)
@@ -42,17 +43,17 @@ func TestBuildsService_List(t *testing.T) {
 
 	mux.HandleFunc("/builds", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"limit": "50", "sort_by": "id"})
+		testFormValues(t, r, values{"limit": "50", "sort_by": "id", "include": "build.commit,build.branch"})
 		fmt.Fprint(w, `{"builds": [{"id":1,"number":"1","state":"created","duration":10}]}`)
 	})
 
-	builds, _, err := client.Builds.List(context.Background(), &BuildsOption{Limit: 50, SortBy: "id"})
+	builds, _, err := client.Builds.List(context.Background(), &BuildsOption{Limit: 50, SortBy: "id", Include: []string{"build.commit", "build.branch"}})
 
 	if err != nil {
 		t.Errorf("Builds.Find returned error: %v", err)
 	}
 
-	want := []Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Builds.Find returned %+v, want %+v", builds, want)
 	}
@@ -74,7 +75,7 @@ func TestBuildsService_ListByRepoId(t *testing.T) {
 		t.Errorf("Builds.FindByRepoId returned error: %v", err)
 	}
 
-	want := []Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Builds.FindByRepoId returned %+v, want %+v", builds, want)
 	}
@@ -96,7 +97,7 @@ func TestBuildsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Builds.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Builds.FindByRepoSlug returned %+v, want %+v", builds, want)
 	}
@@ -117,7 +118,7 @@ func TestBuildsService_Cancel(t *testing.T) {
 		t.Errorf("Build.Cancel returned error: %v", err)
 	}
 
-	want := &MinimalBuild{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
+	want := &Build{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
 	if !reflect.DeepEqual(build, want) {
 		t.Errorf("Build.Cancel returned %+v, want %+v", build, want)
 	}
@@ -138,7 +139,7 @@ func TestBuildsService_Restart(t *testing.T) {
 		t.Errorf("Build.Restart returned error: %v", err)
 	}
 
-	want := &MinimalBuild{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
+	want := &Build{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
 	if !reflect.DeepEqual(build, want) {
 		t.Errorf("Build.Restart returned %+v, want %+v", build, want)
 	}

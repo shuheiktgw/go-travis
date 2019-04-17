@@ -29,7 +29,7 @@ func TestSettingsService_Integration_FindByRepoId(t *testing.T) {
 	want := &Setting{
 		Name:  BuildsOnlyWithTravisYmlSetting,
 		Value: false,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "setting",
 			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
 			Representation: "standard",
@@ -56,7 +56,7 @@ func TestSettingsService_Integration_FindByRepoSlug(t *testing.T) {
 	want := &Setting{
 		Name:  BuildsOnlyWithTravisYmlSetting,
 		Value: false,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "setting",
 			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
 			Representation: "standard",
@@ -116,7 +116,7 @@ func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
 	want := &Setting{
 		Name:  BuildsOnlyWithTravisYmlSetting,
 		Value: true,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "setting",
 			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
 			Representation: "standard",
@@ -144,7 +144,7 @@ func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
 	want = &Setting{
 		Name:  BuildsOnlyWithTravisYmlSetting,
 		Value: false,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "setting",
 			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
 			Representation: "standard",

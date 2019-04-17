@@ -51,7 +51,7 @@ func TestPreferencesService_List(t *testing.T) {
 		t.Errorf("Preferences.Find returned error: %v", err)
 	}
 
-	want := []Preference{{Name: "builds_email", Value: true}}
+	want := []*Preference{{Name: "builds_email", Value: true}}
 	if !reflect.DeepEqual(preferences, want) {
 		t.Errorf("Preferences.Find returned %+v, want %+v", preferences, want)
 	}

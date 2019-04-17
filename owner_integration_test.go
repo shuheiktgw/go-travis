@@ -30,8 +30,6 @@ func TestOwnerService_Integration_FindByLogin(t *testing.T) {
 }
 
 func TestOwnerService_Integration_FindByGitHubId(t *testing.T) {
-	t.Parallel()
-
 	owner, res, err := integrationClient.Owner.FindByGitHubId(context.TODO(), integrationGitHubOwnerId)
 
 	if err != nil {

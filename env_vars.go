@@ -30,7 +30,7 @@ type EnvVar struct {
 	Value string `json:"value,omitempty"`
 	// Whether this environment variable should be publicly visible or not
 	Public bool `json:"public,omitempty"`
-	Metadata
+	*Metadata
 }
 
 // EnvVarBody specifies options for
@@ -47,7 +47,7 @@ type EnvVarBody struct {
 // getEnvVarsResponse represents the response of a call
 // to the Travis CI env vars endpoint.
 type getEnvVarsResponse struct {
-	EnvVars []EnvVar `json:"env_vars"`
+	EnvVars []*EnvVar `json:"env_vars"`
 }
 
 // FindByRepoId fetches environment variable based on the given repository id and env var id
@@ -99,7 +99,7 @@ func (es *EnvVarsService) FindByRepoSlug(ctx context.Context, repoSlug string, i
 // ListByRepoId fetches environment variables based on the given repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_vars#for_repository
-func (es *EnvVarsService) ListByRepoId(ctx context.Context, repoId uint) ([]EnvVar, *http.Response, error) {
+func (es *EnvVarsService) ListByRepoId(ctx context.Context, repoId uint) ([]*EnvVar, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_vars", repoId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -122,7 +122,7 @@ func (es *EnvVarsService) ListByRepoId(ctx context.Context, repoId uint) ([]EnvV
 // ListByRepoSlug fetches environment variables based on the given repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_vars#for_repository
-func (es *EnvVarsService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]EnvVar, *http.Response, error) {
+func (es *EnvVarsService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]*EnvVar, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_vars", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err

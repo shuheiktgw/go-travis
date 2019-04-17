@@ -100,7 +100,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		Name:   "TEST",
 		Value:  "test",
 		Public: true,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "env_var",
 			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
 			Representation: "standard",
@@ -131,7 +131,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		Name:   "NEW_TEST",
 		Value:  "",
 		Public: false,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "env_var",
 			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
 			Representation: "standard",
@@ -175,7 +175,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		Name:   "TEST",
 		Value:  "test",
 		Public: true,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "env_var",
 			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
 			Representation: "standard",
@@ -206,7 +206,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		Name:   "NEW_TEST",
 		Value:  "",
 		Public: false,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "env_var",
 			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
 			Representation: "standard",

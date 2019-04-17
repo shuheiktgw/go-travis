@@ -29,7 +29,7 @@ func TestBroadcastsService_List(t *testing.T) {
 		t.Errorf("Broadcasts.List returned error: %v", err)
 	}
 
-	want := []Broadcast{{Id: 125, Message: "We just switched the default image for", Active: true, CreatedAt: "2014-11-19T14:39:51Z"}}
+	want := []*Broadcast{{Id: 125, Message: "We just switched the default image for", Active: true, CreatedAt: "2014-11-19T14:39:51Z"}}
 	if !reflect.DeepEqual(broadcasts, want) {
 		t.Errorf("Broadcasts.List returned %+v, want %+v", broadcasts, want)
 	}

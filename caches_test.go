@@ -28,7 +28,7 @@ func TestCachesService_ListByRepoId(t *testing.T) {
 		t.Errorf("Caches.FindByRepoId returned error: %v", err)
 	}
 
-	want := []Cache{{Branch: "master", Match: "test"}}
+	want := []*Cache{{Branch: "master", Match: "test"}}
 	if !reflect.DeepEqual(caches, want) {
 		t.Errorf("Caches.FindByRepoId returned %+v, want %+v", caches, want)
 	}
@@ -49,7 +49,7 @@ func TestCachesService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Caches.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []Cache{{Branch: "master", Match: "test"}}
+	want := []*Cache{{Branch: "master", Match: "test"}}
 	if !reflect.DeepEqual(caches, want) {
 		t.Errorf("Caches.FindByRepoSlug returned %+v, want %+v", caches, want)
 	}
@@ -70,7 +70,7 @@ func TestCachesService_DeleteByRepoId(t *testing.T) {
 		t.Errorf("Caches.DeleteByRepoId returned error: %v", err)
 	}
 
-	want := []Cache{{Branch: "master", Match: "test"}}
+	want := []*Cache{{Branch: "master", Match: "test"}}
 	if !reflect.DeepEqual(caches, want) {
 		t.Errorf("Caches.DeleteByRepoId returned %+v, want %+v", caches, want)
 	}
@@ -91,7 +91,7 @@ func TestCachesService_DeleteByRepoSlug(t *testing.T) {
 		t.Errorf("Caches.DeleteByRepoSlug returned error: %v", err)
 	}
 
-	want := []Cache{{Branch: "master", Match: "test"}}
+	want := []*Cache{{Branch: "master", Match: "test"}}
 	if !reflect.DeepEqual(caches, want) {
 		t.Errorf("Caches.DeleteByRepoSlug returned %+v, want %+v", caches, want)
 	}

@@ -51,7 +51,7 @@ func TestJobsService_ListByBuild(t *testing.T) {
 		t.Errorf("Jobs.ListByBuild returned error: %v", err)
 	}
 
-	want := []Job{{Id: testJobId, AllowFailure: true, Number: "1", State: JobStatusCreated}}
+	want := []*Job{{Id: testJobId, AllowFailure: true, Number: "1", State: JobStatusCreated}}
 	if !reflect.DeepEqual(job, want) {
 		t.Errorf("Jobs.ListByBuild returned %+v, want %+v", job, want)
 	}
@@ -73,7 +73,7 @@ func TestJobsService_List(t *testing.T) {
 		t.Errorf("Jobs.List returned error: %v", err)
 	}
 
-	want := []Job{{Id: testJobId, AllowFailure: true, Number: "1", State: JobStatusCreated}}
+	want := []*Job{{Id: testJobId, AllowFailure: true, Number: "1", State: JobStatusCreated}}
 	if !reflect.DeepEqual(job, want) {
 		t.Errorf("Jobs.List returned %+v, want %+v", job, want)
 	}
@@ -94,7 +94,7 @@ func TestJobsService_Cancel(t *testing.T) {
 		t.Errorf("Job.Cancel returned error: %v", err)
 	}
 
-	want := &MinimalJob{Id: testJobId}
+	want := &Job{Id: testJobId}
 	if !reflect.DeepEqual(job, want) {
 		t.Errorf("Job.Cancel returned %+v, want %+v", job, want)
 	}
@@ -115,7 +115,7 @@ func TestJobsService_Restart(t *testing.T) {
 		t.Errorf("Job.Restart returned error: %v", err)
 	}
 
-	want := &MinimalJob{Id: testJobId}
+	want := &Job{Id: testJobId}
 	if !reflect.DeepEqual(job, want) {
 		t.Errorf("Job.Restart returned %+v, want %+v", job, want)
 	}
@@ -136,7 +136,7 @@ func TestJobsService_Debug(t *testing.T) {
 		t.Errorf("Job.Debug returned error: %v", err)
 	}
 
-	want := &MinimalJob{Id: testJobId}
+	want := &Job{Id: testJobId}
 	if !reflect.DeepEqual(job, want) {
 		t.Errorf("Job.Debug returned %+v, want %+v", job, want)
 	}

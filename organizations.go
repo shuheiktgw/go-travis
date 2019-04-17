@@ -33,7 +33,7 @@ type Organization struct {
 	AvatarUrl string `json:"avatar_url,omitempty"`
 	// Whether or not the organization has an education account
 	Education bool `json:"education,omitempty"`
-	Metadata
+	*Metadata
 }
 
 // OrganizationsOption specifies the optional parameters for organizations endpoint
@@ -49,7 +49,7 @@ type OrganizationsOption struct {
 // getOrganizationsResponse represents a response
 // from organizations endpoints
 type getOrganizationsResponse struct {
-	Organizations []Organization `json:"organizations,omitempty"`
+	Organizations []*Organization `json:"organizations,omitempty"`
 }
 
 // Find fetches an organization with the given id
@@ -78,7 +78,7 @@ func (os *OrganizationsService) Find(ctx context.Context, id uint) (*Organizatio
 // List fetches a list of organizations the current user is a member of
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/organizations#for_current_user
-func (os *OrganizationsService) List(ctx context.Context, opt *OrganizationsOption) ([]Organization, *http.Response, error) {
+func (os *OrganizationsService) List(ctx context.Context, opt *OrganizationsOption) ([]*Organization, *http.Response, error) {
 	u, err := urlWithOptions("/orgs", opt)
 	if err != nil {
 		return nil, nil, err

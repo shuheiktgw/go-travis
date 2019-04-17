@@ -5,10 +5,10 @@
 
 package travis
 
-// MinimalStage is a minimal representation of an individual stage
+// Stage is a standard representation of an individual stage
 //
-// Travis CI API docs: https://developer.travis-ci.com/resource/stage#minimal-representation
-type MinimalStage struct {
+// Travis CI API docs: https://developer.travis-ci.com/resource/stage#standard-representation
+type Stage struct {
 	// Value uniquely identifying the stage
 	Id uint `json:"id,omitempty"`
 	// Incremental number for a stage
@@ -21,4 +21,7 @@ type MinimalStage struct {
 	StartedAt string `json:"started_at,omitempty"`
 	// When the stage finished
 	FinishedAt string `json:"finished_at,omitempty"`
+	// The jobs of a stage.
+	Jobs []*Job `json:"jobs,omitempty"`
+	*Metadata
 }

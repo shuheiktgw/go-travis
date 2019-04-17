@@ -27,17 +27,17 @@ type TravisYml struct {
 type Warning struct {
 	Key     []string `json:"key,omitempty"`
 	Message string   `json:"message,omitempty"`
-	Metadata
+	*Metadata
 }
 
 type lintResponse struct {
-	Warnings []Warning `json:"warnings,omitempty"`
+	Warnings []*Warning `json:"warnings,omitempty"`
 }
 
 // Lint validates the .travis.yml file and returns any warnings
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/lint#lint
-func (es *LintService) Lint(ctx context.Context, yml *TravisYml) ([]Warning, *http.Response, error) {
+func (es *LintService) Lint(ctx context.Context, yml *TravisYml) ([]*Warning, *http.Response, error) {
 	u, err := urlWithOptions("/lint", nil)
 	if err != nil {
 		return nil, nil, err

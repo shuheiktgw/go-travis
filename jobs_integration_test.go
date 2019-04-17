@@ -52,7 +52,7 @@ func TestJobsService_Integration_List(t *testing.T) {
 	opt := &JobsOption{}
 	jobs, res, err := integrationClient.Jobs.List(context.TODO(), opt)
 
-	// This endpoint returns 500 as of 2019/09/04
+	// This endpoint returns 500 as of 2019/04/17
 	t.Skip()
 
 	if err != nil {

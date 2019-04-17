@@ -33,17 +33,7 @@ type Owner struct {
 	AvatarUrl string `json:"avatar_url"`
 	// Whether or not the owner has an education account
 	Education bool `json:"education"`
-	Metadata
-}
-
-// MinimalOwner represents a minimal GitHub Owner
-//
-// Travis CI API docs: https://developer.travis-ci.com/resource/owner#minimal-representation
-type MinimalOwner struct {
-	// // Value uniquely identifying the owner
-	Id uint `json:"id"`
-	// User or organization login set on GitHub
-	Login string `json:"login"`
+	*Metadata
 }
 
 // Find fetches a owner based on the provided login

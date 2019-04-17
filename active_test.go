@@ -31,7 +31,7 @@ func TestActiveService_FindByOwner(t *testing.T) {
 		t.Errorf("Active.FindByOwner returned error: %v", err)
 	}
 
-	want := []Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Active.FindByOwner returned %+v, want %+v", builds, want)
 	}
@@ -52,7 +52,7 @@ func TestActiveService_FindByGitHubId(t *testing.T) {
 		t.Errorf("Active.FindByGitHubId returned error: %v", err)
 	}
 
-	want := []Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Active.FindByGitHubId returned %+v, want %+v", builds, want)
 	}
