@@ -34,32 +34,24 @@ type Job struct {
 	// When the job finished
 	FinishedAt string `json:"finished_at,omitempty"`
 	// The build the job is associated with
-	Build MinimalBuild `json:"build,omitempty"`
+	Build *Build `json:"build,omitempty"`
 	// Worker queue this job is/was scheduled on
 	Queue string `json:"queue,omitempty"`
 	// GitHub repository the job is associated with
-	Repository MinimalRepository `json:"repository,omitempty"`
+	Repository *Repository `json:"repository,omitempty"`
 	// The commit the job is associated with
-	Commit MinimalCommit `json:"commit,omitempty"`
+	Commit *Commit `json:"commit,omitempty"`
 	// GitHub user or organization the job belongs to
-	Owner MinimalOwner `json:"owner,omitempty"`
+	Owner *Owner `json:"owner,omitempty"`
 	// The stages of the job
-	Stage MinimalStage `json:"stage,omitempty"`
+	Stage *Stage `json:"stage,omitempty"`
 	// When the job was created
 	CreatedAt string `json:"created_at,omitempty"`
 	// When the job was updated
 	UpdatedAt string `json:"updated_at,omitempty"`
 	// Whether or not the job is private
 	Private bool `json:"private,omitempty"`
-	Metadata
-}
-
-// MinimalJob is a minimal representation of a Travis CI job
-//
-// Travis CI API docs: https://developer.travis-ci.com/resource/job#standard-representation
-type MinimalJob struct {
-	// Value uniquely identifying the job
-	Id uint `json:"id,omitempty"`
+	*Metadata
 }
 
 // JobsOption is query parameters to one can specify
@@ -76,12 +68,12 @@ type JobsOption struct {
 }
 
 type getJobsResponse struct {
-	Jobs []Job `json:"jobs"`
+	Jobs []*Job `json:"jobs"`
 }
 
 // jobResponse is only used to parse responses from Restart, Cancel and Debug
 type jobResponse struct {
-	Job MinimalJob `json:"job,omitempty"`
+	Job *Job `json:"job,omitempty"`
 }
 
 const (
@@ -125,7 +117,7 @@ func (js *JobsService) Find(ctx context.Context, id uint) (*Job, *http.Response,
 // ListByBuild fetches jobs based on the provided build id
 //
 // Travis CI API docs: https://developer.travis-ci.csom/resource/jobs#find
-func (js *JobsService) ListByBuild(ctx context.Context, buildId uint) ([]Job, *http.Response, error) {
+func (js *JobsService) ListByBuild(ctx context.Context, buildId uint) ([]*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/build/%d/jobs", buildId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -150,7 +142,7 @@ func (js *JobsService) ListByBuild(ctx context.Context, buildId uint) ([]Job, *h
 // See jobs_integration_test.go, TestJobsService_Find
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/jobs#find
-func (js *JobsService) List(ctx context.Context, opt *JobsOption) ([]Job, *http.Response, error) {
+func (js *JobsService) List(ctx context.Context, opt *JobsOption) ([]*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/jobs"), opt)
 	if err != nil {
 		return nil, nil, err
@@ -173,7 +165,7 @@ func (js *JobsService) List(ctx context.Context, opt *JobsOption) ([]Job, *http.
 // Cancel cancels a job based on the provided job id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#cancel
-func (js *JobsService) Cancel(ctx context.Context, id uint) (*MinimalJob, *http.Response, error) {
+func (js *JobsService) Cancel(ctx context.Context, id uint) (*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/cancel", id), nil)
 	if err != nil {
 		return nil, nil, err
@@ -190,13 +182,13 @@ func (js *JobsService) Cancel(ctx context.Context, id uint) (*MinimalJob, *http.
 		return nil, resp, err
 	}
 
-	return &jobResponse.Job, resp, err
+	return jobResponse.Job, resp, err
 }
 
 // Restart restarts a job based on the provided job id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#restart
-func (js *JobsService) Restart(ctx context.Context, id uint) (*MinimalJob, *http.Response, error) {
+func (js *JobsService) Restart(ctx context.Context, id uint) (*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/restart", id), nil)
 	if err != nil {
 		return nil, nil, err
@@ -213,7 +205,7 @@ func (js *JobsService) Restart(ctx context.Context, id uint) (*MinimalJob, *http
 		return nil, resp, err
 	}
 
-	return &jobResponse.Job, resp, err
+	return jobResponse.Job, resp, err
 }
 
 // Debug restarts a job in debug mode based on the provided job id
@@ -221,7 +213,7 @@ func (js *JobsService) Restart(ctx context.Context, id uint) (*MinimalJob, *http
 // to enable the debug feature
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#debug
-func (js *JobsService) Debug(ctx context.Context, id uint) (*MinimalJob, *http.Response, error) {
+func (js *JobsService) Debug(ctx context.Context, id uint) (*Job, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/debug", id), nil)
 	if err != nil {
 		return nil, nil, err
@@ -238,5 +230,5 @@ func (js *JobsService) Debug(ctx context.Context, id uint) (*MinimalJob, *http.R
 		return nil, resp, err
 	}
 
-	return &jobResponse.Job, resp, err
+	return jobResponse.Job, resp, err
 }

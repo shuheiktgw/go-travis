@@ -28,7 +28,7 @@ func TestBetaFeaturesService_List(t *testing.T) {
 		t.Errorf("BetaFeatures.List returned error: %v", err)
 	}
 
-	want := []BetaFeature{{Id: 1, Name: "dashboard", Description: "Try the new personal Dashboard layout", Enabled: true, FeedbackUrl: "https://github.com/travis-ci/beta-features/issues/5"}}
+	want := []*BetaFeature{{Id: 1, Name: "dashboard", Description: "Try the new personal Dashboard layout", Enabled: true, FeedbackUrl: "https://github.com/travis-ci/beta-features/issues/5"}}
 	if !reflect.DeepEqual(features, want) {
 		t.Errorf("BetaFeatures.List returned %+v, want %+v", features, want)
 	}

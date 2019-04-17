@@ -15,7 +15,7 @@ import (
 )
 
 func TestBuildService_Integration_Find(t *testing.T) {
-	build, res, err := integrationClient.Builds.Find(context.TODO(), integrationBuildId)
+	build, res, err := integrationClient.Builds.Find(context.TODO(), integrationBuildId, &BuildOption{Include: []string{"build.commit"}})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -36,6 +36,7 @@ func TestBuildsService_Integration_List(t *testing.T) {
 		{Limit: 1},
 		{SortBy: "id"},
 		{Offset: 0},
+		{Include: []string{"build.branch", "build.commit"}},
 	}
 
 	for i, opt := range cases {
@@ -52,6 +53,8 @@ func TestBuildsService_Integration_List(t *testing.T) {
 		if len(builds) == 0 {
 			t.Fatalf("#%d returned empty builds", i)
 		}
+
+		time.Sleep(5 * time.Millisecond)
 	}
 }
 
@@ -66,6 +69,7 @@ func TestBuildsService_Integration_ListByRepoId(t *testing.T) {
 		{EventType: []string{BuildEventTypePush}},
 		{CreatedBy: []string{"shuheiktgwtest"}},
 		{BranchName: []string{"master", "test"}},
+		{Include: []string{"build.branch", "build.commit"}},
 	}
 
 	for i, opt := range cases {
@@ -82,6 +86,8 @@ func TestBuildsService_Integration_ListByRepoId(t *testing.T) {
 		if len(builds) == 0 {
 			t.Fatalf("#%d returned empty builds", i)
 		}
+
+		time.Sleep(5 * time.Millisecond)
 	}
 }
 
@@ -95,6 +101,7 @@ func TestBuildsService_Integration_ListByRepoSlug(t *testing.T) {
 		{PreviousState: []string{BuildStatePassed}},
 		{EventType: []string{BuildEventTypePush}},
 		{CreatedBy: []string{"shuheiktgwtest"}},
+		{Include: []string{"build.branch", "build.commit"}},
 	}
 
 	for i, opt := range cases {
@@ -111,6 +118,8 @@ func TestBuildsService_Integration_ListByRepoSlug(t *testing.T) {
 		if len(builds) == 0 {
 			t.Fatalf("#%d returned empty builds", i)
 		}
+
+		time.Sleep(5 * time.Millisecond)
 	}
 }
 

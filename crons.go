@@ -25,9 +25,9 @@ type Cron struct {
 	// Value uniquely identifying the cron
 	Id uint `json:"id,omitempty"`
 	// Github repository to which this cron belongs
-	Repository MinimalRepository `json:"repository,omitempty"`
+	Repository *Repository `json:"repository,omitempty"`
 	// Git branch of repository to which this cron belongs
-	Branch MinimalBranch `json:"branch,omitempty"`
+	Branch *Branch `json:"branch,omitempty"`
 	// Interval at which the cron will run (can be "daily", "weekly" or "monthly")
 	Interval string `json:"interval,omitempty"`
 	// Whether a cron build should run if there has been a build on this branch in the last 24 hours
@@ -40,7 +40,7 @@ type Cron struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// Whether the cron is active or not
 	Active bool `json:"active,omitempty"`
-	Metadata
+	*Metadata
 }
 
 // CronBody specifies body for
@@ -64,7 +64,7 @@ type CronsOption struct {
 // getCronsResponse represents a response
 // from crons endpoints
 type getCronsResponse struct {
-	Crons []Cron `json:"crons,omitempty"`
+	Crons []*Cron `json:"crons,omitempty"`
 }
 
 const (
@@ -145,7 +145,7 @@ func (cs *CronsService) FindByRepoSlug(ctx context.Context, repoSlug string, bra
 // ListByRepoId fetches crons based on the provided repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/crons#for_repository
-func (cs *CronsService) ListByRepoId(ctx context.Context, repoId uint, opt *CronsOption) ([]Cron, *http.Response, error) {
+func (cs *CronsService) ListByRepoId(ctx context.Context, repoId uint, opt *CronsOption) ([]*Cron, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/crons", repoId), opt)
 	if err != nil {
 		return nil, nil, err
@@ -168,7 +168,7 @@ func (cs *CronsService) ListByRepoId(ctx context.Context, repoId uint, opt *Cron
 // ListByRepoSlug fetches crons based on the provided repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/crons#for_repository
-func (cs *CronsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *CronsOption) ([]Cron, *http.Response, error) {
+func (cs *CronsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *CronsOption) ([]*Cron, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/crons", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err

@@ -24,8 +24,8 @@ type Log struct {
 	// The content of the log
 	Content string `json:"content,omitempty"`
 	// The log parts that form the log
-	LogParts []LogPart `json:"log_parts,omitempty"`
-	Metadata
+	LogParts []*LogPart `json:"log_parts,omitempty"`
+	*Metadata
 }
 
 // 	LogPart is parts that form the log

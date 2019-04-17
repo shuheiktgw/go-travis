@@ -26,8 +26,8 @@ type Installation struct {
 	// The installation's id on GitHub
 	GitHubId uint `json:"github_id,omitempty"`
 	// GitHub user or organization the installation belongs to
-	Owner MinimalOwner `json:"owner,omitempty"`
-	Metadata
+	Owner *Owner `json:"owner,omitempty"`
+	*Metadata
 }
 
 // Find fetches a single GitHub installation based on the provided id.

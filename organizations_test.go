@@ -51,7 +51,7 @@ func TestOrganizationsService_List(t *testing.T) {
 		t.Errorf("Organizations.List returned error: %v", err)
 	}
 
-	want := []Organization{{Id: 111, Login: "TestOrg", Name: "TestOrg", GithubId: 12345, AvatarUrl: "https:///test.com", Education: false}}
+	want := []*Organization{{Id: 111, Login: "TestOrg", Name: "TestOrg", GithubId: 12345, AvatarUrl: "https:///test.com", Education: false}}
 	if !reflect.DeepEqual(orgs, want) {
 		t.Errorf("Organizations.List returned %+v, want %+v", orgs, want)
 	}

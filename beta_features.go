@@ -31,19 +31,19 @@ type BetaFeature struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// Url for users to leave Travis CI feedback on this feature
 	FeedbackUrl string `json:"feedback_url,omitempty"`
-	Metadata
+	*Metadata
 }
 
 // getBetaFeaturesResponse represents a response
 // from organizations endpoints
 type getBetaFeaturesResponse struct {
-	BetaFeatures []BetaFeature `json:"beta_features,omitempty"`
+	BetaFeatures []*BetaFeature `json:"beta_features,omitempty"`
 }
 
 // List fetches a list of beta features available to a user
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_features#find
-func (bs *BetaFeaturesService) List(ctx context.Context, userId uint) ([]BetaFeature, *http.Response, error) {
+func (bs *BetaFeaturesService) List(ctx context.Context, userId uint) ([]*BetaFeature, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_features", userId), nil)
 	if err != nil {
 		return nil, nil, err

@@ -40,28 +40,16 @@ type Repository struct {
 	// Whether or not this repository is private
 	Private bool `json:"private"`
 	// GitHub user or organization the repository belongs to
-	Owner MinimalOwner `json:"owner"`
+	Owner *Owner `json:"owner"`
 	// The default branch on GitHub
-	DefaultBranch MinimalBranch `json:"default_branch"`
+	DefaultBranch *Branch `json:"default_branch"`
 	// Whether or not this repository is starred
 	Starred bool `json:"starred"`
 	// Whether or not this repository is managed by a GitHub App installation
 	ManagedByInstallation bool `json:"managed_by_installation"`
 	// Whether or not this repository runs builds on travis-ci.org (may also be null)
 	ActiveOnOrg bool `json:"active_on_org"`
-	Metadata
-}
-
-// MinimalRepository is a minimal representation of a Travis CI repository
-//
-// Travis CI API docs: https://developer.travis-ci.com/resource/repository#minimal-representation
-type MinimalRepository struct {
-	// Value uniquely identifying the repository
-	Id uint `json:"id"`
-	// The repository's name on GitHub
-	Name string `json:"name"`
-	// Same as {repository.owner.name}/{repository.name}
-	Slug string `json:"slug"`
+	*Metadata
 }
 
 // Find fetches a repository based on the provided slug

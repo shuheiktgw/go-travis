@@ -30,7 +30,7 @@ func TestPreferencesService_Integration_Find(t *testing.T) {
 	want := &Preference{
 		Name:     integrationPreferenceName,
 		Value:    true,
-		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+		Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
 	}
 
 	if !reflect.DeepEqual(preference, want) {
@@ -42,18 +42,25 @@ func TestPreferencesService_Integration_List(t *testing.T) {
 	preferences, res, err := integrationClient.Preferences.List(context.TODO())
 
 	if err != nil {
-		t.Fatalf("Preferences.Find unexpected error occured: %s", err)
+		t.Fatalf("Preferences.List unexpected error occured: %s", err)
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("Preferences.Find invalid http status: %s", res.Status)
+		t.Fatalf("Preferences.List invalid http status: %s", res.Status)
 	}
 
-	want := []Preference{{
-		Name:     "build_emails",
-		Value:    true,
-		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
-	}}
+	want := []*Preference{
+		{
+			Name:     "build_emails",
+			Value:    true,
+			Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
+		},
+		{
+			Name:     "private_insights_visibility",
+			Value:    "private",
+			Metadata: &Metadata{Type: "preference", Href: "/v3/preference/private_insights_visibility", Representation: "standard"},
+		},
+	}
 
 	if !reflect.DeepEqual(preferences, want) {
 		t.Errorf("Preferences.Find returned %+v, want %+v", preferences, want)
@@ -75,7 +82,7 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 	want := &Preference{
 		Name:     integrationPreferenceName,
 		Value:    false,
-		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+		Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
 	}
 
 	if !reflect.DeepEqual(preference, want) {
@@ -96,7 +103,7 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 	want = &Preference{
 		Name:     integrationPreferenceName,
 		Value:    true,
-		Metadata: Metadata{Type: "preference", Href: "/preference/build_emails", Representation: "standard"},
+		Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
 	}
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Update returned %+v, want %+v", preference, want)

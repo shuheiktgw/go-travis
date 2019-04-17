@@ -72,7 +72,7 @@ func TestEnvVarsService_ListByRepoId(t *testing.T) {
 		t.Errorf("EnvVars.FindByRepoId returned error: %v", err)
 	}
 
-	want := []EnvVar{{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}}
+	want := []*EnvVar{{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.FindByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -93,7 +93,7 @@ func TestEnvVarsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("EnvVars.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []EnvVar{{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}}
+	want := []*EnvVar{{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.FindByRepoSlug returned %+v, want %+v", envVar, want)
 	}

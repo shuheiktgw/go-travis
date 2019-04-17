@@ -34,11 +34,11 @@ func TestOrganizationsService_Integration_Find(t *testing.T) {
 		GithubId:  351550,
 		AvatarUrl: "https://avatars1.githubusercontent.com/u/351550",
 		Education: false,
-		Metadata: Metadata{
+		Metadata: &Metadata{
 			Type:           "organization",
 			Href:           "/org/111",
 			Representation: "standard",
-			Permissions:    Permissions{"read": true, "sync": false},
+			Permissions:    Permissions{"read": true, "admin": false, "sync": false},
 		},
 	}
 
