@@ -17,7 +17,8 @@ import (
 const buildId = 420907933
 
 func TestJobsService_Integration_Find(t *testing.T) {
-	job, res, err := integrationClient.Jobs.Find(context.TODO(), integrationJobId)
+	opt := JobOption{Include: []string{"job.repository"}}
+	job, res, err := integrationClient.Jobs.Find(context.TODO(), integrationJobId, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -30,6 +31,14 @@ func TestJobsService_Integration_Find(t *testing.T) {
 	if job.Id != integrationJobId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, job.Id)
 	}
+
+	if job.Repository.IsMinimal() {
+		t.Fatal("repository is minimal representation")
+	}
+
+	if job.Commit.IsStandard() {
+		t.Fatal("commit is standard representation")
+	}
 }
 
 func TestJobsService_Integration_ListByBuild(t *testing.T) {
@@ -40,7 +49,7 @@ func TestJobsService_Integration_ListByBuild(t *testing.T) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
+		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
 	if len(jobs) == 0 {

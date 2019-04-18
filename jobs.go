@@ -54,8 +54,7 @@ type Job struct {
 	*Metadata
 }
 
-// JobsOption is query parameters to one can specify
-// to find jobs
+// JobsOption is query parameters to one can specify to find jobs
 type JobsOption struct {
 	// How many jobs to include in the response
 	Limit int `url:"limit,omitempty"`
@@ -65,9 +64,17 @@ type JobsOption struct {
 	SortBy []string `url:"sort_by,omitempty,comma"`
 	// // Current state of the job
 	State []string `url:"state,omitempty,comma"`
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
-type getJobsResponse struct {
+// JobOption is query parameters to one can specify to find job
+type JobOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
+}
+
+type jobsResponse struct {
 	Jobs []*Job `json:"jobs"`
 }
 
@@ -94,8 +101,8 @@ const (
 // Find fetches a job based on the provided job id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#find
-func (js *JobsService) Find(ctx context.Context, id uint) (*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d", id), nil)
+func (js *JobsService) Find(ctx context.Context, id uint, opt *JobOption) (*Job, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/job/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -128,13 +135,13 @@ func (js *JobsService) ListByBuild(ctx context.Context, buildId uint) ([]*Job, *
 		return nil, nil, err
 	}
 
-	var getJobsResponse getJobsResponse
-	resp, err := js.client.Do(ctx, req, &getJobsResponse)
+	var jr jobsResponse
+	resp, err := js.client.Do(ctx, req, &jr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getJobsResponse.Jobs, resp, err
+	return jr.Jobs, resp, err
 }
 
 // List fetches current user's jobs based on the provided options
@@ -153,13 +160,13 @@ func (js *JobsService) List(ctx context.Context, opt *JobsOption) ([]*Job, *http
 		return nil, nil, err
 	}
 
-	var getJobsResponse getJobsResponse
-	resp, err := js.client.Do(ctx, req, &getJobsResponse)
+	var jr jobsResponse
+	resp, err := js.client.Do(ctx, req, &jr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getJobsResponse.Jobs, resp, err
+	return jr.Jobs, resp, err
 }
 
 // Cancel cancels a job based on the provided job id
@@ -176,13 +183,13 @@ func (js *JobsService) Cancel(ctx context.Context, id uint) (*Job, *http.Respons
 		return nil, nil, err
 	}
 
-	var jobResponse jobResponse
-	resp, err := js.client.Do(ctx, req, &jobResponse)
+	var jr jobResponse
+	resp, err := js.client.Do(ctx, req, &jr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return jobResponse.Job, resp, err
+	return jr.Job, resp, err
 }
 
 // Restart restarts a job based on the provided job id
@@ -199,13 +206,13 @@ func (js *JobsService) Restart(ctx context.Context, id uint) (*Job, *http.Respon
 		return nil, nil, err
 	}
 
-	var jobResponse jobResponse
-	resp, err := js.client.Do(ctx, req, &jobResponse)
+	var jr jobResponse
+	resp, err := js.client.Do(ctx, req, &jr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return jobResponse.Job, resp, err
+	return jr.Job, resp, err
 }
 
 // Debug restarts a job in debug mode based on the provided job id
@@ -224,11 +231,11 @@ func (js *JobsService) Debug(ctx context.Context, id uint) (*Job, *http.Response
 		return nil, nil, err
 	}
 
-	var jobResponse jobResponse
-	resp, err := js.client.Do(ctx, req, &jobResponse)
+	var jr jobResponse
+	resp, err := js.client.Do(ctx, req, &jr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return jobResponse.Job, resp, err
+	return jr.Job, resp, err
 }

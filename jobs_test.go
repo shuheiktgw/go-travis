@@ -21,10 +21,12 @@ func TestJobsService_Find(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/job/%d", testJobId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "job.commit"})
 		fmt.Fprint(w, `{"id":1,"allow_failure":true,"number":"1","state":"created"}`)
 	})
 
-	job, _, err := client.Jobs.Find(context.Background(), testJobId)
+	opt := JobOption{Include: []string{"job.commit"}}
+	job, _, err := client.Jobs.Find(context.Background(), testJobId, &opt)
 
 	if err != nil {
 		t.Errorf("Job.Find returned error: %v", err)
@@ -63,11 +65,12 @@ func TestJobsService_List(t *testing.T) {
 
 	mux.HandleFunc("/jobs", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"limit": "50", "state": "created,queued"})
+		testFormValues(t, r, values{"limit": "50", "state": "created,queued", "include": "job.commit"})
 		fmt.Fprint(w, `{"jobs":[{"id":1,"allow_failure":true,"number":"1","state":"created"}]}`)
 	})
 
-	job, _, err := client.Jobs.List(context.Background(), &JobsOption{Limit: 50, State: []string{"created", "queued"}})
+	opt := JobsOption{Limit: 50, State: []string{"created", "queued"}, Include: []string{"job.commit"}}
+	job, _, err := client.Jobs.List(context.Background(), &opt)
 
 	if err != nil {
 		t.Errorf("Jobs.List returned error: %v", err)
