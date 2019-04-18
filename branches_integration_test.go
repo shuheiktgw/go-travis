@@ -11,10 +11,13 @@ import (
 	"context"
 	"net/http"
 	"testing"
+	"time"
 )
 
 func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
-	branch, res, err := integrationClient.Branches.FindByRepoId(context.TODO(), integrationRepoId, "master")
+	opt := BranchOption{Include: []string{"branch.recent_builds"}}
+
+	branch, res, err := integrationClient.Branches.FindByRepoId(context.TODO(), integrationRepoId, "master", &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -31,10 +34,16 @@ func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
 	if branch.Repository.Id != integrationRepoId {
 		t.Fatalf("unexpected branch returned: want %d: got %d", integrationRepoId, branch.Repository.Id)
 	}
+
+	if len(branch.RecentBuilds) == 0 {
+		t.Fatal("recent builds is empty")
+	}
 }
 
 func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
-	branch, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepoSlug, "master")
+	opt := BranchOption{Include: []string{"branch.repository"}}
+
+	branch, res, err := integrationClient.Branches.FindByRepoSlug(context.TODO(), integrationRepoSlug, "master", &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -51,14 +60,19 @@ func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
 	if branch.Repository.Slug != integrationRepoSlug {
 		t.Fatalf("unexpected branch returned: want %s: got %s", integrationRepoSlug, branch.Repository.Slug)
 	}
+
+	if branch.Repository == nil {
+		t.Fatal("repository is empty")
+	}
 }
 
 func TestBranchesService_Integration_ListByRepoId(t *testing.T) {
-	cases := []*ListBranchesOption{
+	cases := []*BranchesOption{
 		{},
 		{Limit: 1},
 		{SortBy: "id"},
 		{Offset: 0},
+		{Include: []string{"branch.recent_builds"}},
 	}
 
 	for i, opt := range cases {
@@ -75,15 +89,18 @@ func TestBranchesService_Integration_ListByRepoId(t *testing.T) {
 		if len(branches) == 0 {
 			t.Fatalf("#%d returned empty branches", i)
 		}
+
+		time.Sleep(5 * time.Millisecond)
 	}
 }
 
 func TestBranchesService_Integration_ListByRepoSlug(t *testing.T) {
-	cases := []*ListBranchesOption{
+	cases := []*BranchesOption{
 		{},
 		{Limit: 1},
 		{SortBy: "id"},
 		{Offset: 0},
+		{Include: []string{"branch.repository"}},
 	}
 
 	for i, opt := range cases {
@@ -100,5 +117,7 @@ func TestBranchesService_Integration_ListByRepoSlug(t *testing.T) {
 		if len(branches) == 0 {
 			t.Fatalf("#%d returned empty branches", i)
 		}
+
+		time.Sleep(5 * time.Millisecond)
 	}
 }
