@@ -19,10 +19,12 @@ func TestRepositoriesService_Find(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "repository.default_branch"})
 		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
 	})
 
-	repo, _, err := client.Repositories.Find(context.Background(), testRepoSlug)
+	opt := RepositoryOption{Include: []string{"repository.default_branch"}}
+	repo, _, err := client.Repositories.Find(context.Background(), testRepoSlug, &opt)
 
 	if err != nil {
 		t.Errorf("Repository.Find returned error: %v", err)
