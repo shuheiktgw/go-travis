@@ -49,14 +49,24 @@ type Repository struct {
 	ManagedByInstallation bool `json:"managed_by_installation"`
 	// Whether or not this repository runs builds on travis-ci.org (may also be null)
 	ActiveOnOrg bool `json:"active_on_org"`
+	// The repository's migration_status
+	MigrationStatus string `json:"migration_status"`
+	// The repository's allow_migration
+	AllowMigration bool `json:"allow_migration"`
 	*Metadata
+}
+
+// RepositoryOption is query parameters to one can specify to find repository
+type RepositoryOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
 // Find fetches a repository based on the provided slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#find
-func (rs *RepositoriesService) Find(ctx context.Context, slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s", url.QueryEscape(slug)), nil)
+func (rs *RepositoriesService) Find(ctx context.Context, slug string, opt *RepositoryOption) (*Repository, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s", url.QueryEscape(slug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}

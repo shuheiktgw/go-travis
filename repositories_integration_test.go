@@ -14,7 +14,8 @@ import (
 )
 
 func TestRepositoriesService_Integration_Find(t *testing.T) {
-	repo, res, err := integrationClient.Repositories.Find(context.TODO(), integrationRepoSlug)
+	opt := RepositoryOption{Include: []string{"repository.default_branch"}}
+	repo, res, err := integrationClient.Repositories.Find(context.TODO(), integrationRepoSlug, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -26,6 +27,10 @@ func TestRepositoriesService_Integration_Find(t *testing.T) {
 
 	if got, want := repo.Slug, integrationRepoSlug; got != want {
 		t.Fatalf("unexpected repository returned: want %s: got %s", want, got)
+	}
+
+	if !repo.DefaultBranch.IsStandard() {
+		t.Fatalf("default_branch is in a standard representation")
 	}
 }
 
