@@ -13,6 +13,57 @@ import (
 	"testing"
 )
 
+func TestRepositoriesService_Integration_List(t *testing.T) {
+	opt := RepositoriesOption{Active: true, Include: []string{"repository.default_branch"}}
+	repos, res, err := integrationClient.Repositories.List(context.TODO(), &opt)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if len(repos) == 0 {
+		t.Fatal("repositories are empty")
+	}
+}
+
+func TestRepositoriesService_Integration_ListByOwner(t *testing.T) {
+	opt := RepositoriesOption{Active: true, Include: []string{"repository.default_branch"}}
+	repos, res, err := integrationClient.Repositories.ListByOwner(context.TODO(), integrationGitHubOwner, &opt)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if len(repos) == 0 {
+		t.Fatal("repositories are empty")
+	}
+}
+
+func TestRepositoriesService_Integration_ListGitHubId(t *testing.T) {
+	opt := RepositoriesOption{Active: true, Include: []string{"repository.default_branch"}}
+	repos, res, err := integrationClient.Repositories.ListByGitHubId(context.TODO(), integrationGitHubOwnerId, &opt)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if len(repos) == 0 {
+		t.Fatal("repositories are empty")
+	}
+}
+
 func TestRepositoriesService_Integration_Find(t *testing.T) {
 	opt := RepositoryOption{Include: []string{"repository.default_branch"}}
 	repo, res, err := integrationClient.Repositories.Find(context.TODO(), integrationRepoSlug, &opt)

@@ -13,6 +13,77 @@ import (
 	"testing"
 )
 
+func TestRepositoriesService_List(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc("/repos", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"active_on_org": "true", "starred": "true", "private": "true"})
+		fmt.Fprint(w, `{"repositories": [{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}]}`)
+	})
+
+	opt := RepositoriesOption{ActiveOnOrg: true, Starred: true, Private: true}
+	repos, _, err := client.Repositories.List(context.Background(), &opt)
+
+	if err != nil {
+		t.Errorf("Repository.List returned error: %v", err)
+	}
+
+	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	if !reflect.DeepEqual(repos[0], want) {
+		t.Errorf("Repository.List returned %+v, want %+v", repos[0], want)
+	}
+}
+
+func TestRepositoriesService_ListByOwner(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	owner := "shuheiktgw"
+	mux.HandleFunc(fmt.Sprintf("/owner/%s/repos", owner), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"active_on_org": "true", "starred": "true", "private": "true"})
+		fmt.Fprint(w, `{"repositories": [{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}]}`)
+	})
+
+	opt := RepositoriesOption{ActiveOnOrg: true, Starred: true, Private: true}
+	repos, _, err := client.Repositories.ListByOwner(context.Background(), owner, &opt)
+
+	if err != nil {
+		t.Errorf("Repository.ListByOwner returned error: %v", err)
+	}
+
+	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	if !reflect.DeepEqual(repos[0], want) {
+		t.Errorf("Repository.ListByOwner returned %+v, want %+v", repos[0], want)
+	}
+}
+
+func TestRepositoriesService_ListByGitHubId(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	var id uint = 9999
+	mux.HandleFunc(fmt.Sprintf("/owner/github_id/%d/repos", id), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"active_on_org": "true", "starred": "true", "private": "true"})
+		fmt.Fprint(w, `{"repositories": [{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}]}`)
+	})
+
+	opt := RepositoriesOption{ActiveOnOrg: true, Starred: true, Private: true}
+	repos, _, err := client.Repositories.ListByGitHubId(context.Background(), id, &opt)
+
+	if err != nil {
+		t.Errorf("Repository.ListByOwner returned error: %v", err)
+	}
+
+	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	if !reflect.DeepEqual(repos[0], want) {
+		t.Errorf("Repository.ListByOwner returned %+v, want %+v", repos[0], want)
+	}
+}
+
 func TestRepositoriesService_Find(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
