@@ -103,7 +103,7 @@ type BuildOption struct {
 	Include []string `url:"include,omitempty,comma"`
 }
 
-type getBuildsResponse struct {
+type buildsResponse struct {
 	Builds []*Build `json:"builds"`
 }
 
@@ -173,13 +173,13 @@ func (bs *BuildsService) List(ctx context.Context, opt *BuildsOption) ([]*Build,
 		return nil, nil, err
 	}
 
-	var getBuildsResponse getBuildsResponse
-	resp, err := bs.client.Do(ctx, req, &getBuildsResponse)
+	var br buildsResponse
+	resp, err := bs.client.Do(ctx, req, &br)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getBuildsResponse.Builds, resp, err
+	return br.Builds, resp, err
 }
 
 // ListByRepoId fetches current user's builds based on the repository id and options
@@ -196,13 +196,13 @@ func (bs *BuildsService) ListByRepoId(ctx context.Context, repoId uint, opt *Bui
 		return nil, nil, err
 	}
 
-	var getBuildsResponse getBuildsResponse
-	resp, err := bs.client.Do(ctx, req, &getBuildsResponse)
+	var br buildsResponse
+	resp, err := bs.client.Do(ctx, req, &br)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getBuildsResponse.Builds, resp, err
+	return br.Builds, resp, err
 }
 
 // ListByRepoSlug fetches current user's builds based on the repository slug and options
@@ -219,13 +219,13 @@ func (bs *BuildsService) ListByRepoSlug(ctx context.Context, repoSlug string, op
 		return nil, nil, err
 	}
 
-	var getBuildsResponse getBuildsResponse
-	resp, err := bs.client.Do(ctx, req, &getBuildsResponse)
+	var br buildsResponse
+	resp, err := bs.client.Do(ctx, req, &br)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getBuildsResponse.Builds, resp, err
+	return br.Builds, resp, err
 }
 
 // Cancel cancels a build based on the provided build id
@@ -265,11 +265,11 @@ func (bs *BuildsService) Restart(ctx context.Context, id uint) (*Build, *http.Re
 		return nil, nil, err
 	}
 
-	var response buildResponse
-	resp, err := bs.client.Do(ctx, req, &response)
+	var br buildResponse
+	resp, err := bs.client.Do(ctx, req, &br)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return response.Build, resp, err
+	return br.Build, resp, err
 }
