@@ -14,7 +14,8 @@ import (
 )
 
 func TestOwnerService_Integration_FindByLogin(t *testing.T) {
-	owner, res, err := integrationClient.Owner.FindByLogin(context.TODO(), integrationGitHubOwner)
+	opt := OwnerOption{Include: []string{"owner.repositories"}}
+	owner, res, err := integrationClient.Owner.FindByLogin(context.TODO(), integrationGitHubOwner, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -27,10 +28,19 @@ func TestOwnerService_Integration_FindByLogin(t *testing.T) {
 	if owner.Login != integrationGitHubOwner {
 		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, owner.Login)
 	}
+
+	if len(owner.Repositories) == 0 {
+		t.Fatal("repositories are empty")
+	}
+
+	if !owner.Repositories[0].IsStandard() {
+		t.Fatal("repository is not in a standard representation")
+	}
 }
 
 func TestOwnerService_Integration_FindByGitHubId(t *testing.T) {
-	owner, res, err := integrationClient.Owner.FindByGitHubId(context.TODO(), integrationGitHubOwnerId)
+	opt := OwnerOption{Include: []string{"owner.installation"}}
+	owner, res, err := integrationClient.Owner.FindByGitHubId(context.TODO(), integrationGitHubOwnerId, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)

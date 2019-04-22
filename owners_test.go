@@ -19,10 +19,12 @@ func TestOwnerService_FindByLogin(t *testing.T) {
 
 	mux.HandleFunc("/owner/shuheiktgw", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "owner.repositories"})
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","github_id":1}`)
 	})
 
-	owner, _, err := client.Owner.FindByLogin(context.Background(), "shuheiktgw")
+	opt := OwnerOption{Include: []string{"owner.repositories"}}
+	owner, _, err := client.Owner.FindByLogin(context.Background(), "shuheiktgw", &opt)
 
 	if err != nil {
 		t.Errorf("Owner.FindByLogin returned error: %v", err)
@@ -40,10 +42,12 @@ func TestOwnerService_FindByGitHubId(t *testing.T) {
 
 	mux.HandleFunc("/owner/github_id/1", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "owner.installation"})
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","github_id":1}`)
 	})
 
-	owner, _, err := client.Owner.FindByGitHubId(context.Background(), 1)
+	opt := OwnerOption{Include: []string{"owner.installation"}}
+	owner, _, err := client.Owner.FindByGitHubId(context.Background(), 1, &opt)
 
 	if err != nil {
 		t.Errorf("Owner.FindByGitHubId returned error: %v", err)
