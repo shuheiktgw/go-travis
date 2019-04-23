@@ -21,10 +21,12 @@ func TestUserService_Current(t *testing.T) {
 
 	mux.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "user.repositories,user.installation,user.emails"})
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","name":"shuheiktgw","github_id":1}`)
 	})
 
-	repo, _, err := client.User.Current(context.Background())
+	opt := UserOption{Include: []string{"user.repositories", "user.installation", "user.emails"}}
+	repo, _, err := client.User.Current(context.Background(), &opt)
 
 	if err != nil {
 		t.Errorf("UserService.Current returned error: %v", err)
@@ -42,10 +44,12 @@ func TestUserService_Find(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/user/%d", testUserId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "user.repositories,user.installation,user.emails"})
 		fmt.Fprint(w, `{"id":1,"login":"shuheiktgw","name":"shuheiktgw","github_id":1}`)
 	})
 
-	repo, _, err := client.User.Find(context.Background(), testUserId)
+	opt := UserOption{Include: []string{"user.repositories", "user.installation", "user.emails"}}
+	repo, _, err := client.User.Find(context.Background(), testUserId, &opt)
 
 	if err != nil {
 		t.Errorf("UserService.Find returned error: %v", err)

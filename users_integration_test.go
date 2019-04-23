@@ -13,10 +13,9 @@ import (
 	"testing"
 )
 
-const integrationUserId uint = 1362503
-
 func TestUserService_Integration_Current(t *testing.T) {
-	user, res, err := integrationClient.User.Current(context.TODO())
+	opt := UserOption{Include: []string{"user.repositories", "user.installation", "user.emails"}}
+	user, res, err := integrationClient.User.Current(context.TODO(), &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -28,11 +27,20 @@ func TestUserService_Integration_Current(t *testing.T) {
 
 	if user.Id != integrationUserId {
 		t.Fatalf("unexpected user returned: want user_id: %d, got user_id %d", integrationUserId, user.Id)
+	}
+
+	if !user.Repositories[0].IsStandard() {
+		t.Fatal("repository is not in a standard representation")
+	}
+
+	if len(user.Emails) == 0 {
+		t.Fatal("emails are empty")
 	}
 }
 
 func TestUserService_Integration_Find(t *testing.T) {
-	user, res, err := integrationClient.User.Find(context.TODO(), integrationUserId)
+	opt := UserOption{Include: []string{"user.repositories", "user.installation", "user.emails"}}
+	user, res, err := integrationClient.User.Find(context.TODO(), integrationUserId, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -44,6 +52,14 @@ func TestUserService_Integration_Find(t *testing.T) {
 
 	if user.Id != integrationUserId {
 		t.Fatalf("unexpected user returned: want user_id: %d, got user_id %d", integrationUserId, user.Id)
+	}
+
+	if !user.Repositories[0].IsStandard() {
+		t.Fatal("repository is not in a standard representation")
+	}
+
+	if len(user.Emails) == 0 {
+		t.Fatal("emails are empty")
 	}
 }
 

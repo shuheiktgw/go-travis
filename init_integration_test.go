@@ -12,16 +12,17 @@ import (
 )
 
 var (
+	integrationBuildId       uint = 426024083
 	integrationClient        *Client
-	integrationGitHubToken        = os.Getenv("TRAVIS_GITHUB_PERSONAL_ACCESS_TOKEN")
 	integrationGitHubOwner        = "shuheiktgwtest"
 	integrationGitHubOwnerId uint = 41975784
+	integrationGitHubToken        = os.Getenv("TRAVIS_GITHUB_PERSONAL_ACCESS_TOKEN")
+	integrationJobId         uint = 426024084
 	integrationRepoSlug           = "shuheiktgwtest/go-travis-test"
 	integrationRepoId        uint = 20783933
-	integrationBuildId       uint = 426024083
-	integrationJobId         uint = 426024084
 	integrationTravisToken        = os.Getenv("TRAVIS_API_AUTH_TOKEN")
 	integrationUrl                = ApiOrgUrl
+	integrationUserId        uint = 1362503
 )
 
 func init() {
