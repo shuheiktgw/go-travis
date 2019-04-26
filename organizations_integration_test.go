@@ -10,14 +10,14 @@ package travis
 import (
 	"context"
 	"net/http"
-	"reflect"
 	"testing"
 )
 
 const integrationOrgId = 111
 
 func TestOrganizationsService_Integration_Find(t *testing.T) {
-	org, res, err := integrationClient.Organizations.Find(context.TODO(), integrationOrgId)
+	opt := OrganizationOption{Include: []string{"organization.repositories"}}
+	org, res, err := integrationClient.Organizations.Find(context.TODO(), integrationOrgId, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -27,28 +27,17 @@ func TestOrganizationsService_Integration_Find(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	want := &Organization{
-		Id:        integrationOrgId,
-		Login:     "RubyMoney",
-		Name:      "RubyMoney",
-		GithubId:  351550,
-		AvatarUrl: "https://avatars1.githubusercontent.com/u/351550",
-		Education: false,
-		Metadata: &Metadata{
-			Type:           "organization",
-			Href:           "/org/111",
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "admin": false, "sync": false},
-		},
+	if got, want := org.Id, uint(integrationOrgId); got != want {
+		t.Fatalf("invalid org id: want: %d, got: %d", want, got)
 	}
 
-	if !reflect.DeepEqual(org, want) {
-		t.Errorf("Organizations.Find returned %+v, want %+v", org, want)
+	if r := org.Repositories[0]; !r.IsStandard() {
+		t.Fatal("repository is not in a standard representation")
 	}
 }
 
 func TestOrganizationsService_Integration_List(t *testing.T) {
-	opt := OrganizationsOption{Limit: 50, Offset: 50, SortBy: "id"}
+	opt := OrganizationsOption{Limit: 50, Offset: 50, SortBy: "id", Include: []string{"organization.repositories"}}
 	_, res, err := integrationClient.Organizations.List(context.TODO(), &opt)
 
 	if err != nil {

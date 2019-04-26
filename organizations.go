@@ -33,7 +33,17 @@ type Organization struct {
 	AvatarUrl string `json:"avatar_url,omitempty"`
 	// Whether or not the organization has an education account
 	Education bool `json:"education,omitempty"`
+	// Repositories belonging to this organization.
+	Repositories []*Repository `json:"repositories,omitempty"`
+	// Installation belonging to the organization
+	Installation *Installation `json:"installation,omitempty"`
 	*Metadata
+}
+
+// OrganizationOption specifies the optional parameters for organization endpoint
+type OrganizationOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
 // OrganizationsOption specifies the optional parameters for organizations endpoint
@@ -44,19 +54,21 @@ type OrganizationsOption struct {
 	Offset int `url:"offset,omitempty"`
 	// Attributes to sort organizations by
 	SortBy string `url:"sort_by,omitempty"`
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
-// getOrganizationsResponse represents a response
+// organizationsResponse represents a response
 // from organizations endpoints
-type getOrganizationsResponse struct {
+type organizationsResponse struct {
 	Organizations []*Organization `json:"organizations,omitempty"`
 }
 
 // Find fetches an organization with the given id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/organization#find
-func (os *OrganizationsService) Find(ctx context.Context, id uint) (*Organization, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/org/%d", id), nil)
+func (os *OrganizationsService) Find(ctx context.Context, id uint, opt *OrganizationOption) (*Organization, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/org/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,11 +101,11 @@ func (os *OrganizationsService) List(ctx context.Context, opt *OrganizationsOpti
 		return nil, nil, err
 	}
 
-	var getOrganizationsResponse getOrganizationsResponse
-	resp, err := os.client.Do(ctx, req, &getOrganizationsResponse)
+	var or organizationsResponse
+	resp, err := os.client.Do(ctx, req, &or)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getOrganizationsResponse.Organizations, resp, err
+	return or.Organizations, resp, err
 }
