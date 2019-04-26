@@ -19,10 +19,12 @@ func TestOrganizationsService_Find(t *testing.T) {
 
 	mux.HandleFunc("/org/111", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "organization.repositories"})
 		fmt.Fprint(w, `{"id":111,"login":"TestOrg","name":"TestOrg","github_id":12345,"avatar_url":"https:///test.com","education":false}`)
 	})
 
-	org, _, err := client.Organizations.Find(context.Background(), 111)
+	opt := OrganizationOption{Include: []string{"organization.repositories"}}
+	org, _, err := client.Organizations.Find(context.Background(), 111, &opt)
 
 	if err != nil {
 		t.Errorf("Organizations.Find returned error: %v", err)
@@ -40,11 +42,11 @@ func TestOrganizationsService_List(t *testing.T) {
 
 	mux.HandleFunc("/orgs", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"limit": "50", "offset": "50", "sort_by": "id"})
+		testFormValues(t, r, values{"limit": "50", "offset": "50", "sort_by": "id", "include": "organization.repositories"})
 		fmt.Fprint(w, `{"organizations":[{"id":111,"login":"TestOrg","name":"TestOrg","github_id":12345,"avatar_url":"https:///test.com","education":false}]}`)
 	})
 
-	opt := OrganizationsOption{Limit: 50, Offset: 50, SortBy: "id"}
+	opt := OrganizationsOption{Limit: 50, Offset: 50, SortBy: "id", Include: []string{"organization.repositories"}}
 	orgs, _, err := client.Organizations.List(context.Background(), &opt)
 
 	if err != nil {
