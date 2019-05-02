@@ -14,7 +14,8 @@ import (
 )
 
 func TestInstallations_Integration_Find(t *testing.T) {
-	_, res, err := integrationClient.Installations.Find(context.TODO(), 111)
+	opt := InstallationOption{Include: []string{"installation.owner"}}
+	_, res, err := integrationClient.Installations.Find(context.TODO(), 111, &opt)
 
 	if err == nil {
 		t.Error("error is not supposed to be nil")

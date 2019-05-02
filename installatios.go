@@ -30,11 +30,17 @@ type Installation struct {
 	*Metadata
 }
 
+// InstallationOption is query parameters to one can specify to find installation
+type InstallationOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
+}
+
 // Find fetches a single GitHub installation based on the provided id.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/installation#find
-func (is *InstallationsService) Find(ctx context.Context, id uint) (*Installation, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/installation/%d", id), nil)
+func (is *InstallationsService) Find(ctx context.Context, id uint, opt *InstallationOption) (*Installation, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/installation/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -21,10 +21,12 @@ func TestInstallationsService_Find(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/installation/%d", testInstallationId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "installation.owner"})
 		fmt.Fprintf(w, `{"id":%d,"github_id":%d}`, testInstallationId, testGitHubId)
 	})
 
-	installation, _, err := client.Installations.Find(context.Background(), testInstallationId)
+	opt := InstallationOption{Include: []string{"installation.owner"}}
+	installation, _, err := client.Installations.Find(context.Background(), testInstallationId, &opt)
 
 	if err != nil {
 		t.Errorf("Installation.Find returned error: %v", err)
