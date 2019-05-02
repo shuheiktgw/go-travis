@@ -17,17 +17,23 @@ type ActiveService struct {
 	client *Client
 }
 
-// getActiveResponse represents the response of a call
+// activeResponse represents the response of a call
 // to the Travis CI active endpoint.
-type getActiveResponse struct {
+type activeResponse struct {
 	Builds []*Build `json:"builds"`
+}
+
+// ActiveOption specifies the optional parameters for active endpoint
+type ActiveOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
 // FindByOwner fetches active builds based on the owner's name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/active#for_owner
-func (as *ActiveService) FindByOwner(ctx context.Context, owner string) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/%s/active", owner), nil)
+func (as *ActiveService) FindByOwner(ctx context.Context, owner string, opt *ActiveOption) ([]*Build, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/owner/%s/active", owner), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -37,20 +43,20 @@ func (as *ActiveService) FindByOwner(ctx context.Context, owner string) ([]*Buil
 		return nil, nil, err
 	}
 
-	var getActiveResponse getActiveResponse
-	resp, err := as.client.Do(ctx, req, &getActiveResponse)
+	var ar activeResponse
+	resp, err := as.client.Do(ctx, req, &ar)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getActiveResponse.Builds, resp, err
+	return ar.Builds, resp, err
 }
 
 // FindByGitHubId fetches active builds based on the owner's GitHub id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/active#for_owner
-func (as *ActiveService) FindByGitHubId(ctx context.Context, githubId uint) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/github_id/%d/active", githubId), nil)
+func (as *ActiveService) FindByGitHubId(ctx context.Context, githubId uint, opt *ActiveOption) ([]*Build, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/owner/github_id/%d/active", githubId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -60,11 +66,11 @@ func (as *ActiveService) FindByGitHubId(ctx context.Context, githubId uint) ([]*
 		return nil, nil, err
 	}
 
-	var getActiveResponse getActiveResponse
-	resp, err := as.client.Do(ctx, req, &getActiveResponse)
+	var ar activeResponse
+	resp, err := as.client.Do(ctx, req, &ar)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getActiveResponse.Builds, resp, err
+	return ar.Builds, resp, err
 }
