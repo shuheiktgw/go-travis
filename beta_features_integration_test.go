@@ -59,3 +59,30 @@ func TestBetaFeaturesService_Integration_Update(t *testing.T) {
 		t.Fatalf("unexpected beta feature has returned: %v", feature)
 	}
 }
+
+func TestBetaFeaturesService_Integration_Delete(t *testing.T) {
+	// Need to enable the feature before deleting it
+	_, res, err := integrationClient.BetaFeatures.Update(context.TODO(), integrationUserId, integrationBetaFeatureId, true)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	f, res, err := integrationClient.BetaFeatures.Delete(context.TODO(), integrationUserId, integrationBetaFeatureId)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+
+	if got, want := int(f.Id), integrationBetaFeatureId; got != want {
+		t.Fatalf("invalid beta feature id: got %d, want: %d", got, want)
+	}
+}
