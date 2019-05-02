@@ -35,16 +35,39 @@ type LogPart struct {
 	Number  uint   `json:"number,omitempty"`
 }
 
-// FindByJob fetches a job's log based on it's provided id.
+// FindByJobId fetches a job's log based on it's provided id.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/log#find
-func (ls *LogsService) FindByJob(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
+func (ls *LogsService) FindByJobId(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/log", jobId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	req, err := ls.client.NewRequest(http.MethodGet, u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var log Log
+	resp, err := ls.client.Do(ctx, req, &log)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &log, resp, err
+}
+
+// DeleteByJobId fetches a job's log based on it's provided id.
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/log#delete
+func (ls *LogsService) DeleteByJobId(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/job/%d/log", jobId), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := ls.client.NewRequest(http.MethodDelete, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
