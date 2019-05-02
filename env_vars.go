@@ -44,9 +44,9 @@ type EnvVarBody struct {
 	Public bool `json:"env_var.public"`
 }
 
-// getEnvVarsResponse represents the response of a call
+// envVarsResponse represents the response of a call
 // to the Travis CI env vars endpoint.
-type getEnvVarsResponse struct {
+type envVarsResponse struct {
 	EnvVars []*EnvVar `json:"env_vars"`
 }
 
@@ -110,13 +110,13 @@ func (es *EnvVarsService) ListByRepoId(ctx context.Context, repoId uint) ([]*Env
 		return nil, nil, err
 	}
 
-	var getEnvVarsResponse getEnvVarsResponse
-	resp, err := es.client.Do(ctx, req, &getEnvVarsResponse)
+	var er envVarsResponse
+	resp, err := es.client.Do(ctx, req, &er)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getEnvVarsResponse.EnvVars, resp, err
+	return er.EnvVars, resp, err
 }
 
 // ListByRepoSlug fetches environment variables based on the given repository slug
@@ -133,13 +133,13 @@ func (es *EnvVarsService) ListByRepoSlug(ctx context.Context, repoSlug string) (
 		return nil, nil, err
 	}
 
-	var getEnvVarsResponse getEnvVarsResponse
-	resp, err := es.client.Do(ctx, req, &getEnvVarsResponse)
+	var er envVarsResponse
+	resp, err := es.client.Do(ctx, req, &er)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getEnvVarsResponse.EnvVars, resp, err
+	return er.EnvVars, resp, err
 }
 
 // CreateByRepoId creates environment variable based on the given repository id
