@@ -35,10 +35,10 @@ type LogPart struct {
 	Number  uint   `json:"number,omitempty"`
 }
 
-// FindByJob fetches a job's log based on it's provided id.
+// FindByJobId fetches a job's log based on it's provided id.
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/log#find
-func (ls *LogsService) FindByJob(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
+func (ls *LogsService) FindByJobId(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/job/%d/log", jobId), nil)
 	if err != nil {
 		return nil, nil, err

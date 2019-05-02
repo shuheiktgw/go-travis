@@ -22,7 +22,7 @@ func TestLogsService_FindByJob(t *testing.T) {
 		fmt.Fprint(w, `{"id":1,"content":"test"}`)
 	})
 
-	log, _, err := client.Logs.FindByJob(context.Background(), testJobId)
+	log, _, err := client.Logs.FindByJobId(context.Background(), testJobId)
 
 	if err != nil {
 		t.Errorf("Log.FindByJob returned error: %v", err)
