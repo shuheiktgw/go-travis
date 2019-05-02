@@ -34,9 +34,9 @@ type BetaFeature struct {
 	*Metadata
 }
 
-// getBetaFeaturesResponse represents a response
+// betaFeaturesResponse represents a response
 // from organizations endpoints
-type getBetaFeaturesResponse struct {
+type betaFeaturesResponse struct {
 	BetaFeatures []*BetaFeature `json:"beta_features,omitempty"`
 }
 
@@ -54,13 +54,13 @@ func (bs *BetaFeaturesService) List(ctx context.Context, userId uint) ([]*BetaFe
 		return nil, nil, err
 	}
 
-	var getBetaFeaturesResponse getBetaFeaturesResponse
-	resp, err := bs.client.Do(ctx, req, &getBetaFeaturesResponse)
+	var br betaFeaturesResponse
+	resp, err := bs.client.Do(ctx, req, &br)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getBetaFeaturesResponse.BetaFeatures, resp, err
+	return br.BetaFeatures, resp, err
 }
 
 // Update updates a user's beta_feature
@@ -73,6 +73,29 @@ func (bs *BetaFeaturesService) Update(ctx context.Context, userId uint, id uint,
 	}
 
 	req, err := bs.client.NewRequest(http.MethodPatch, u, map[string]bool{"enabled": enabled}, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var feature BetaFeature
+	resp, err := bs.client.Do(ctx, req, &feature)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &feature, resp, err
+}
+
+// Delete delete a user's beta feature
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/beta_feature#delete
+func (bs *BetaFeaturesService) Delete(ctx context.Context, userId uint, id uint) (*BetaFeature, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_feature/%d", userId, id), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := bs.client.NewRequest(http.MethodDelete, u, nil, nil)
 	if err != nil {
 		return nil, nil, err
 	}
