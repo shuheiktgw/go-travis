@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-func TestLogsService_FindByJob(t *testing.T) {
+func TestLogsService_FindByJobId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -25,11 +25,32 @@ func TestLogsService_FindByJob(t *testing.T) {
 	log, _, err := client.Logs.FindByJobId(context.Background(), testJobId)
 
 	if err != nil {
-		t.Errorf("Log.FindByJob returned error: %v", err)
+		t.Errorf("Log.FindByJobId returned error: %v", err)
 	}
 
 	want := &Log{Id: 1, Content: "test"}
 	if !reflect.DeepEqual(log, want) {
-		t.Errorf("Log.FindByJob returned %+v, want %+v", log, want)
+		t.Errorf("Log.FindByJobId returned %+v, want %+v", log, want)
+	}
+}
+
+func TestLogsService_DeleteByJobId(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/job/%d/log", testJobId), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodDelete)
+		fmt.Fprint(w, `{"id":1,"content":"Log removed by XXX at 2017-02-13 16:00:00 UTC"}`)
+	})
+
+	log, _, err := client.Logs.DeleteByJobId(context.Background(), testJobId)
+
+	if err != nil {
+		t.Errorf("Log.DeleteByJobId returned error: %v", err)
+	}
+
+	want := &Log{Id: 1, Content: "Log removed by XXX at 2017-02-13 16:00:00 UTC"}
+	if !reflect.DeepEqual(log, want) {
+		t.Errorf("Log.DeleteByJobId returned %+v, want %+v", log, want)
 	}
 }

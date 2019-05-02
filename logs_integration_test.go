@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-func TestLogsService_Integration_FindByJob(t *testing.T) {
+func TestLogsService_Integration_FindByJobId(t *testing.T) {
 	_, res, err := integrationClient.Logs.FindByJobId(context.TODO(), integrationJobId)
 
 	if err != nil {
@@ -21,6 +21,16 @@ func TestLogsService_Integration_FindByJob(t *testing.T) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("#invalid http status: %s", res.Status)
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+}
+
+func TestLogsService_Integration_DeleteByJobId(t *testing.T) {
+	var id uint = 420907934
+
+	_, res, _ := integrationClient.Logs.DeleteByJobId(context.TODO(), id)
+
+	if res.StatusCode != http.StatusConflict {
+		t.Fatalf("invalid http status: %s", res.Status)
 	}
 }
