@@ -39,11 +39,13 @@ type Broadcast struct {
 type BroadcastsOption struct {
 	// Filters broadcasts by whether or not the broadcast should still be displayed
 	Active bool `url:"active"`
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
-// getBroadcastsResponse represents a response
+// broadcastsResponse represents a response
 // from broadcast endpoints
-type getBroadcastsResponse struct {
+type broadcastsResponse struct {
 	Broadcasts []*Broadcast `json:"broadcasts,omitempty"`
 }
 
@@ -61,11 +63,11 @@ func (bs *BroadcastsService) List(ctx context.Context, opt *BroadcastsOption) ([
 		return nil, nil, err
 	}
 
-	var getBroadcastsResponse getBroadcastsResponse
-	resp, err := bs.client.Do(ctx, req, &getBroadcastsResponse)
+	var br broadcastsResponse
+	resp, err := bs.client.Do(ctx, req, &br)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getBroadcastsResponse.Broadcasts, resp, err
+	return br.Broadcasts, resp, err
 }

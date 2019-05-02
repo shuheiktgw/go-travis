@@ -18,7 +18,7 @@ func TestBroadcastsService_Integration_List(t *testing.T) {
 	cases := []*BroadcastsOption{
 		nil,
 		{Active: true},
-		{Active: false},
+		{Active: false, Include: []string{"broadcast.recipient"}},
 	}
 
 	for i, opt := range cases {
