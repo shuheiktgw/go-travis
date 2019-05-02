@@ -14,7 +14,9 @@ import (
 )
 
 func TestActiveService_Integration_FindByOwner(t *testing.T) {
-	_, res, err := integrationClient.Active.FindByOwner(context.TODO(), integrationGitHubOwner)
+	opt := ActiveOption{Include: []string{"active.builds"}}
+
+	_, res, err := integrationClient.Active.FindByOwner(context.TODO(), integrationGitHubOwner, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -26,7 +28,9 @@ func TestActiveService_Integration_FindByOwner(t *testing.T) {
 }
 
 func TestActiveService_Integration_FindByGitHubId(t *testing.T) {
-	_, res, err := integrationClient.Active.FindByGitHubId(context.TODO(), integrationGitHubOwnerId)
+	opt := ActiveOption{Include: []string{"active.builds"}}
+
+	_, res, err := integrationClient.Active.FindByGitHubId(context.TODO(), integrationGitHubOwnerId, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
