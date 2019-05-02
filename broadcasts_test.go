@@ -19,11 +19,11 @@ func TestBroadcastsService_List(t *testing.T) {
 
 	mux.HandleFunc("/broadcasts", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"active": "true"})
+		testFormValues(t, r, values{"active": "true", "include": "broadcast.recipient"})
 		fmt.Fprint(w, `{"broadcasts": [{"id":125,"message":"We just switched the default image for","active":true,"created_at":"2014-11-19T14:39:51Z"}]}`)
 	})
 
-	broadcasts, _, err := client.Broadcasts.List(context.Background(), &BroadcastsOption{Active: true})
+	broadcasts, _, err := client.Broadcasts.List(context.Background(), &BroadcastsOption{Active: true, Include: []string{"broadcast.recipient"}})
 
 	if err != nil {
 		t.Errorf("Broadcasts.List returned error: %v", err)
