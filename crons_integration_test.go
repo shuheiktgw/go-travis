@@ -34,23 +34,31 @@ func TestCronService_Integration_ListByRepoId(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Find crons
-	opt := CronsOption{Limit: 5}
+	opt := CronsOption{Limit: 5, Include: []string{"cron.repository", "cron.branch"}}
 	crons, res, err := integrationClient.Crons.ListByRepoId(context.TODO(), integrationRepoId, &opt)
 
 	if err != nil {
-		t.Fatalf("Cron.FindByRepoId unexpected error occured: %s", err)
+		t.Fatalf("Cron.ListByRepoId unexpected error occured: %s", err)
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("Cron.FindByRepoId invalid http status: %s", res.Status)
+		t.Fatalf("Cron.ListByRepoId invalid http status: %s", res.Status)
 	}
 
 	if got, want := len(crons), 1; got != want {
-		t.Fatalf("Cron.FindByRepoId returns invalid number of items: want %d, got %d", want, got)
+		t.Fatalf("Cron.ListByRepoId returns invalid number of items: want %d, got %d", want, got)
 	}
 
 	if got, want := crons[0].Id, createdCron.Id; got != want {
-		t.Fatalf("Cron.FindByRepoId returns invalid item id: want %d, got %d", want, got)
+		t.Fatalf("Cron.ListByRepoId returns invalid item id: want %d, got %d", want, got)
+	}
+
+	if !crons[0].Repository.IsStandard() {
+		t.Fatal("Cron.ListByRepoId returns minimal repository")
+	}
+
+	if !crons[0].Branch.IsStandard() {
+		t.Fatal("Cron.ListByRepoId returns minimal branch")
 	}
 
 	time.Sleep(2 * time.Second)
@@ -87,23 +95,31 @@ func TestCronService_Integration_ListByRepoSlug(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Find crons
-	opt := CronsOption{Limit: 5}
+	opt := CronsOption{Limit: 5, Include: []string{"cron.repository", "cron.branch"}}
 	crons, res, err := integrationClient.Crons.ListByRepoSlug(context.TODO(), integrationRepoSlug, &opt)
 
 	if err != nil {
-		t.Fatalf("Cron.FindByRepoSlug unexpected error occured: %s", err)
+		t.Fatalf("Cron.ListByRepoSlug unexpected error occured: %s", err)
 	}
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatalf("Cron.FindByRepoSlug invalid http status: %s", res.Status)
+		t.Fatalf("Cron.ListByRepoSlug invalid http status: %s", res.Status)
 	}
 
 	if got, want := len(crons), 1; got != want {
-		t.Fatalf("Cron.FindByRepoSlug returns invalid number of items: want %d, got %d", want, got)
+		t.Fatalf("Cron.ListByRepoSlug returns invalid number of items: want %d, got %d", want, got)
 	}
 
 	if got, want := crons[0].Id, createdCron.Id; got != want {
-		t.Fatalf("Cron.FindByRepoSlug returns invalid item id: want %d, got %d", want, got)
+		t.Fatalf("Cron.ListByRepoSlug returns invalid item id: want %d, got %d", want, got)
+	}
+
+	if !crons[0].Repository.IsStandard() {
+		t.Fatal("Cron.ListByRepoSlug returns minimal repository")
+	}
+
+	if !crons[0].Branch.IsStandard() {
+		t.Fatal("Cron.ListByRepoSlug returns minimal branch")
 	}
 
 	time.Sleep(2 * time.Second)
@@ -122,8 +138,8 @@ func TestCronService_Integration_ListByRepoSlug(t *testing.T) {
 
 func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 	// Create a cron by repository id
-	opt := CronBody{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true}
-	createdCron, res, err := integrationClient.Crons.CreateByRepoId(context.TODO(), integrationRepoId, "master", &opt)
+	body := CronBody{Interval: CronIntervalMonthly, DontRunIfRecentBuildExists: true}
+	createdCron, res, err := integrationClient.Crons.CreateByRepoId(context.TODO(), integrationRepoId, "master", &body)
 
 	if err != nil {
 		t.Fatalf("Cron.CreateByRepoId unexpected error occured: %s", err)
@@ -157,7 +173,7 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Create a cron by repository slug
-	createdCron, res, err = integrationClient.Crons.CreateByRepoSlug(context.TODO(), integrationRepoSlug, "master", &opt)
+	createdCron, res, err = integrationClient.Crons.CreateByRepoSlug(context.TODO(), integrationRepoSlug, "master", &body)
 
 	if err != nil {
 		t.Fatalf("Cron.CreateByRepoSlug unexpected error occured: %s", err)
@@ -178,7 +194,8 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Find a cron
-	findCron, res, err := integrationClient.Crons.Find(context.TODO(), createdCron.Id)
+	opt := CronOption{Include: []string{"cron.repository", "cron.branch"}}
+	findCron, res, err := integrationClient.Crons.Find(context.TODO(), createdCron.Id, &opt)
 
 	if err != nil {
 		t.Fatalf("Cron.Find unexpected error occured: %s", err)
@@ -200,10 +217,18 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Errorf("Cron.Find unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
+	if !findCron.Repository.IsStandard() {
+		t.Error("Cron.Find returns minimal repository")
+	}
+
+	if !findCron.Branch.IsStandard() {
+		t.Error("Cron.Find returns minimal branch")
+	}
+
 	time.Sleep(2 * time.Second)
 
 	// Find a cron by repository id
-	findCron, res, err = integrationClient.Crons.FindByRepoId(context.TODO(), integrationRepoId, "master")
+	findCron, res, err = integrationClient.Crons.FindByRepoId(context.TODO(), integrationRepoId, "master", &opt)
 
 	if err != nil {
 		t.Fatalf("Cron.FindByRepoId unexpected error occured: %s", err)
@@ -225,10 +250,18 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Errorf("Cron.FindByRepoId unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
+	if !findCron.Repository.IsStandard() {
+		t.Error("Cron.FindByRepoId returns minimal repository")
+	}
+
+	if !findCron.Branch.IsStandard() {
+		t.Error("Cron.FindByRepoId returns minimal branch")
+	}
+
 	time.Sleep(2 * time.Second)
 
 	// Find a cron by repository slug
-	findCron, res, err = integrationClient.Crons.FindByRepoSlug(context.TODO(), integrationRepoSlug, "master")
+	findCron, res, err = integrationClient.Crons.FindByRepoSlug(context.TODO(), integrationRepoSlug, "master", &opt)
 
 	if err != nil {
 		t.Fatalf("Cron.FindByRepoSlug unexpected error occured: %s", err)
@@ -248,6 +281,14 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 
 	if got, want := findCron.DontRunIfRecentBuildExists, true; got != want {
 		t.Errorf("Cron.FindByRepoSlug unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
+	}
+
+	if !findCron.Repository.IsStandard() {
+		t.Error("Cron.FindByRepoSlug returns minimal repository")
+	}
+
+	if !findCron.Branch.IsStandard() {
+		t.Error("Cron.FindByRepoSlug returns minimal branch")
 	}
 
 	time.Sleep(2 * time.Second)

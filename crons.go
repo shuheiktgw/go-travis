@@ -52,6 +52,13 @@ type CronBody struct {
 	DontRunIfRecentBuildExists bool `json:"cron.dont_run_if_recent_build_exists"`
 }
 
+// CronOption specifies options for
+// fetching cron.
+type CronOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
+}
+
 // CronsOption specifies options for
 // fetching crons.
 type CronsOption struct {
@@ -59,11 +66,13 @@ type CronsOption struct {
 	Limit int `url:"limit,omitempty"`
 	// How many crons to skip before the first entry in the response
 	Offset int `url:"offset,omitempty"`
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
-// getCronsResponse represents a response
+// cronsResponse represents a response
 // from crons endpoints
-type getCronsResponse struct {
+type cronsResponse struct {
 	Crons []*Cron `json:"crons,omitempty"`
 }
 
@@ -76,8 +85,8 @@ const (
 // Find fetches a cron based on the provided id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#find
-func (cs *CronsService) Find(ctx context.Context, id uint) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/cron/%d", id), nil)
+func (cs *CronsService) Find(ctx context.Context, id uint, opt *CronOption) (*Cron, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/cron/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -99,8 +108,8 @@ func (cs *CronsService) Find(ctx context.Context, id uint) (*Cron, *http.Respons
 // FindByRepoId fetches a cron based on the provided repository id and branch name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#for_branch
-func (cs *CronsService) FindByRepoId(ctx context.Context, repoId uint, branch string) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branch/%s/cron", repoId, branch), nil)
+func (cs *CronsService) FindByRepoId(ctx context.Context, repoId uint, branch string, opt *CronOption) (*Cron, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branch/%s/cron", repoId, branch), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -122,8 +131,8 @@ func (cs *CronsService) FindByRepoId(ctx context.Context, repoId uint, branch st
 // FindByRepoSlug fetches a cron based on the provided repository slug and branch name
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#for_branch
-func (cs *CronsService) FindByRepoSlug(ctx context.Context, repoSlug string, branch string) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branch), nil)
+func (cs *CronsService) FindByRepoSlug(ctx context.Context, repoSlug string, branch string, opt *CronOption) (*Cron, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branch), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -156,13 +165,13 @@ func (cs *CronsService) ListByRepoId(ctx context.Context, repoId uint, opt *Cron
 		return nil, nil, err
 	}
 
-	var getCronsResponse getCronsResponse
-	resp, err := cs.client.Do(ctx, req, &getCronsResponse)
+	var cr cronsResponse
+	resp, err := cs.client.Do(ctx, req, &cr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getCronsResponse.Crons, resp, err
+	return cr.Crons, resp, err
 }
 
 // ListByRepoSlug fetches crons based on the provided repository slug
@@ -179,13 +188,13 @@ func (cs *CronsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt
 		return nil, nil, err
 	}
 
-	var getCronsResponse getCronsResponse
-	resp, err := cs.client.Do(ctx, req, &getCronsResponse)
+	var cr cronsResponse
+	resp, err := cs.client.Do(ctx, req, &cr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getCronsResponse.Crons, resp, err
+	return cr.Crons, resp, err
 }
 
 // CreateByRepoId creates a cron based on the provided repository id and branch name

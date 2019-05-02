@@ -21,10 +21,12 @@ func TestCronsService_Find(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/cron/%d", testCronId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "cron.repository"})
 		fmt.Fprint(w, `{"id":12345,"interval":"weekly","dont_run_if_recent_build_exists":true,"active":true}`)
 	})
 
-	cron, _, err := client.Crons.Find(context.Background(), testCronId)
+	opt := CronOption{Include: []string{"cron.repository"}}
+	cron, _, err := client.Crons.Find(context.Background(), testCronId, &opt)
 
 	if err != nil {
 		t.Errorf("Cron.Find returned error: %v", err)
@@ -42,10 +44,12 @@ func TestCronsService_FindByRepoId(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/branch/%s/cron", testRepoId, "master"), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "cron.repository"})
 		fmt.Fprint(w, `{"id":12345,"interval":"weekly","dont_run_if_recent_build_exists":true,"active":true}`)
 	})
 
-	cron, _, err := client.Crons.FindByRepoId(context.Background(), testRepoId, "master")
+	opt := CronOption{Include: []string{"cron.repository"}}
+	cron, _, err := client.Crons.FindByRepoId(context.Background(), testRepoId, "master", &opt)
 
 	if err != nil {
 		t.Errorf("Cron.FindByRepoId returned error: %v", err)
@@ -63,10 +67,12 @@ func TestCronsService_FindByRepoSlug(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/branch/%s/cron", testRepoSlug, "master"), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "cron.repository"})
 		fmt.Fprint(w, `{"id":12345,"interval":"weekly","dont_run_if_recent_build_exists":true,"active":true}`)
 	})
 
-	cron, _, err := client.Crons.FindByRepoSlug(context.Background(), testRepoSlug, "master")
+	opt := CronOption{Include: []string{"cron.repository"}}
+	cron, _, err := client.Crons.FindByRepoSlug(context.Background(), testRepoSlug, "master", &opt)
 
 	if err != nil {
 		t.Errorf("Cron.FindByRepoSlug returned error: %v", err)
