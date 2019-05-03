@@ -65,6 +65,7 @@ type Client struct {
 	Jobs               *JobsService
 	Lint               *LintService
 	Logs               *LogsService
+	Messages           *MessagesService
 	Organizations      *OrganizationsService
 	Owner              *OwnerService
 	Preferences        *PreferencesService
@@ -108,6 +109,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Jobs = &JobsService{client: c}
 	c.Lint = &LintService{client: c}
 	c.Logs = &LogsService{client: c}
+	c.Messages = &MessagesService{client: c}
 	c.Organizations = &OrganizationsService{client: c}
 	c.Owner = &OwnerService{client: c}
 	c.Preferences = &PreferencesService{client: c}
