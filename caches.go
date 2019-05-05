@@ -23,9 +23,9 @@ type CachesService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#attributes
 type Cache struct {
 	// The branch the cache belongs to
-	Branch string `json:"branch,omitempty"`
+	Branch *string `json:"branch,omitempty"`
 	// The string to match against the cache name
-	Match string `json:"match,omitempty"`
+	Match *string `json:"match,omitempty"`
 	*Metadata
 }
 

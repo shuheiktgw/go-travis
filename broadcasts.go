@@ -21,15 +21,15 @@ type BroadcastsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/broadcast#standard-representation
 type Broadcast struct {
 	// Value uniquely identifying the broadcast
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// Message to display to the user
-	Message string `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
 	// Broadcast category (used for icon and color)
-	Category string `json:"category,omitempty"`
+	Category *string `json:"category,omitempty"`
 	// Whether or not the broadcast should still be displayed
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 	// When the broadcast was created
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// Either a user, organization or repository, or null for global
 	Recipient interface{} `json:"recipient,omitempty"`
 	*Metadata

@@ -8,10 +8,10 @@ package travis
 // Tag is a standard representation of a Travis CI tag
 type Tag struct {
 	// Value uniquely identifying a repository of the build belongs to
-	RepositoryId uint `json:"repository_id"`
+	RepositoryId *uint `json:"repository_id"`
 	// Name of the tag
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// Id of a last build on the branch
-	LastBuildId uint `json:"last_build_id"`
+	LastBuildId *uint `json:"last_build_id"`
 	*Metadata
 }

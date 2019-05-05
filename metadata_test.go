@@ -19,7 +19,7 @@ func TestMetadata_isStandard(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		m := Metadata{Representation: c.representation}
+		m := Metadata{Representation: String(c.representation)}
 
 		if got := m.IsStandard(); got != c.want {
 			t.Fatalf("#%d invalid: got %v, want: %v", i, got, c.want)
@@ -37,7 +37,7 @@ func TestMetadata_isMinimal(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		m := Metadata{Representation: c.representation}
+		m := Metadata{Representation: String(c.representation)}
 
 		if got := m.IsMinimal(); got != c.want {
 			t.Fatalf("#%d invalid: got %v, want: %v", i, got, c.want)

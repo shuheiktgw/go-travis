@@ -22,27 +22,27 @@ type UserService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#standard-representation
 type User struct {
 	// Value uniquely identifying the user
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// Login set on Github
-	Login string `json:"login,omitempty"`
+	Login *string `json:"login,omitempty"`
 	// Name set on GitHub
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// Id set on GitHub
-	GithubId uint `json:"github_id,omitempty"`
+	GithubId *uint `json:"github_id,omitempty"`
 	// Avatar URL set on GitHub
-	AvatarUrl string `json:"avatar_url,omitempty"`
+	AvatarUrl *string `json:"avatar_url,omitempty"`
 	// Whether or not the user has an education account
-	Education bool `json:"education,omitempty"`
+	Education *bool `json:"education,omitempty"`
 	// Whether or not the user is currently being synced with Github
-	IsSyncing bool `json:"is_syncing,omitempty"`
+	IsSyncing *bool `json:"is_syncing,omitempty"`
 	// The last time the user was synced with GitHub
-	SyncedAt string `json:"synced_at,omitempty"`
+	SyncedAt *string `json:"synced_at,omitempty"`
 	// Repositories belonging to this user
 	Repositories []*Repository `json:"repositories,omitempty"`
 	// Installation belonging to the user
 	Installation []*Repository `json:"installation,omitempty"`
 	// The user's emails
-	Emails []string `json:"emails,omitempty"`
+	Emails []*string `json:"emails,omitempty"`
 	*Metadata
 }
 

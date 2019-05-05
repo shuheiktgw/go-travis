@@ -27,13 +27,13 @@ func TestSettingsService_Integration_FindByRepoId(t *testing.T) {
 	}
 
 	want := &Setting{
-		Name:  BuildsOnlyWithTravisYmlSetting,
+		Name:  String(BuildsOnlyWithTravisYmlSetting),
 		Value: false,
 		Metadata: &Metadata{
-			Type:           "setting",
-			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
+			Type:           String("setting"),
+			Href:           String("/repo/20783933/setting/builds_only_with_travis_yml"),
+			Representation: String("standard"),
+			Permissions:    &Permissions{"read": true, "write": true},
 		},
 	}
 
@@ -54,13 +54,13 @@ func TestSettingsService_Integration_FindByRepoSlug(t *testing.T) {
 	}
 
 	want := &Setting{
-		Name:  BuildsOnlyWithTravisYmlSetting,
+		Name:  String(BuildsOnlyWithTravisYmlSetting),
 		Value: false,
 		Metadata: &Metadata{
-			Type:           "setting",
-			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
+			Type:           String("setting"),
+			Href:           String("/repo/20783933/setting/builds_only_with_travis_yml"),
+			Representation: String("standard"),
+			Permissions:    &Permissions{"read": true, "write": true},
 		},
 	}
 
@@ -102,7 +102,7 @@ func TestSettingsService_Integration_ListByRepoSlug(t *testing.T) {
 }
 
 func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
-	s := Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
+	s := SettingBody{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
 	setting, res, err := integrationClient.Settings.UpdateByRepoId(context.TODO(), integrationRepoId, &s)
 
 	if err != nil {
@@ -114,13 +114,13 @@ func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
 	}
 
 	want := &Setting{
-		Name:  BuildsOnlyWithTravisYmlSetting,
+		Name:  String(BuildsOnlyWithTravisYmlSetting),
 		Value: true,
 		Metadata: &Metadata{
-			Type:           "setting",
-			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
+			Type:           String("setting"),
+			Href:           String("/repo/20783933/setting/builds_only_with_travis_yml"),
+			Representation: String("standard"),
+			Permissions:    &Permissions{"read": true, "write": true},
 		},
 	}
 
@@ -130,7 +130,7 @@ func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
 
 	time.Sleep(2 * time.Second)
 
-	s = Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: false}
+	s = SettingBody{Name: BuildsOnlyWithTravisYmlSetting, Value: false}
 	setting, res, err = integrationClient.Settings.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, &s)
 
 	if err != nil {
@@ -142,13 +142,13 @@ func TestSettingsService_Integration_UpdateByRepoIdAndSlug(t *testing.T) {
 	}
 
 	want = &Setting{
-		Name:  BuildsOnlyWithTravisYmlSetting,
+		Name:  String(BuildsOnlyWithTravisYmlSetting),
 		Value: false,
 		Metadata: &Metadata{
-			Type:           "setting",
-			Href:           "/repo/20783933/setting/builds_only_with_travis_yml",
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
+			Type:           String("setting"),
+			Href:           String("/repo/20783933/setting/builds_only_with_travis_yml"),
+			Representation: String("standard"),
+			Permissions:    &Permissions{"read": true, "write": true},
 		},
 	}
 

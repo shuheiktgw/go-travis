@@ -23,13 +23,13 @@ type EnvVarsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#standard-representation
 type EnvVar struct {
 	// The environment variable id
-	Id string `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	// The environment variable name, e.g. FOO
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// The environment variable's value, e.g. bar
-	Value string `json:"value,omitempty"`
+	Value *string `json:"value,omitempty"`
 	// Whether this environment variable should be publicly visible or not
-	Public bool `json:"public,omitempty"`
+	Public *bool `json:"public,omitempty"`
 	*Metadata
 }
 

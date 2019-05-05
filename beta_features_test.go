@@ -28,7 +28,7 @@ func TestBetaFeaturesService_List(t *testing.T) {
 		t.Errorf("BetaFeatures.List returned error: %v", err)
 	}
 
-	want := []*BetaFeature{{Id: 1, Name: "dashboard", Description: "Try the new personal Dashboard layout", Enabled: true, FeedbackUrl: "https://github.com/travis-ci/beta-features/issues/5"}}
+	want := []*BetaFeature{{Id: Uint(1), Name: String("dashboard"), Description: String("Try the new personal Dashboard layout"), Enabled: Bool(true), FeedbackUrl: String("https://github.com/travis-ci/beta-features/issues/5")}}
 	if !reflect.DeepEqual(features, want) {
 		t.Errorf("BetaFeatures.List returned %+v, want %+v", features, want)
 	}
@@ -50,7 +50,7 @@ func TestBetaFeaturesService_Update(t *testing.T) {
 		t.Errorf("BetaFeatures.Update returned error: %v", err)
 	}
 
-	want := &BetaFeature{Id: 1, Name: "dashboard", Description: "Try the new personal Dashboard layout", Enabled: true, FeedbackUrl: "https://github.com/travis-ci/beta-features/issues/5"}
+	want := &BetaFeature{Id: Uint(1), Name: String("dashboard"), Description: String("Try the new personal Dashboard layout"), Enabled: Bool(true), FeedbackUrl: String("https://github.com/travis-ci/beta-features/issues/5")}
 	if !reflect.DeepEqual(features, want) {
 		t.Errorf("BetaFeatures.Update returned %+v, want %+v", features, want)
 	}
@@ -71,7 +71,7 @@ func TestBetaFeaturesService_Delete(t *testing.T) {
 		t.Errorf("BetaFeatures.Delete returned error: %v", err)
 	}
 
-	want := &BetaFeature{Id: 1, Name: "dashboard", Description: "Try the new personal Dashboard layout", Enabled: true, FeedbackUrl: "https://github.com/travis-ci/beta-features/issues/5"}
+	want := &BetaFeature{Id: Uint(1), Name: String("dashboard"), Description: String("Try the new personal Dashboard layout"), Enabled: Bool(true), FeedbackUrl: String("https://github.com/travis-ci/beta-features/issues/5")}
 	if !reflect.DeepEqual(features, want) {
 		t.Errorf("BetaFeatures.Delete returned %+v, want %+v", features, want)
 	}

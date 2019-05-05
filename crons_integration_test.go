@@ -49,7 +49,7 @@ func TestCronService_Integration_ListByRepoId(t *testing.T) {
 		t.Fatalf("Cron.ListByRepoId returns invalid number of items: want %d, got %d", want, got)
 	}
 
-	if got, want := crons[0].Id, createdCron.Id; got != want {
+	if got, want := *crons[0].Id, *createdCron.Id; got != want {
 		t.Fatalf("Cron.ListByRepoId returns invalid item id: want %d, got %d", want, got)
 	}
 
@@ -64,7 +64,7 @@ func TestCronService_Integration_ListByRepoId(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Delete a cron
-	res, err = integrationClient.Crons.Delete(context.TODO(), createdCron.Id)
+	res, err = integrationClient.Crons.Delete(context.TODO(), *createdCron.Id)
 
 	if err != nil {
 		t.Fatalf("Cron.Delete unexpected error occured: %s", err)
@@ -110,7 +110,7 @@ func TestCronService_Integration_ListByRepoSlug(t *testing.T) {
 		t.Fatalf("Cron.ListByRepoSlug returns invalid number of items: want %d, got %d", want, got)
 	}
 
-	if got, want := crons[0].Id, createdCron.Id; got != want {
+	if got, want := *crons[0].Id, *createdCron.Id; got != want {
 		t.Fatalf("Cron.ListByRepoSlug returns invalid item id: want %d, got %d", want, got)
 	}
 
@@ -125,7 +125,7 @@ func TestCronService_Integration_ListByRepoSlug(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Delete a cron
-	res, err = integrationClient.Crons.Delete(context.TODO(), createdCron.Id)
+	res, err = integrationClient.Crons.Delete(context.TODO(), *createdCron.Id)
 
 	if err != nil {
 		t.Fatalf("Cron.Delete unexpected error occured: %s", err)
@@ -149,18 +149,18 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Fatalf("Cron.CreateByRepoId invalid http status: %s", res.Status)
 	}
 
-	if got, want := createdCron.Interval, CronIntervalMonthly; got != want {
+	if got, want := *createdCron.Interval, CronIntervalMonthly; got != want {
 		t.Errorf("Cron.CreateByRepoId unexpected cron interval returned: want %s got %s", want, got)
 	}
 
-	if got, want := createdCron.DontRunIfRecentBuildExists, true; got != want {
+	if got, want := *createdCron.DontRunIfRecentBuildExists, true; got != want {
 		t.Errorf("Cron.CreateByRepoId unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
 	time.Sleep(2 * time.Second)
 
 	// Delete a cron
-	res, err = integrationClient.Crons.Delete(context.TODO(), createdCron.Id)
+	res, err = integrationClient.Crons.Delete(context.TODO(), *createdCron.Id)
 
 	if err != nil {
 		t.Fatalf("Cron.Delete unexpected error occured: %s", err)
@@ -183,11 +183,11 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Fatalf("Cron.CreateByRepoSlug invalid http status: %s", res.Status)
 	}
 
-	if got, want := createdCron.Interval, CronIntervalMonthly; got != want {
+	if got, want := *createdCron.Interval, CronIntervalMonthly; got != want {
 		t.Errorf("Cron.CreateByRepoSlug unexpected cron interval returned: want %s got %s", want, got)
 	}
 
-	if got, want := createdCron.DontRunIfRecentBuildExists, true; got != want {
+	if got, want := *createdCron.DontRunIfRecentBuildExists, true; got != want {
 		t.Errorf("Cron.CreateByRepoSlug unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
@@ -195,7 +195,7 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 
 	// Find a cron
 	opt := CronOption{Include: []string{"cron.repository", "cron.branch"}}
-	findCron, res, err := integrationClient.Crons.Find(context.TODO(), createdCron.Id, &opt)
+	findCron, res, err := integrationClient.Crons.Find(context.TODO(), *createdCron.Id, &opt)
 
 	if err != nil {
 		t.Fatalf("Cron.Find unexpected error occured: %s", err)
@@ -205,15 +205,15 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Fatalf("Cron.Find invalid http status: %s", res.Status)
 	}
 
-	if got, want := findCron.Id, createdCron.Id; got != want {
+	if got, want := *findCron.Id, *createdCron.Id; got != want {
 		t.Errorf("Cron.Find unexpected cron interval returned: want %d got %d", want, got)
 	}
 
-	if got, want := findCron.Interval, CronIntervalMonthly; got != want {
+	if got, want := *findCron.Interval, CronIntervalMonthly; got != want {
 		t.Errorf("Cron.Find unexpected cron interval returned: want %s got %s", want, got)
 	}
 
-	if got, want := findCron.DontRunIfRecentBuildExists, true; got != want {
+	if got, want := *findCron.DontRunIfRecentBuildExists, true; got != want {
 		t.Errorf("Cron.Find unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
@@ -238,15 +238,15 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Fatalf("Cron.FindByRepoId invalid http status: %s", res.Status)
 	}
 
-	if got, want := findCron.Id, createdCron.Id; got != want {
+	if got, want := *findCron.Id, *createdCron.Id; got != want {
 		t.Errorf("Cron.FindByRepoId unexpected cron interval returned: want %d got %d", want, got)
 	}
 
-	if got, want := findCron.Interval, CronIntervalMonthly; got != want {
+	if got, want := *findCron.Interval, CronIntervalMonthly; got != want {
 		t.Errorf("Cron.FindByRepoId unexpected cron interval returned: want %s got %s", want, got)
 	}
 
-	if got, want := findCron.DontRunIfRecentBuildExists, true; got != want {
+	if got, want := *findCron.DontRunIfRecentBuildExists, true; got != want {
 		t.Errorf("Cron.FindByRepoId unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
@@ -271,15 +271,15 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 		t.Fatalf("Cron.FindByRepoSlug invalid http status: %s", res.Status)
 	}
 
-	if got, want := findCron.Id, createdCron.Id; got != want {
+	if got, want := *findCron.Id, *createdCron.Id; got != want {
 		t.Errorf("Cron.FindByRepoSlug unexpected cron interval returned: want %d got %d", want, got)
 	}
 
-	if got, want := findCron.Interval, CronIntervalMonthly; got != want {
+	if got, want := *findCron.Interval, CronIntervalMonthly; got != want {
 		t.Errorf("Cron.FindByRepoSlug unexpected cron interval returned: want %s got %s", want, got)
 	}
 
-	if got, want := findCron.DontRunIfRecentBuildExists, true; got != want {
+	if got, want := *findCron.DontRunIfRecentBuildExists, true; got != want {
 		t.Errorf("Cron.FindByRepoSlug unexpected cron DontRunIfRecentBuildExists returned: want %v got %v", want, got)
 	}
 
@@ -294,7 +294,7 @@ func TestCronsService_Integration_CreateAndFindAndDeleteCron(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Delete a cron
-	res, err = integrationClient.Crons.Delete(context.TODO(), createdCron.Id)
+	res, err = integrationClient.Crons.Delete(context.TODO(), *createdCron.Id)
 
 	if err != nil {
 		t.Fatalf("Cron.Delete unexpected error occured: %s", err)

@@ -10,17 +10,17 @@ package travis
 // Travis CI API docs: https://developer.travis-ci.com/resource/commit#standard-representation
 type Commit struct {
 	// Value uniquely identifying the commit
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// Checksum the commit has in git and is identified by
-	Sha string `json:"sha,omitempty"`
+	Sha *string `json:"sha,omitempty"`
 	// Named reference the commit has in git.
-	Ref string `json:"ref,omitempty"`
+	Ref *string `json:"ref,omitempty"`
 	// Commit message
-	Message string `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
 	// URL to the commit's diff on GitHub
-	CompareUrl string `json:"compare_url,omitempty"`
+	CompareUrl *string `json:"compare_url,omitempty"`
 	// Commit date from git
-	CommittedAt string `json:"committed_at,omitempty"`
+	CommittedAt *string `json:"committed_at,omitempty"`
 	// Committer of the commit
 	Committer *Committer `json:"committer,omitempty"`
 	// Author of the commit

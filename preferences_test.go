@@ -30,7 +30,7 @@ func TestPreferencesService_Find(t *testing.T) {
 		t.Errorf("Preference.Find returned error: %v", err)
 	}
 
-	want := &Preference{Name: "builds_email", Value: true}
+	want := &Preference{Name: String("builds_email"), Value: true}
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Find returned %+v, want %+v", preference, want)
 	}
@@ -51,7 +51,7 @@ func TestPreferencesService_List(t *testing.T) {
 		t.Errorf("Preferences.Find returned error: %v", err)
 	}
 
-	want := []*Preference{{Name: "builds_email", Value: true}}
+	want := []*Preference{{Name: String("builds_email"), Value: true}}
 	if !reflect.DeepEqual(preferences, want) {
 		t.Errorf("Preferences.Find returned %+v, want %+v", preferences, want)
 	}
@@ -67,13 +67,13 @@ func TestPreferencesService_Update(t *testing.T) {
 		fmt.Fprint(w, `{"name":"builds_email","value":false}`)
 	})
 
-	preference, _, err := client.Preferences.Update(context.Background(), &Preference{Name: "builds_email", Value: false})
+	preference, _, err := client.Preferences.Update(context.Background(), &PreferenceBody{Name: "builds_email", Value: false})
 
 	if err != nil {
 		t.Errorf("Preference.Update returned error: %v", err)
 	}
 
-	want := &Preference{Name: "builds_email", Value: false}
+	want := &Preference{Name: String("builds_email"), Value: false}
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Update returned %+v, want %+v", preference, want)
 	}

@@ -39,7 +39,7 @@ func TestBetaFeaturesService_Integration_Update(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if feature.Id != integrationBetaFeatureId || feature.Enabled != true {
+	if *feature.Id != integrationBetaFeatureId || *feature.Enabled != true {
 		t.Fatalf("unexpected beta feature has returned: %v", feature)
 	}
 
@@ -55,7 +55,7 @@ func TestBetaFeaturesService_Integration_Update(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if feature.Id != integrationBetaFeatureId || feature.Enabled != false {
+	if *feature.Id != integrationBetaFeatureId || *feature.Enabled != false {
 		t.Fatalf("unexpected beta feature has returned: %v", feature)
 	}
 }
@@ -82,7 +82,7 @@ func TestBetaFeaturesService_Integration_Delete(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if got, want := int(f.Id), integrationBetaFeatureId; got != want {
+	if got, want := int(*f.Id), integrationBetaFeatureId; got != want {
 		t.Fatalf("invalid beta feature id: got %d, want: %d", got, want)
 	}
 }

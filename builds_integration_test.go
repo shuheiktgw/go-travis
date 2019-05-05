@@ -25,7 +25,7 @@ func TestBuildService_Integration_Find(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if build.Id != integrationBuildId {
+	if *build.Id != integrationBuildId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
 	}
 }
@@ -134,7 +134,7 @@ func TestBuildService_Integration_RestartAndCancel(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if build.Id != integrationBuildId {
+	if *build.Id != integrationBuildId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
 	}
 
@@ -151,7 +151,7 @@ func TestBuildService_Integration_RestartAndCancel(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if build.Id != integrationBuildId {
+	if *build.Id != integrationBuildId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
 	}
 }

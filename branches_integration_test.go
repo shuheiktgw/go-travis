@@ -27,11 +27,11 @@ func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if branch.Name != "master" {
+	if *branch.Name != "master" {
 		t.Fatalf("unexpected branch returned: want %s: got %s", "master", branch.Name)
 	}
 
-	if branch.Repository.Id != integrationRepoId {
+	if *branch.Repository.Id != integrationRepoId {
 		t.Fatalf("unexpected branch returned: want %d: got %d", integrationRepoId, branch.Repository.Id)
 	}
 
@@ -53,11 +53,11 @@ func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if branch.Name != "master" {
+	if *branch.Name != "master" {
 		t.Fatalf("unexpected branch returned: want %s: got %s", "master", branch.Name)
 	}
 
-	if branch.Repository.Slug != integrationRepoSlug {
+	if *branch.Repository.Slug != integrationRepoSlug {
 		t.Fatalf("unexpected branch returned: want %s: got %s", integrationRepoSlug, branch.Repository.Slug)
 	}
 

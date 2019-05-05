@@ -28,9 +28,9 @@ func TestPreferencesService_Integration_Find(t *testing.T) {
 	}
 
 	want := &Preference{
-		Name:     integrationPreferenceName,
+		Name:     String(integrationPreferenceName),
 		Value:    true,
-		Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
+		Metadata: &Metadata{Type: String("preference"), Href: String("/v3/preference/build_emails"), Representation: String("standard")},
 	}
 
 	if !reflect.DeepEqual(preference, want) {
@@ -51,14 +51,14 @@ func TestPreferencesService_Integration_List(t *testing.T) {
 
 	want := []*Preference{
 		{
-			Name:     "build_emails",
+			Name:     String("build_emails"),
 			Value:    true,
-			Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
+			Metadata: &Metadata{Type: String("preference"), Href: String("/v3/preference/build_emails"), Representation: String("standard")},
 		},
 		{
-			Name:     "private_insights_visibility",
+			Name:     String("private_insights_visibility"),
 			Value:    "private",
-			Metadata: &Metadata{Type: "preference", Href: "/v3/preference/private_insights_visibility", Representation: "standard"},
+			Metadata: &Metadata{Type: String("preference"), Href: String("/v3/preference/private_insights_visibility"), Representation: String("standard")},
 		},
 	}
 
@@ -69,7 +69,7 @@ func TestPreferencesService_Integration_List(t *testing.T) {
 
 func TestPreferenceServices_Integration_Update(t *testing.T) {
 	// Change build_emails = false
-	preference, res, err := integrationClient.Preferences.Update(context.TODO(), &Preference{Name: integrationPreferenceName, Value: false})
+	preference, res, err := integrationClient.Preferences.Update(context.TODO(), &PreferenceBody{Name: integrationPreferenceName, Value: false})
 
 	if err != nil {
 		t.Fatalf("Preference.Update unexpected error occured: %s", err)
@@ -80,9 +80,9 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 	}
 
 	want := &Preference{
-		Name:     integrationPreferenceName,
+		Name:     String(integrationPreferenceName),
 		Value:    false,
-		Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
+		Metadata: &Metadata{Type: String("preference"), Href: String("/v3/preference/build_emails"), Representation: String("standard")},
 	}
 
 	if !reflect.DeepEqual(preference, want) {
@@ -90,7 +90,7 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 	}
 
 	// Change build_emails = true
-	preference, res, err = integrationClient.Preferences.Update(context.TODO(), &Preference{Name: integrationPreferenceName, Value: true})
+	preference, res, err = integrationClient.Preferences.Update(context.TODO(), &PreferenceBody{Name: integrationPreferenceName, Value: true})
 
 	if err != nil {
 		t.Fatalf("Preference.Update unexpected error occured: %s", err)
@@ -101,9 +101,9 @@ func TestPreferenceServices_Integration_Update(t *testing.T) {
 	}
 
 	want = &Preference{
-		Name:     integrationPreferenceName,
+		Name:     String(integrationPreferenceName),
 		Value:    true,
-		Metadata: &Metadata{Type: "preference", Href: "/v3/preference/build_emails", Representation: "standard"},
+		Metadata: &Metadata{Type: String("preference"), Href: String("/v3/preference/build_emails"), Representation: String("standard")},
 	}
 	if !reflect.DeepEqual(preference, want) {
 		t.Errorf("Preference.Update returned %+v, want %+v", preference, want)

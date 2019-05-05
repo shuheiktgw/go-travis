@@ -30,7 +30,7 @@ func TestRepositoriesService_List(t *testing.T) {
 		t.Errorf("Repository.List returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repos[0], want) {
 		t.Errorf("Repository.List returned %+v, want %+v", repos[0], want)
 	}
@@ -54,7 +54,7 @@ func TestRepositoriesService_ListByOwner(t *testing.T) {
 		t.Errorf("Repository.ListByOwner returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repos[0], want) {
 		t.Errorf("Repository.ListByOwner returned %+v, want %+v", repos[0], want)
 	}
@@ -78,7 +78,7 @@ func TestRepositoriesService_ListByGitHubId(t *testing.T) {
 		t.Errorf("Repository.ListByOwner returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repos[0], want) {
 		t.Errorf("Repository.ListByOwner returned %+v, want %+v", repos[0], want)
 	}
@@ -101,7 +101,7 @@ func TestRepositoriesService_Find(t *testing.T) {
 		t.Errorf("Repository.Find returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("Repository.Find returned %+v, want %+v", repo, want)
 	}
@@ -122,7 +122,7 @@ func TestRepositoriesService_Activate(t *testing.T) {
 		t.Errorf("Repository.Activate returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("Repository.Activate returned %+v, want %+v", repo, want)
 	}
@@ -143,7 +143,7 @@ func TestRepositoriesService_Deactivate(t *testing.T) {
 		t.Errorf("Repository.Deactivate returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("Repository.Deactivate returned %+v, want %+v", repo, want)
 	}
@@ -164,7 +164,7 @@ func TestRepositoriesService_Migrate(t *testing.T) {
 		t.Errorf("Repository.Migrate returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("Repository.Migrate returned %+v, want %+v", repo, want)
 	}
@@ -185,7 +185,7 @@ func TestRepositoriesService_Star(t *testing.T) {
 		t.Errorf("Repository.Star returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("Repository.Star returned %+v, want %+v", repo, want)
 	}
@@ -206,7 +206,7 @@ func TestRepositoriesService_Unstar(t *testing.T) {
 		t.Errorf("Repository.Unstar returned error: %v", err)
 	}
 
-	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	want := &Repository{Id: Uint(1), Name: String("go-travis-test"), Slug: String("shuheiktgw/go-travis-test")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("Repository.Unstar returned %+v, want %+v", repo, want)
 	}

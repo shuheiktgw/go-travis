@@ -24,13 +24,13 @@ type MessagesService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/message#message
 type Message struct {
 	// The message's id
-	Id uint `json:"id"`
+	Id *uint `json:"id"`
 	// The message's level
-	Level string `json:"level"`
+	Level *string `json:"level"`
 	// The message's key
-	Key string `json:"key"`
+	Key *string `json:"key"`
 	// The message's code
-	Code string `json:"code"`
+	Code *string `json:"code"`
 	// The message's args
 	Args json.RawMessage `json:"args"`
 	*Metadata

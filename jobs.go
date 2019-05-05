@@ -22,21 +22,21 @@ type JobsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#standard-representation
 type Job struct {
 	// Value uniquely identifying the job
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// The job's allow_failure
-	AllowFailure bool `json:"allow_failure,omitempty"`
+	AllowFailure *bool `json:"allow_failure,omitempty"`
 	// Incremental number for a repository's builds
-	Number string `json:"number,omitempty"`
+	Number *string `json:"number,omitempty"`
 	// Current state of the job
-	State string `json:"state,omitempty"`
+	State *string `json:"state,omitempty"`
 	// When the job started
-	StartedAt string `json:"started_at,omitempty"`
+	StartedAt *string `json:"started_at,omitempty"`
 	// When the job finished
-	FinishedAt string `json:"finished_at,omitempty"`
+	FinishedAt *string `json:"finished_at,omitempty"`
 	// The build the job is associated with
 	Build *Build `json:"build,omitempty"`
 	// Worker queue this job is/was scheduled on
-	Queue string `json:"queue,omitempty"`
+	Queue *string `json:"queue,omitempty"`
 	// GitHub repository the job is associated with
 	Repository *Repository `json:"repository,omitempty"`
 	// The commit the job is associated with
@@ -46,11 +46,11 @@ type Job struct {
 	// The stages of the job
 	Stage *Stage `json:"stage,omitempty"`
 	// When the job was created
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// When the job was updated
-	UpdatedAt string `json:"updated_at,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
 	// Whether or not the job is private
-	Private bool `json:"private,omitempty"`
+	Private *bool `json:"private,omitempty"`
 	*Metadata
 }
 

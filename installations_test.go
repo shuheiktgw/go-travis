@@ -32,7 +32,7 @@ func TestInstallationsService_Find(t *testing.T) {
 		t.Errorf("Installation.Find returned error: %v", err)
 	}
 
-	want := &Installation{Id: testInstallationId, GitHubId: testGitHubId}
+	want := &Installation{Id: Uint(testInstallationId), GitHubId: Uint(testGitHubId)}
 	if !reflect.DeepEqual(installation, want) {
 		t.Errorf("Installation.Find returned %+v, want %+v", installation, want)
 	}

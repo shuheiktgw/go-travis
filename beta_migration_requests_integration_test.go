@@ -42,7 +42,7 @@ func TestBetaMigrationRequestsService_Integration_Create(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if got, want := request.OwnerName, integrationGitHubOwner; got != want {
+	if got, want := *request.OwnerName, integrationGitHubOwner; got != want {
 		t.Fatalf("invalid owner: got: %s, want: %s", got, want)
 	}
 }

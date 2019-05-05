@@ -22,17 +22,17 @@ type OwnerService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/owner#standard-representation
 type Owner struct {
 	// Value uniquely identifying the owner
-	Id uint `json:"id"`
+	Id *uint `json:"id"`
 	// User or organization login set on GitHub
-	Login string `json:"login"`
+	Login *string `json:"login"`
 	// User or organization name set on GitHub
-	Name string `json:"name"`
+	Name *string `json:"name"`
 	// User or organization id set on GitHub
-	GitHubId uint `json:"github_id"`
+	GitHubId *uint `json:"github_id"`
 	// Link to user or organization avatar (image) set on GitHub
-	AvatarUrl string `json:"avatar_url"`
+	AvatarUrl *string `json:"avatar_url"`
 	// Whether or not the owner has an education account
-	Education bool `json:"education"`
+	Education *bool `json:"education"`
 	// Repositories belonging to this account
 	Repositories []*Repository `json:"repositories"`
 	// Installation belonging to the owner

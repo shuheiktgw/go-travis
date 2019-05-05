@@ -32,7 +32,7 @@ func TestUserService_Current(t *testing.T) {
 		t.Errorf("UserService.Current returned error: %v", err)
 	}
 
-	want := &User{Id: 1, Login: "shuheiktgw", Name: "shuheiktgw", GithubId: 1}
+	want := &User{Id: Uint(1), Login: String("shuheiktgw"), Name: String("shuheiktgw"), GithubId: Uint(1)}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("UserService.Current returned %+v, want %+v", repo, want)
 	}
@@ -55,7 +55,7 @@ func TestUserService_Find(t *testing.T) {
 		t.Errorf("UserService.Find returned error: %v", err)
 	}
 
-	want := &User{Id: 1, Login: "shuheiktgw", Name: "shuheiktgw", GithubId: 1}
+	want := &User{Id: Uint(1), Login: String("shuheiktgw"), Name: String("shuheiktgw"), GithubId: Uint(1)}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("UserService.Find returned %+v, want %+v", repo, want)
 	}
@@ -76,7 +76,7 @@ func TestUserService_Sync(t *testing.T) {
 		t.Errorf("UserService.Sync returned error: %v", err)
 	}
 
-	want := &User{Id: 1, Login: "shuheiktgw", Name: "shuheiktgw", GithubId: 1}
+	want := &User{Id: Uint(1), Login: String("shuheiktgw"), Name: String("shuheiktgw"), GithubId: Uint(1)}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("UserService.Sync returned %+v, want %+v", repo, want)
 	}

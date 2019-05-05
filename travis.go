@@ -312,3 +312,15 @@ func withContext(ctx context.Context, req *http.Request) *http.Request {
 
 // Permissions represents permissions of Travis CI API
 type Permissions map[string]bool
+
+// Bool is a helper routine that allocates a new bool value
+// to store v and returns a pointer to it.
+func Bool(v bool) *bool { return &v }
+
+// Uint is a helper routine that allocates a new Uint value
+// to store v and returns a pointer to it.
+func Uint(v uint) *uint { return &v }
+
+// String is a helper routine that allocates a new string value
+// to store v and returns a pointer to it.
+func String(v string) *string { return &v }

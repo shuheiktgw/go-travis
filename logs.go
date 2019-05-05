@@ -20,9 +20,9 @@ type LogsService struct {
 // Log represents a Travis CI job log
 type Log struct {
 	// The log's id
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// The content of the log
-	Content string `json:"content,omitempty"`
+	Content *string `json:"content,omitempty"`
 	// The log parts that form the log
 	LogParts []*LogPart `json:"log_parts,omitempty"`
 	*Metadata
@@ -30,9 +30,9 @@ type Log struct {
 
 // 	LogPart is parts that form the log
 type LogPart struct {
-	Content string `json:"content,omitempty"`
-	Final   bool   `json:"final,omitempty"`
-	Number  uint   `json:"number,omitempty"`
+	Content *string `json:"content,omitempty"`
+	Final   *bool   `json:"final,omitempty"`
+	Number  *uint   `json:"number,omitempty"`
 }
 
 // FindByJobId fetches a job's log based on it's provided id.

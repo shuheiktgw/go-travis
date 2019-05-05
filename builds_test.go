@@ -31,7 +31,7 @@ func TestBuildsService_Find(t *testing.T) {
 		t.Errorf("Build.Find returned error: %v", err)
 	}
 
-	want := &Build{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
+	want := &Build{Id: Uint(testBuildId), Number: String("1"), State: String(BuildStateCreated), Duration: Uint(10)}
 	if !reflect.DeepEqual(build, want) {
 		t.Errorf("Build.Find returned %+v, want %+v", build, want)
 	}
@@ -53,7 +53,7 @@ func TestBuildsService_List(t *testing.T) {
 		t.Errorf("Builds.Find returned error: %v", err)
 	}
 
-	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: Uint(testBuildId), Number: String("1"), State: String(BuildStateCreated), Duration: Uint(10)}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Builds.Find returned %+v, want %+v", builds, want)
 	}
@@ -75,7 +75,7 @@ func TestBuildsService_ListByRepoId(t *testing.T) {
 		t.Errorf("Builds.FindByRepoId returned error: %v", err)
 	}
 
-	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: Uint(testBuildId), Number: String("1"), State: String(BuildStateCreated), Duration: Uint(10)}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Builds.FindByRepoId returned %+v, want %+v", builds, want)
 	}
@@ -97,7 +97,7 @@ func TestBuildsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Builds.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []*Build{{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}}
+	want := []*Build{{Id: Uint(testBuildId), Number: String("1"), State: String(BuildStateCreated), Duration: Uint(10)}}
 	if !reflect.DeepEqual(builds, want) {
 		t.Errorf("Builds.FindByRepoSlug returned %+v, want %+v", builds, want)
 	}
@@ -118,7 +118,7 @@ func TestBuildsService_Cancel(t *testing.T) {
 		t.Errorf("Build.Cancel returned error: %v", err)
 	}
 
-	want := &Build{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
+	want := &Build{Id: Uint(testBuildId), Number: String("1"), State: String(BuildStateCreated), Duration: Uint(10)}
 	if !reflect.DeepEqual(build, want) {
 		t.Errorf("Build.Cancel returned %+v, want %+v", build, want)
 	}
@@ -139,7 +139,7 @@ func TestBuildsService_Restart(t *testing.T) {
 		t.Errorf("Build.Restart returned error: %v", err)
 	}
 
-	want := &Build{Id: testBuildId, Number: "1", State: BuildStateCreated, Duration: 10}
+	want := &Build{Id: Uint(testBuildId), Number: String("1"), State: String(BuildStateCreated), Duration: Uint(10)}
 	if !reflect.DeepEqual(build, want) {
 		t.Errorf("Build.Restart returned %+v, want %+v", build, want)
 	}

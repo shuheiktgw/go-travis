@@ -24,17 +24,17 @@ type RequestsService struct {
 // // Travis CI API docs: https://developer.travis-ci.com/resource/request#standard-representation
 type Request struct {
 	// Value uniquely identifying the request
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// The state of a request (eg. whether it has been processed or not)
-	State string `json:"state,omitempty"`
+	State *string `json:"state,omitempty"`
 	// The result of the request (eg. rejected or approved)
-	Result string `json:"result,omitempty"`
+	Result *string `json:"result,omitempty"`
 	// Travis-ci status message attached to the request.
-	Message string `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
 	// GitHub user or organization the request belongs to
 	Repository *Repository `json:"repository,omitempty"`
 	// Name of the branch requested to be built
-	BranchName string `json:"branch_name,omitempty"`
+	BranchName *string `json:"branch_name,omitempty"`
 	// The commit the request is associated with
 	Commit *Commit `json:"commit,omitempty"`
 	// The request's builds
@@ -42,13 +42,13 @@ type Request struct {
 	// GitHub user or organization the request belongs to
 	Owner *Owner `json:"owner,omitempty"`
 	// When Travis CI created the request
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// Origin of request (push, pull request, api)
-	EventType string `json:"event_type,omitempty"`
+	EventType *string `json:"event_type,omitempty"`
 	// The base commit the request is associated with
-	BaseCommit string `json:"base_commit,omitempty"`
+	BaseCommit *string `json:"base_commit,omitempty"`
 	// The head commit the request is associated with
-	HeadCommit string `json:"head_commit,omitempty"`
+	HeadCommit *string `json:"head_commit,omitempty"`
 	*Metadata
 }
 

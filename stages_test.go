@@ -31,7 +31,7 @@ func TestStagesService_ListByBuild(t *testing.T) {
 		t.Errorf("Repository.List returned error: %v", err)
 	}
 
-	want := &Stage{Id: 1, Number: 2, Name: "Test"}
+	want := &Stage{Id: Uint(1), Number: Uint(2), Name: String("Test")}
 	if !reflect.DeepEqual(stages[0], want) {
 		t.Errorf("Stages.ListByBuild returned %+v, want %+v", stages[0], want)
 	}

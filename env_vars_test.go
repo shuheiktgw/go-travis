@@ -30,7 +30,7 @@ func TestEnvVarsService_FindByRepoId(t *testing.T) {
 		t.Errorf("EnvVars.FindByRepoId returned error: %v", err)
 	}
 
-	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
+	want := &EnvVar{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.FindByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -51,7 +51,7 @@ func TestEnvVarsService_FindByRepoSlug(t *testing.T) {
 		t.Errorf("EnvVar.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
+	want := &EnvVar{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.FindByRepoSlug returned %+v, want %+v", envVar, want)
 	}
@@ -72,7 +72,7 @@ func TestEnvVarsService_ListByRepoId(t *testing.T) {
 		t.Errorf("EnvVars.FindByRepoId returned error: %v", err)
 	}
 
-	want := []*EnvVar{{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}}
+	want := []*EnvVar{{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.FindByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -93,7 +93,7 @@ func TestEnvVarsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("EnvVars.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []*EnvVar{{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}}
+	want := []*EnvVar{{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.FindByRepoSlug returned %+v, want %+v", envVar, want)
 	}
@@ -116,7 +116,7 @@ func TestEnvVarsService_CreateByRepoId(t *testing.T) {
 		t.Errorf("EnvVars.CreateByRepoId returned error: %v", err)
 	}
 
-	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
+	want := &EnvVar{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.CreateByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -139,7 +139,7 @@ func TestEnvVarsService_CreateByRepoSlug(t *testing.T) {
 		t.Errorf("EnvVars.CreateByRepoSlug returned error: %v", err)
 	}
 
-	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
+	want := &EnvVar{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}
 	if !reflect.DeepEqual(envVar, want) {
 		t.Errorf("EnvVars.CreateByRepoSlug returned %+v, want %+v", envVar, want)
 	}
@@ -162,7 +162,7 @@ func TestEnvVarsService_UpdateByRepoId(t *testing.T) {
 		t.Errorf("EnvVar.UpdateByRepoId returned error: %v", err)
 	}
 
-	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
+	want := &EnvVar{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}
 	if !reflect.DeepEqual(e, want) {
 		t.Errorf("EnvVars.UpdateByRepoId returned %+v, want %+v", envVar, want)
 	}
@@ -185,7 +185,7 @@ func TestEnvVarsService_UpdateByRepoSlug(t *testing.T) {
 		t.Errorf("EnvVars.UpdateByRepoSlug returned error: %v", err)
 	}
 
-	want := &EnvVar{Id: testEnvVarId, Name: "TEST", Value: "test", Public: false}
+	want := &EnvVar{Id: String(testEnvVarId), Name: String("TEST"), Value: String("test"), Public: Bool(false)}
 	if !reflect.DeepEqual(e, want) {
 		t.Errorf("EnvVars.UpdateByRepoSlug returned %+v, want %+v", e, want)
 	}
