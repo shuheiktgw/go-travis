@@ -45,6 +45,10 @@ type Request struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// Origin of request (push, pull request, api)
 	EventType string `json:"event_type,omitempty"`
+	// The base commit the request is associated with
+	BaseCommit string `json:"base_commit,omitempty"`
+	// The head commit the request is associated with
+	HeadCommit string `json:"head_commit,omitempty"`
 	*Metadata
 }
 
