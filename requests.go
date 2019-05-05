@@ -48,13 +48,22 @@ type Request struct {
 	*Metadata
 }
 
-// ListRequestsOption specifies options for
-// FindRequests request.
-type ListRequestsOption struct {
+// RequestsOption specifies options for
+// listing requests.
+type RequestsOption struct {
 	// How many requests to include in the response
 	Limit int `url:"limit,omitempty"`
 	// How many requests to skip before the first entry in the response
 	Offset int `url:"offset,omitempty"`
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
+}
+
+// RequestOption specifies options for
+// finding a request.
+type RequestOption struct {
+	// List of attributes to eager load
+	Include []string `url:"include,omitempty,comma"`
 }
 
 // RequestBody specifies body for
@@ -70,15 +79,15 @@ type RequestBody struct {
 	Token string `json:"token,omitempty"`
 }
 
-type getRequestsResponse struct {
+type requestsResponse struct {
 	Requests []*Request `json:"requests"`
 }
 
 // FindByRepoId fetches request of given repository id and request id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/request#find
-func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, id uint) (*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/request/%d", repoId, id), nil)
+func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, id uint, opt *RequestOption) (*Request, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/request/%d", repoId, id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -100,8 +109,8 @@ func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, id uin
 // FindByRepoSlug fetches request of given repository slug and request id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/request#find
-func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, id uint) (*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/request/%d", url.QueryEscape(repoSlug), id), nil)
+func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, id uint, opt *RequestOption) (*Request, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/request/%d", url.QueryEscape(repoSlug), id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -123,7 +132,7 @@ func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 // Create endpoints actually returns following form of response.
 // It is different from standard nor minimal representation of a request.
 // So far, I'm not going to create a special struct to parse it, and
-// just use the minimal representation of request.
+// just use the standard representation of a request.
 //
 //{
 //  "@type":              "pending",
@@ -159,7 +168,7 @@ type createRequestResponse struct {
 // ListByRepoId fetches requests of given repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#find
-func (rs *RequestsService) ListByRepoId(ctx context.Context, repoId uint, opt *ListRequestsOption) ([]*Request, *http.Response, error) {
+func (rs *RequestsService) ListByRepoId(ctx context.Context, repoId uint, opt *RequestsOption) ([]*Request, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), opt)
 	if err != nil {
 		return nil, nil, err
@@ -170,19 +179,19 @@ func (rs *RequestsService) ListByRepoId(ctx context.Context, repoId uint, opt *L
 		return nil, nil, err
 	}
 
-	var getRequestsResponse getRequestsResponse
-	resp, err := rs.client.Do(ctx, req, &getRequestsResponse)
+	var rr requestsResponse
+	resp, err := rs.client.Do(ctx, req, &rr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getRequestsResponse.Requests, resp, err
+	return rr.Requests, resp, err
 }
 
 // ListByRepoSlug fetches requests of given repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#find
-func (rs *RequestsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *ListRequestsOption) ([]*Request, *http.Response, error) {
+func (rs *RequestsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *RequestsOption) ([]*Request, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
@@ -193,13 +202,13 @@ func (rs *RequestsService) ListByRepoSlug(ctx context.Context, repoSlug string, 
 		return nil, nil, err
 	}
 
-	var getRequestsResponse getRequestsResponse
-	resp, err := rs.client.Do(ctx, req, &getRequestsResponse)
+	var rr requestsResponse
+	resp, err := rs.client.Do(ctx, req, &rr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getRequestsResponse.Requests, resp, err
+	return rr.Requests, resp, err
 }
 
 // CreateByRepoId create requests of given repository id and provided options
