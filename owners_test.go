@@ -30,7 +30,7 @@ func TestOwnerService_FindByLogin(t *testing.T) {
 		t.Errorf("Owner.FindByLogin returned error: %v", err)
 	}
 
-	want := &Owner{Id: 1, Login: "shuheiktgw", GitHubId: 1}
+	want := &Owner{Id: Uint(1), Login: String("shuheiktgw"), GitHubId: Uint(1)}
 	if !reflect.DeepEqual(owner, want) {
 		t.Errorf("Owner.FindByLogin returned %+v, want %+v", owner, want)
 	}
@@ -53,7 +53,7 @@ func TestOwnerService_FindByGitHubId(t *testing.T) {
 		t.Errorf("Owner.FindByGitHubId returned error: %v", err)
 	}
 
-	want := &Owner{Id: 1, Login: "shuheiktgw", GitHubId: 1}
+	want := &Owner{Id: Uint(1), Login: String("shuheiktgw"), GitHubId: Uint(1)}
 	if !reflect.DeepEqual(owner, want) {
 		t.Errorf("Owner.FindByGitHubId returned %+v, want %+v", owner, want)
 	}

@@ -22,15 +22,15 @@ type BetaFeaturesService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_feature#attributes
 type BetaFeature struct {
 	// Value uniquely identifying the beta feature
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// The name of the feature
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// Longer description of the feature
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// Indicates if the user has this feature turned on
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Url for users to leave Travis CI feedback on this feature
-	FeedbackUrl string `json:"feedback_url,omitempty"`
+	FeedbackUrl *string `json:"feedback_url,omitempty"`
 	*Metadata
 }
 

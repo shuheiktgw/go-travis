@@ -22,13 +22,21 @@ type PreferencesService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/preference#standard-representation
 type Preference struct {
 	// The preference's name
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// The preference's value
 	Value interface{} `json:"value"`
 	*Metadata
 }
 
-type getPreferencesResponse struct {
+// PreferenceBody is body for creating preference
+type PreferenceBody struct {
+	// The preference's name
+	Name string `json:"name,omitempty"`
+	// The preference's value
+	Value interface{} `json:"value"`
+}
+
+type preferencesResponse struct {
 	Preferences []*Preference `json:"preferences,omitempty"`
 }
 
@@ -70,20 +78,20 @@ func (ps *PreferencesService) List(ctx context.Context) ([]*Preference, *http.Re
 		return nil, nil, err
 	}
 
-	var getPreferencesResponse getPreferencesResponse
-	resp, err := ps.client.Do(ctx, req, &getPreferencesResponse)
+	var pr preferencesResponse
+	resp, err := ps.client.Do(ctx, req, &pr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getPreferencesResponse.Preferences, resp, err
+	return pr.Preferences, resp, err
 }
 
 // Update updates the current user's preference based on
 // the provided preference property
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/preference#update
-func (ps *PreferencesService) Update(ctx context.Context, preference *Preference) (*Preference, *http.Response, error) {
+func (ps *PreferencesService) Update(ctx context.Context, preference *PreferenceBody) (*Preference, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/preference/%s", preference.Name), nil)
 	if err != nil {
 		return nil, nil, err

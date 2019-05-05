@@ -28,7 +28,7 @@ func TestLogsService_FindByJobId(t *testing.T) {
 		t.Errorf("Log.FindByJobId returned error: %v", err)
 	}
 
-	want := &Log{Id: 1, Content: "test"}
+	want := &Log{Id: Uint(1), Content: String("test")}
 	if !reflect.DeepEqual(log, want) {
 		t.Errorf("Log.FindByJobId returned %+v, want %+v", log, want)
 	}
@@ -49,7 +49,7 @@ func TestLogsService_DeleteByJobId(t *testing.T) {
 		t.Errorf("Log.DeleteByJobId returned error: %v", err)
 	}
 
-	want := &Log{Id: 1, Content: "Log removed by XXX at 2017-02-13 16:00:00 UTC"}
+	want := &Log{Id: Uint(1), Content: String("Log removed by XXX at 2017-02-13 16:00:00 UTC")}
 	if !reflect.DeepEqual(log, want) {
 		t.Errorf("Log.DeleteByJobId returned %+v, want %+v", log, want)
 	}

@@ -27,7 +27,7 @@ func TestOrganizationsService_Integration_Find(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if got, want := org.Id, uint(integrationOrgId); got != want {
+	if got, want := *org.Id, uint(integrationOrgId); got != want {
 		t.Fatalf("invalid org id: want: %d, got: %d", want, got)
 	}
 

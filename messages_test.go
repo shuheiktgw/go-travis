@@ -30,7 +30,7 @@ func TestMessagesService_ListByRepoId(t *testing.T) {
 		t.Errorf("Messages.ListByRepoId returned error: %v", err)
 	}
 
-	want := &Message{Id: 1, Level: "info", Key: "testKey", Code: "testCode", Args: []byte(`{"test":"test"}`)}
+	want := &Message{Id: Uint(1), Level: String("info"), Key: String("testKey"), Code: String("testCode"), Args: []byte(`{"test":"test"}`)}
 	if !reflect.DeepEqual(messages[0], want) {
 		t.Errorf("Messages.ListByRepoId returned %+v, want %+v", messages[0], want)
 	}
@@ -53,7 +53,7 @@ func TestMessagesService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Messages.ListByRepoId returned error: %v", err)
 	}
 
-	want := &Message{Id: 1, Level: "info", Key: "testKey", Code: "testCode", Args: []byte(`{"test":"test"}`)}
+	want := &Message{Id: Uint(1), Level: String("info"), Key: String("testKey"), Code: String("testCode"), Args: []byte(`{"test":"test"}`)}
 	if !reflect.DeepEqual(messages[0], want) {
 		t.Errorf("Messages.ListByRepoId returned %+v, want %+v", messages[0], want)
 	}

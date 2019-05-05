@@ -23,13 +23,13 @@ type BranchesService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/branch#standard-representation
 type Branch struct {
 	// Name of the git branch
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// GitHub Repository
 	Repository *Repository `json:"repository,omitempty"`
 	// Whether or not this is the repository's default branch
-	DefaultBranch bool `json:"default_branch,omitempty"`
+	DefaultBranch *bool `json:"default_branch,omitempty"`
 	// Whether or not the branch still exists on GitHub
-	ExistsOnGithub bool `json:"exists_on_github,omitempty"`
+	ExistsOnGithub *bool `json:"exists_on_github,omitempty"`
 	// Last build on the branch
 	LastBuild *Build `json:"last_build,omitempty"`
 	// Last 10 builds on the branch (when `include=branch.recent_builds` is used)

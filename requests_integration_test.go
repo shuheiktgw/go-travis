@@ -25,7 +25,7 @@ func TestRequestsService_Integration_CreateAndFindById(t *testing.T) {
 	}
 
 	opt := RequestOption{Include: []string{"request.repository", "request.commit", "request.builds", "request.owner"}}
-	request, res, err := integrationClient.Requests.FindByRepoId(context.TODO(), integrationRepoId, createdRequest.Id, &opt)
+	request, res, err := integrationClient.Requests.FindByRepoId(context.TODO(), integrationRepoId, *createdRequest.Id, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -35,7 +35,7 @@ func TestRequestsService_Integration_CreateAndFindById(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if request.Id != createdRequest.Id {
+	if *request.Id != *createdRequest.Id {
 		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", request.Id, createdRequest.Id)
 	}
 
@@ -68,7 +68,7 @@ func TestRequestsService_Integration_CreateAndFindBySlug(t *testing.T) {
 	}
 
 	opt := RequestOption{Include: []string{"request.repository", "request.commit", "request.builds", "request.owner"}}
-	request, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepoSlug, createdRequest.Id, &opt)
+	request, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepoSlug, *createdRequest.Id, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -78,7 +78,7 @@ func TestRequestsService_Integration_CreateAndFindBySlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if request.Id != createdRequest.Id {
+	if *request.Id != *createdRequest.Id {
 		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", request.Id, createdRequest.Id)
 	}
 
@@ -120,7 +120,7 @@ func TestRequestsService_CreateAndListById(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if requests[0].Id != createdRequest.Id {
+	if *requests[0].Id != *createdRequest.Id {
 		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", requests[0].Id, createdRequest.Id)
 	}
 }
@@ -146,7 +146,7 @@ func TestRequestsService_CreateAndListBySlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if requests[0].Id != createdRequest.Id {
+	if *requests[0].Id != *createdRequest.Id {
 		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", requests[0].Id, createdRequest.Id)
 	}
 }

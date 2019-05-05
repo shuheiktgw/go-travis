@@ -25,7 +25,7 @@ func TestOwnerService_Integration_FindByLogin(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if owner.Login != integrationGitHubOwner {
+	if *owner.Login != integrationGitHubOwner {
 		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, owner.Login)
 	}
 
@@ -50,7 +50,7 @@ func TestOwnerService_Integration_FindByGitHubId(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if owner.GitHubId != integrationGitHubOwnerId {
+	if *owner.GitHubId != integrationGitHubOwnerId {
 		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, owner.Login)
 	}
 }

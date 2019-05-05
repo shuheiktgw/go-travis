@@ -22,17 +22,17 @@ type OrganizationsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/organization#standard-representation
 type Organization struct {
 	// Value uniquely identifying the organization
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// Login set on GitHub
-	Login string `json:"login,omitempty"`
+	Login *string `json:"login,omitempty"`
 	// Name set on GitHub
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// Id set on GitHub
-	GithubId uint `json:"github_id,omitempty"`
+	GithubId *uint `json:"github_id,omitempty"`
 	// Avatar_url set on GitHub
-	AvatarUrl string `json:"avatar_url,omitempty"`
+	AvatarUrl *string `json:"avatar_url,omitempty"`
 	// Whether or not the organization has an education account
-	Education bool `json:"education,omitempty"`
+	Education *bool `json:"education,omitempty"`
 	// Repositories belonging to this organization.
 	Repositories []*Repository `json:"repositories,omitempty"`
 	// Installation belonging to the organization

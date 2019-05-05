@@ -23,23 +23,23 @@ type CronsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#standard-representation
 type Cron struct {
 	// Value uniquely identifying the cron
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// Github repository to which this cron belongs
 	Repository *Repository `json:"repository,omitempty"`
 	// Git branch of repository to which this cron belongs
 	Branch *Branch `json:"branch,omitempty"`
 	// Interval at which the cron will run (can be "daily", "weekly" or "monthly")
-	Interval string `json:"interval,omitempty"`
+	Interval *string `json:"interval,omitempty"`
 	// Whether a cron build should run if there has been a build on this branch in the last 24 hours
-	DontRunIfRecentBuildExists bool `json:"dont_run_if_recent_build_exists,omitempty"`
+	DontRunIfRecentBuildExists *bool `json:"dont_run_if_recent_build_exists,omitempty"`
 	// When the cron ran last
-	LastRun string `json:"last_run,omitempty"`
+	LastRun *string `json:"last_run,omitempty"`
 	// When the cron is scheduled to run next
-	NextRun string `json:"next_run,omitempty"`
+	NextRun *string `json:"next_run,omitempty"`
 	// When the cron was created
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// Whether the cron is active or not
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 	*Metadata
 }
 

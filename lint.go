@@ -25,8 +25,8 @@ type TravisYml struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/lint
 type Warning struct {
-	Key     []string `json:"key,omitempty"`
-	Message string   `json:"message,omitempty"`
+	Key     []*string `json:"key,omitempty"`
+	Message *string   `json:"message,omitempty"`
 	*Metadata
 }
 

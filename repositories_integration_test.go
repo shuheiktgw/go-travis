@@ -76,7 +76,7 @@ func TestRepositoriesService_Integration_Find(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if got, want := repo.Slug, integrationRepoSlug; got != want {
+	if got, want := *repo.Slug, integrationRepoSlug; got != want {
 		t.Fatalf("unexpected repository returned: want %s: got %s", want, got)
 	}
 
@@ -96,7 +96,7 @@ func TestRepositoriesService_Integration_Activation(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepoSlug {
+	if *repo.Slug != integrationRepoSlug {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
@@ -110,17 +110,13 @@ func TestRepositoriesService_Integration_Activation(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepoSlug {
+	if *repo.Slug != integrationRepoSlug {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 }
 
 func TestRepositoriesService_Integration_Migrate(t *testing.T) {
-	_, res, err := integrationClient.Repositories.Migrate(context.TODO(), integrationRepoSlug)
-
-	if err != nil {
-		t.Fatalf("unexpected error occured: %s", err)
-	}
+	_, res, _ := integrationClient.Repositories.Migrate(context.TODO(), integrationRepoSlug)
 
 	// The repository is not allowed to migrate as of May 5th, 2019
 	if res.StatusCode != http.StatusForbidden {
@@ -139,7 +135,7 @@ func TestRepositoriesService_Integration_Star(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepoSlug {
+	if *repo.Slug != integrationRepoSlug {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 
@@ -153,7 +149,7 @@ func TestRepositoriesService_Integration_Star(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if repo.Slug != integrationRepoSlug {
+	if *repo.Slug != integrationRepoSlug {
 		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
 	}
 }

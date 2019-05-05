@@ -32,7 +32,7 @@ func TestCronsService_Find(t *testing.T) {
 		t.Errorf("Cron.Find returned error: %v", err)
 	}
 
-	want := &Cron{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}
+	want := &Cron{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}
 	if !reflect.DeepEqual(cron, want) {
 		t.Errorf("Cron.Find returned %+v, want %+v", cron, want)
 	}
@@ -55,7 +55,7 @@ func TestCronsService_FindByRepoId(t *testing.T) {
 		t.Errorf("Cron.FindByRepoId returned error: %v", err)
 	}
 
-	want := &Cron{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}
+	want := &Cron{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}
 	if !reflect.DeepEqual(cron, want) {
 		t.Errorf("Cron.FindByRepoId returned %+v, want %+v", cron, want)
 	}
@@ -78,7 +78,7 @@ func TestCronsService_FindByRepoSlug(t *testing.T) {
 		t.Errorf("Cron.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := &Cron{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}
+	want := &Cron{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}
 	if !reflect.DeepEqual(cron, want) {
 		t.Errorf("Cron.FindByRepoSlug returned %+v, want %+v", cron, want)
 	}
@@ -101,7 +101,7 @@ func TestCronsService_ListByRepoId(t *testing.T) {
 		t.Errorf("Crons.FindByRepoId returned error: %v", err)
 	}
 
-	want := []*Cron{{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}}
+	want := []*Cron{{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}}
 	if !reflect.DeepEqual(crons, want) {
 		t.Errorf("Crons.FindByRepoId returned %+v, want %+v", crons, want)
 	}
@@ -124,7 +124,7 @@ func TestCronsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Crons.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []*Cron{{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}}
+	want := []*Cron{{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}}
 	if !reflect.DeepEqual(crons, want) {
 		t.Errorf("Crons.FindByRepoSlug returned %+v, want %+v", crons, want)
 	}
@@ -147,7 +147,7 @@ func TestCronsService_CreateByRepoId(t *testing.T) {
 		t.Errorf("Cron.CreateByRepoId returned error: %v", err)
 	}
 
-	want := &Cron{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}
+	want := &Cron{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}
 	if !reflect.DeepEqual(cron, want) {
 		t.Errorf("Cron.CreateByRepoId returned %+v, want %+v", cron, want)
 	}
@@ -170,7 +170,7 @@ func TestCronsService_CreateByRepoSlug(t *testing.T) {
 		t.Errorf("Cron.CreateByRepoId returned error: %v", err)
 	}
 
-	want := &Cron{Id: testCronId, Interval: CronIntervalWeekly, DontRunIfRecentBuildExists: true, Active: true}
+	want := &Cron{Id: Uint(testCronId), Interval: String(CronIntervalWeekly), DontRunIfRecentBuildExists: Bool(true), Active: Bool(true)}
 	if !reflect.DeepEqual(cron, want) {
 		t.Errorf("Cron.CreateByRepoId returned %+v, want %+v", cron, want)
 	}

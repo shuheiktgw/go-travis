@@ -37,7 +37,7 @@ func TestBranchesService_FindByRepoId(t *testing.T) {
 		t.Errorf("Branch.FindByRepoId returned error: %v", err)
 	}
 
-	want := &Branch{Name: "master", Repository: &Repository{Id: 1, Name: "test", Slug: "shuheiktgw/test"}, DefaultBranch: true, ExistsOnGithub: true}
+	want := &Branch{Name: String("master"), Repository: &Repository{Id: Uint(1), Name: String("test"), Slug: String("shuheiktgw/test")}, DefaultBranch: Bool(true), ExistsOnGithub: Bool(true)}
 	if !reflect.DeepEqual(branch, want) {
 		t.Errorf("Branch.FindByRepoId returned %+v, want %+v", branch, want)
 	}
@@ -60,7 +60,7 @@ func TestBranchesService_FindByRepoSlug(t *testing.T) {
 		t.Errorf("Branch.FindByRepoId returned error: %v", err)
 	}
 
-	want := &Branch{Name: "master", Repository: &Repository{Id: 1, Name: "test", Slug: "shuheiktgw/test"}, DefaultBranch: true, ExistsOnGithub: true}
+	want := &Branch{Name: String("master"), Repository: &Repository{Id: Uint(1), Name: String("test"), Slug: String("shuheiktgw/test")}, DefaultBranch: Bool(true), ExistsOnGithub: Bool(true)}
 	if !reflect.DeepEqual(branch, want) {
 		t.Errorf("Branch.FindByRepoId returned %+v, want %+v", branch, want)
 	}
@@ -83,7 +83,7 @@ func TestBranchesService_ListByRepoId(t *testing.T) {
 		t.Errorf("Branches.FindByRepoId returned error: %v", err)
 	}
 
-	want := []*Branch{{Name: "master", Repository: &Repository{Id: 1, Name: "test", Slug: "shuheiktgw/test"}, DefaultBranch: true, ExistsOnGithub: true}}
+	want := []*Branch{{Name: String("master"), Repository: &Repository{Id: Uint(1), Name: String("test"), Slug: String("shuheiktgw/test")}, DefaultBranch: Bool(true), ExistsOnGithub: Bool(true)}}
 	if !reflect.DeepEqual(branches, want) {
 		t.Errorf("Branchse.FindByRepoId returned %+v, want %+v", branches, want)
 	}
@@ -106,7 +106,7 @@ func TestBranchesService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("Branches.indByRepoSlug returned error: %v", err)
 	}
 
-	want := []*Branch{{Name: "master", Repository: &Repository{Id: 1, Name: "test", Slug: "shuheiktgw/test"}, DefaultBranch: true, ExistsOnGithub: true}}
+	want := []*Branch{{Name: String("master"), Repository: &Repository{Id: Uint(1), Name: String("test"), Slug: String("shuheiktgw/test")}, DefaultBranch: Bool(true), ExistsOnGithub: Bool(true)}}
 	if !reflect.DeepEqual(branches, want) {
 		t.Errorf("Branchse.indByRepoSlug returned %+v, want %+v", branches, want)
 	}

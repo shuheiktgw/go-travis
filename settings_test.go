@@ -28,7 +28,7 @@ func TestSettingsService_FindByRepoId(t *testing.T) {
 		t.Errorf("Settings.FindByRepoId returned error: %v", err)
 	}
 
-	want := &Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: false}
+	want := &Setting{Name: String(BuildsOnlyWithTravisYmlSetting), Value: false}
 	if !reflect.DeepEqual(setting, want) {
 		t.Errorf("Settings.FindByRepoId returned %+v, want %+v", setting, want)
 	}
@@ -49,7 +49,7 @@ func TestSettingsService_FindByRepoSlug(t *testing.T) {
 		t.Errorf("Settings.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := &Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: false}
+	want := &Setting{Name: String(BuildsOnlyWithTravisYmlSetting), Value: false}
 	if !reflect.DeepEqual(setting, want) {
 		t.Errorf("Settings.FindByRepoSlug returned %+v, want %+v", setting, want)
 	}
@@ -65,14 +65,14 @@ func TestSettingsService_UpdateByRepoId(t *testing.T) {
 		fmt.Fprint(w, `{"name":"builds_only_with_travis_yml","value":true}`)
 	})
 
-	s := Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
+	s := SettingBody{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
 	setting, _, err := client.Settings.UpdateByRepoId(context.Background(), testRepoId, &s)
 
 	if err != nil {
 		t.Errorf("Settings.UpdateByRepoId returned error: %v", err)
 	}
 
-	want := &Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
+	want := &Setting{Name: String(BuildsOnlyWithTravisYmlSetting), Value: true}
 	if !reflect.DeepEqual(setting, want) {
 		t.Errorf("Settings.UpdateByRepoId returned %+v, want %+v", setting, want)
 	}
@@ -88,14 +88,14 @@ func TestSettingsService_UpdateByRepoSlug(t *testing.T) {
 		fmt.Fprint(w, `{"name":"builds_only_with_travis_yml","value":true}`)
 	})
 
-	s := Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
+	s := SettingBody{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
 	setting, _, err := client.Settings.UpdateByRepoSlug(context.Background(), testRepoSlug, &s)
 
 	if err != nil {
 		t.Errorf("Settings.UpdateByRepoSlug returned error: %v", err)
 	}
 
-	want := &Setting{Name: BuildsOnlyWithTravisYmlSetting, Value: true}
+	want := &Setting{Name: String(BuildsOnlyWithTravisYmlSetting), Value: true}
 	if !reflect.DeepEqual(setting, want) {
 		t.Errorf("Settings.UpdateByRepoSlug returned %+v, want %+v", setting, want)
 	}

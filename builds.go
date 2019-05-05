@@ -23,29 +23,29 @@ type BuildsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/build#standard-representation
 type Build struct {
 	// Value uniquely identifying the build
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// Incremental number for a repository's builds
-	Number string `json:"number,omitempty"`
+	Number *string `json:"number,omitempty"`
 	// Current state of the build
-	State string `json:"state,omitempty"`
+	State *string `json:"state,omitempty"`
 	// Wall clock time in seconds
-	Duration uint `json:"duration,omitempty"`
+	Duration *uint `json:"duration,omitempty"`
 	// Event that triggered the build
-	EventType string `json:"event_type,omitempty"`
+	EventType *string `json:"event_type,omitempty"`
 	// State of the previous build (useful to see if state changed)
-	PreviousState string `json:"previous_state,omitempty"`
+	PreviousState *string `json:"previous_state,omitempty"`
 	// Title of the build's pull request
-	PullRequestTitle string `json:"pull_request_title,omitempty"`
+	PullRequestTitle *string `json:"pull_request_title,omitempty"`
 	// Number of the build's pull request
-	PullRequestNumber uint `json:"pull_request_number,omitempty"`
+	PullRequestNumber *uint `json:"pull_request_number,omitempty"`
 	// When the build started
-	StartedAt string `json:"started_at,omitempty"`
+	StartedAt *string `json:"started_at,omitempty"`
 	// When the build finished
-	FinishedAt string `json:"finished_at,omitempty"`
+	FinishedAt *string `json:"finished_at,omitempty"`
 	// The last time the build was updated
-	UpdatedAt string `json:"updated_at,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
 	// Whether or not the build is private
-	Private bool `json:"private,omitempty"`
+	Private *bool `json:"private,omitempty"`
 	// GitHub repository the build is associated with
 	Repository *Repository `json:"repository,omitempty"`
 	// The branch the build is associated with

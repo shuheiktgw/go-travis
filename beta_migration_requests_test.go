@@ -30,7 +30,7 @@ func TestBetaMigrationRequestsService_List(t *testing.T) {
 		t.Errorf("BetaMigrationRequest.List returned error: %v", err)
 	}
 
-	want := []*BetaMigrationRequest{{Id: 1, OwnerId: 2, OwnerName: "test", OwnerType: "User"}}
+	want := []*BetaMigrationRequest{{Id: Uint(1), OwnerId: Uint(2), OwnerName: String("test"), OwnerType: String("User")}}
 	if !reflect.DeepEqual(requests, want) {
 		t.Errorf("BetaMigrationRequest.List returned %+v, want %+v", requests, want)
 	}
@@ -53,7 +53,7 @@ func TestBetaMigrationRequestsService_Create(t *testing.T) {
 		t.Errorf("BetaMigrationRequests.Create returned error: %v", err)
 	}
 
-	want := &BetaMigrationRequest{Id: 1, OwnerId: 2, OwnerName: "test", OwnerType: "User"}
+	want := &BetaMigrationRequest{Id: Uint(1), OwnerId: Uint(2), OwnerName: String("test"), OwnerType: String("User")}
 	if !reflect.DeepEqual(request, want) {
 		t.Errorf("BetaMigrationRequests.Create returned %+v, want %+v", request, want)
 	}

@@ -30,7 +30,7 @@ func TestOrganizationsService_Find(t *testing.T) {
 		t.Errorf("Organizations.Find returned error: %v", err)
 	}
 
-	want := &Organization{Id: 111, Login: "TestOrg", Name: "TestOrg", GithubId: 12345, AvatarUrl: "https:///test.com", Education: false}
+	want := &Organization{Id: Uint(111), Login: String("TestOrg"), Name: String("TestOrg"), GithubId: Uint(12345), AvatarUrl: String("https:///test.com"), Education: Bool(false)}
 	if !reflect.DeepEqual(org, want) {
 		t.Errorf("Organizations.Find returned %+v, want %+v", org, want)
 	}
@@ -53,7 +53,7 @@ func TestOrganizationsService_List(t *testing.T) {
 		t.Errorf("Organizations.List returned error: %v", err)
 	}
 
-	want := []*Organization{{Id: 111, Login: "TestOrg", Name: "TestOrg", GithubId: 12345, AvatarUrl: "https:///test.com", Education: false}}
+	want := []*Organization{{Id: Uint(111), Login: String("TestOrg"), Name: String("TestOrg"), GithubId: Uint(12345), AvatarUrl: String("https:///test.com"), Education: Bool(false)}}
 	if !reflect.DeepEqual(orgs, want) {
 		t.Errorf("Organizations.List returned %+v, want %+v", orgs, want)
 	}

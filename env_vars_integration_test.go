@@ -9,9 +9,7 @@ package travis
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 	"time"
 )
@@ -29,7 +27,7 @@ func TestEnvVarsService_Integration_FindByRepoId(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if envVar.Id != integrationEnvVarId {
+	if *envVar.Id != integrationEnvVarId {
 		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, envVar.Id)
 	}
 }
@@ -45,7 +43,7 @@ func TestEnvVarsService_Integration_FindByRepoSlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	if envVar.Id != integrationEnvVarId {
+	if *envVar.Id != integrationEnvVarId {
 		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, envVar.Id)
 	}
 }
@@ -95,20 +93,8 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		t.Fatalf("EnvVars.CreateByRepoId returned invalid http status: %s", res.Status)
 	}
 
-	want := &EnvVar{
-		Id:     envVar.Id,
-		Name:   "TEST",
-		Value:  "test",
-		Public: true,
-		Metadata: &Metadata{
-			Type:           "env_var",
-			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
-		},
-	}
-	if !reflect.DeepEqual(envVar, want) {
-		t.Errorf("EnvVars.CreateByRepoId returned %+v, want %+v", envVar, want)
+	if *envVar.Name != body.Name || *envVar.Value != body.Value || *envVar.Public != body.Public {
+		t.Fatalf("EnvVars.CreateByRepoId returned invalid EnvVar: %v", envVar)
 	}
 
 	// Be nice to the API
@@ -116,7 +102,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 
 	// Update
 	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
-	envVar, res, err = integrationClient.EnvVars.UpdateByRepoId(context.TODO(), integrationRepoId, envVar.Id, &body)
+	envVar, res, err = integrationClient.EnvVars.UpdateByRepoId(context.TODO(), integrationRepoId, *envVar.Id, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVars.UpdateByRepoId returned unexpected error: %s", err)
@@ -126,27 +112,15 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		t.Fatalf("EnvVars.UpdateByRepoId returned invalid http status: %s", res.Status)
 	}
 
-	want = &EnvVar{
-		Id:     envVar.Id,
-		Name:   "NEW_TEST",
-		Value:  "",
-		Public: false,
-		Metadata: &Metadata{
-			Type:           "env_var",
-			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
-		},
-	}
-	if !reflect.DeepEqual(envVar, want) {
-		t.Errorf("EnvVars.UpdateByRepoId returned %+v, want %+v", envVar, want)
+	if *envVar.Name != body.Name || envVar.Value != nil || *envVar.Public != body.Public {
+		t.Fatalf("EnvVars.UpdateByRepoId returned invalid EnvVar: %v", envVar)
 	}
 
 	// Be nice to the API
 	time.Sleep(2 * time.Second)
 
 	// Delete
-	res, err = integrationClient.EnvVars.DeleteByRepoId(context.TODO(), integrationRepoId, envVar.Id)
+	res, err = integrationClient.EnvVars.DeleteByRepoId(context.TODO(), integrationRepoId, *envVar.Id)
 
 	if err != nil {
 		t.Fatalf("EnvVars.DeleteByRepoId returned unexpected error: %s", err)
@@ -170,20 +144,8 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		t.Fatalf("EnvVars.CreateByRepoSlug returned invalid http status: %s", res.Status)
 	}
 
-	want := &EnvVar{
-		Id:     envVar.Id,
-		Name:   "TEST",
-		Value:  "test",
-		Public: true,
-		Metadata: &Metadata{
-			Type:           "env_var",
-			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
-		},
-	}
-	if !reflect.DeepEqual(envVar, want) {
-		t.Errorf("EnvVars.CreateByRepoSlug returned %+v, want %+v", envVar, want)
+	if *envVar.Name != body.Name || *envVar.Value != body.Value || *envVar.Public != body.Public {
+		t.Fatalf("EnvVars.CreateByRepoSlug returned invalid EnvVar: %v", envVar)
 	}
 
 	// Be nice to the API
@@ -191,7 +153,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 
 	// Update
 	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
-	envVar, res, err = integrationClient.EnvVars.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id, &body)
+	envVar, res, err = integrationClient.EnvVars.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, *envVar.Id, &body)
 
 	if err != nil {
 		t.Fatalf("EnvVar.UpdateByRepoSlug returned unexpected error: %s", err)
@@ -201,27 +163,15 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		t.Fatalf("EnvVar.UpdateByRepoSlug returned invalid http status: %s", res.Status)
 	}
 
-	want = &EnvVar{
-		Id:     envVar.Id,
-		Name:   "NEW_TEST",
-		Value:  "",
-		Public: false,
-		Metadata: &Metadata{
-			Type:           "env_var",
-			Href:           fmt.Sprintf("/repo/20783933/env_var/%s", envVar.Id),
-			Representation: "standard",
-			Permissions:    Permissions{"read": true, "write": true},
-		},
-	}
-	if !reflect.DeepEqual(envVar, want) {
-		t.Errorf("EnvVars.UpdateByRepoSlug returned %+v, want %+v", envVar, want)
+	if *envVar.Name != body.Name || envVar.Value != nil || *envVar.Public != body.Public {
+		t.Fatalf("EnvVars.UpdateByRepoSlug returned invalid EnvVar: %v", envVar)
 	}
 
 	// Be nice to the API
 	time.Sleep(2 * time.Second)
 
 	// Delete
-	res, err = integrationClient.EnvVars.DeleteByRepoSlug(context.TODO(), integrationRepoSlug, envVar.Id)
+	res, err = integrationClient.EnvVars.DeleteByRepoSlug(context.TODO(), integrationRepoSlug, *envVar.Id)
 
 	if err != nil {
 		t.Fatalf("EnvVars.DeleteByRepoSlug returned unexpected error: %s", err)

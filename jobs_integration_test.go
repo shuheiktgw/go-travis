@@ -28,7 +28,7 @@ func TestJobsService_Integration_Find(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if job.Id != integrationJobId {
+	if *job.Id != integrationJobId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, job.Id)
 	}
 
@@ -89,7 +89,7 @@ func TestJobsService_Integration_RestartAndCancel(t *testing.T) {
 		t.Fatalf("#invalid http status: %s", res.Status)
 	}
 
-	if job.Id != integrationJobId {
+	if *job.Id != integrationJobId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationJobId, job.Id)
 	}
 
@@ -102,7 +102,7 @@ func TestJobsService_Integration_RestartAndCancel(t *testing.T) {
 		t.Fatalf("unexpected error occured: %s", err)
 	}
 
-	if job.Id != integrationJobId {
+	if *job.Id != integrationJobId {
 		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationJobId, job.Id)
 	}
 }

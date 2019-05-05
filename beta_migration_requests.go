@@ -22,15 +22,15 @@ type BetaMigrationRequestsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_migration_request#attributes
 type BetaMigrationRequest struct {
 	// The beta_migration_request's id
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// The beta_migration_request's owner_id
-	OwnerId uint `json:"owner_id,omitempty"`
+	OwnerId *uint `json:"owner_id,omitempty"`
 	// The beta_migration_request's owner_name
-	OwnerName string `json:"owner_name,omitempty"`
+	OwnerName *string `json:"owner_name,omitempty"`
 	// Longer description of the feature
-	OwnerType string `json:"owner_type,omitempty"`
+	OwnerType *string `json:"owner_type,omitempty"`
 	// The beta_migration_request's accepted_at
-	AcceptedAt string `json:"accepted_at,omitempty"`
+	AcceptedAt *string `json:"accepted_at,omitempty"`
 	// The beta_migration_request's organizations
 	Organizations []*Organization `json:"organizations,omitempty"`
 	*Metadata

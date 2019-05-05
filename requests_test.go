@@ -32,7 +32,7 @@ func TestRequestsService_FindByRepoId(t *testing.T) {
 		t.Errorf("RequestService.FindByRepoId returned error: %v", err)
 	}
 
-	want := &Request{Id: 1, State: "processed", Result: "rejected"}
+	want := &Request{Id: Uint(1), State: String("processed"), Result: String("rejected")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("RequestService.FindByRepoId returned %+v, want %+v", repo, want)
 	}
@@ -55,7 +55,7 @@ func TestRequestsService_FindByRepoSlug(t *testing.T) {
 		t.Errorf("RequestService.FindByRepoId returned error: %v", err)
 	}
 
-	want := &Request{Id: 1, State: "processed", Result: "rejected"}
+	want := &Request{Id: Uint(1), State: String("processed"), Result: String("rejected")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("RequestService.FindByRepoId returned %+v, want %+v", repo, want)
 	}
@@ -78,7 +78,7 @@ func TestRequestsService_ListByRepoId(t *testing.T) {
 		t.Errorf("RequestsService.FindByRepoId returned error: %v", err)
 	}
 
-	want := []*Request{{Id: 1, State: "processed", Result: "rejected"}}
+	want := []*Request{{Id: Uint(1), State: String("processed"), Result: String("rejected")}}
 	if !reflect.DeepEqual(repos, want) {
 		t.Errorf("RequestsService.FindByRepoId returned %+v, want %+v", repos, want)
 	}
@@ -101,7 +101,7 @@ func TestRequestsService_ListByRepoSlug(t *testing.T) {
 		t.Errorf("RequestsService.FindByRepoSlug returned error: %v", err)
 	}
 
-	want := []*Request{{Id: 1, State: "processed", Result: "rejected"}}
+	want := []*Request{{Id: Uint(1), State: String("processed"), Result: String("rejected")}}
 	if !reflect.DeepEqual(repos, want) {
 		t.Errorf("RequestsService.FindByRepoSlug returned %+v, want %+v", repos, want)
 	}
@@ -123,7 +123,7 @@ func TestRequestsService_CreateByRepoId(t *testing.T) {
 		t.Errorf("RequestsService.CreateByRepoId returned error: %v", err)
 	}
 
-	want := &Request{Id: 1, Message: "message!"}
+	want := &Request{Id: Uint(1), Message: String("message!")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("RequestsService.CreateByRepoId returned %+v, want %+v", repo, want)
 	}
@@ -145,7 +145,7 @@ func TestRequestsService_CreateByRepoSlug(t *testing.T) {
 		t.Errorf("RequestsService.CreateByRepoSlug returned error: %v", err)
 	}
 
-	want := &Request{Id: 1, Message: "message!"}
+	want := &Request{Id: Uint(1), Message: String("message!")}
 	if !reflect.DeepEqual(repo, want) {
 		t.Errorf("RequestsService.CreateByRepoSlug returned %+v, want %+v", repo, want)
 	}

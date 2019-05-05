@@ -23,15 +23,21 @@ type SettingsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#standard-representation
 type Setting struct {
 	// The setting's name
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// The setting's value
 	// Currently value can be boolean or integer
 	Value interface{} `json:"value,omitempty"`
 	*Metadata
 }
 
-// getSettingsResponse represents response from the settings endpoints
-type getSettingsResponse struct {
+// SettingBody is a body to update setting
+type SettingBody struct {
+	Name  string      `json:"name,omitempty"`
+	Value interface{} `json:"value,omitempty"`
+}
+
+// settingsResponse represents response from the settings endpoints
+type settingsResponse struct {
 	Settings []*Setting `json:"settings,omitempty"`
 }
 
@@ -110,13 +116,13 @@ func (ss *SettingsService) ListByRepoId(ctx context.Context, repoId uint) ([]*Se
 		return nil, nil, err
 	}
 
-	var getSettingsResponse getSettingsResponse
-	resp, err := ss.client.Do(ctx, req, &getSettingsResponse)
+	var sr settingsResponse
+	resp, err := ss.client.Do(ctx, req, &sr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getSettingsResponse.Settings, resp, err
+	return sr.Settings, resp, err
 }
 
 // ListByRepoSlug fetches a list of settings of given repository slug
@@ -133,19 +139,19 @@ func (ss *SettingsService) ListByRepoSlug(ctx context.Context, repoSlug string) 
 		return nil, nil, err
 	}
 
-	var getSettingsResponse getSettingsResponse
-	resp, err := ss.client.Do(ctx, req, &getSettingsResponse)
+	var sr settingsResponse
+	resp, err := ss.client.Do(ctx, req, &sr)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return getSettingsResponse.Settings, resp, err
+	return sr.Settings, resp, err
 }
 
 // UpdateByRepoId updates a setting with setting property
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#update
-func (ss *SettingsService) UpdateByRepoId(ctx context.Context, repoId uint, setting *Setting) (*Setting, *http.Response, error) {
+func (ss *SettingsService) UpdateByRepoId(ctx context.Context, repoId uint, setting *SettingBody) (*Setting, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/setting/%s", repoId, setting.Name), nil)
 	if err != nil {
 		return nil, nil, err
@@ -174,7 +180,7 @@ func (ss *SettingsService) UpdateByRepoId(ctx context.Context, repoId uint, sett
 // UpdateByRepoSlug updates a setting with setting property
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#update
-func (ss *SettingsService) UpdateByRepoSlug(ctx context.Context, repoSlug string, setting *Setting) (*Setting, *http.Response, error) {
+func (ss *SettingsService) UpdateByRepoSlug(ctx context.Context, repoSlug string, setting *SettingBody) (*Setting, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/setting/%s", url.QueryEscape(repoSlug), setting.Name), nil)
 	if err != nil {
 		return nil, nil, err

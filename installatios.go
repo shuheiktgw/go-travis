@@ -22,9 +22,9 @@ type InstallationsService struct {
 // Travis CI API docs: https://developer.travis-ci.com/resource/installation#standard-representation
 type Installation struct {
 	// The installation id
-	Id uint `json:"id,omitempty"`
+	Id *uint `json:"id,omitempty"`
 	// The installation's id on GitHub
-	GitHubId uint `json:"github_id,omitempty"`
+	GitHubId *uint `json:"github_id,omitempty"`
 	// GitHub user or organization the installation belongs to
 	Owner *Owner `json:"owner,omitempty"`
 	*Metadata
