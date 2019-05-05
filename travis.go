@@ -51,29 +51,30 @@ type Client struct {
 	UserAgent string
 
 	// Services used to manipulate API entities
-	Active             *ActiveService
-	Authentication     *AuthenticationService
-	BetaFeatures       *BetaFeaturesService
-	Branches           *BranchesService
-	Broadcasts         *BroadcastsService
-	Builds             *BuildsService
-	Caches             *CachesService
-	Crons              *CronsService
-	EmailSubscriptions *EmailSubscriptionsService
-	EnvVars            *EnvVarsService
-	Installations      *InstallationsService
-	Jobs               *JobsService
-	Lint               *LintService
-	Logs               *LogsService
-	Messages           *MessagesService
-	Organizations      *OrganizationsService
-	Owner              *OwnerService
-	Preferences        *PreferencesService
-	Repositories       *RepositoriesService
-	Requests           *RequestsService
-	Settings           *SettingsService
-	Stages             *StagesService
-	User               *UserService
+	Active                *ActiveService
+	Authentication        *AuthenticationService
+	BetaFeatures          *BetaFeaturesService
+	BetaMigrationRequests *BetaMigrationRequestsService
+	Branches              *BranchesService
+	Broadcasts            *BroadcastsService
+	Builds                *BuildsService
+	Caches                *CachesService
+	Crons                 *CronsService
+	EmailSubscriptions    *EmailSubscriptionsService
+	EnvVars               *EnvVarsService
+	Installations         *InstallationsService
+	Jobs                  *JobsService
+	Lint                  *LintService
+	Logs                  *LogsService
+	Messages              *MessagesService
+	Organizations         *OrganizationsService
+	Owner                 *OwnerService
+	Preferences           *PreferencesService
+	Repositories          *RepositoriesService
+	Requests              *RequestsService
+	Settings              *SettingsService
+	Stages                *StagesService
+	User                  *UserService
 }
 
 // NewClient returns a new Travis API client.
@@ -98,6 +99,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.Active = &ActiveService{client: c}
 	c.Authentication = &AuthenticationService{client: c}
 	c.BetaFeatures = &BetaFeaturesService{client: c}
+	c.BetaMigrationRequests = &BetaMigrationRequestsService{client: c}
 	c.Branches = &BranchesService{client: c}
 	c.Broadcasts = &BroadcastsService{client: c}
 	c.Builds = &BuildsService{client: c}
