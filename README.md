@@ -86,14 +86,26 @@ builds, resp, err := client.Builds.FindByRepoSlug(context.Background(), "shuheik
 _, err := client.Jobs.Cancel(context.Background(), 12345)
 ```
 
-## Supported / Unsupported features
+## Standard Representation / Minimal Representation 
 
-### Supported features
-- ~~Covers all the [Travis CI API v3 public endpoints](https://developer.travis-ci.com/)! :tada:~~
-- As of April 14. 2019, there are several changes on the API we have not yet handled yet. Check https://github.com/shuheiktgw/go-travis/issues/19 and help us fix the problems! :+1:
+Travis CI API V3  provides two types of resource representations, standard and minimal. The API returns the resource you request in a standard representation and the resources related to the original resource in a minimal representation.
 
-### Unsupported features
-- [Eager loading](https://developer.travis-ci.com/eager-loading#eager%20loading) is not supported so far
+If you want **the related resources** in a standard representation, you need to [eager load](https://developer.travis-ci.com/eager-loading#eager%20loading) them by specifying `include` option.
+
+For example, to eager load `repository` and `commits` when fetching a build, one can specify `Include` in `BuildOption`:
+
+
+```go
+opt := BuildOption{Include: []string{"build.repository", "build.commits"}}
+build, _, err := client.Builds.Find(context.Background(), 123, &opt)
+```  
+
+## Important Note 
+
+There are several breaking changes between v0.1.9 and v0.2.0 mainly to support eager loading. If you have never used go-travis, please select v0.2.0 or above. If you have used go-travis v0.1.9 or below, and consider updating it, please be aware those two changes:
+
+- Almost all the struct fields are pointer.
+- Almost all the methods interacting with the API takes an option parameter to support eager loading. 
 
 ## Contribution
 Contributions are of course always welcome!
