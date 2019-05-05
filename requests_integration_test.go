@@ -24,7 +24,8 @@ func TestRequestsService_Integration_CreateAndFindById(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	request, res, err := integrationClient.Requests.FindByRepoId(context.TODO(), integrationRepoId, createdRequest.Id)
+	opt := RequestOption{Include: []string{"request.repository", "request.commit", "request.builds", "request.owner"}}
+	request, res, err := integrationClient.Requests.FindByRepoId(context.TODO(), integrationRepoId, createdRequest.Id, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -36,6 +37,22 @@ func TestRequestsService_Integration_CreateAndFindById(t *testing.T) {
 
 	if request.Id != createdRequest.Id {
 		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", request.Id, createdRequest.Id)
+	}
+
+	if request.Repository != nil && !request.Repository.IsStandard() {
+		t.Fatal("repository should be in a standard representation")
+	}
+
+	if request.Commit != nil && !request.Commit.IsStandard() {
+		t.Fatal("commit should be in a standard representation")
+	}
+
+	if len(request.Builds) != 0 && !request.Builds[0].IsStandard() {
+		t.Fatal("build should be in a standard representation")
+	}
+
+	if request.Owner != nil && !request.Owner.IsStandard() {
+		t.Fatal("owner should be in a standard representation")
 	}
 }
 
@@ -50,7 +67,8 @@ func TestRequestsService_Integration_CreateAndFindBySlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	request, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepoSlug, createdRequest.Id)
+	opt := RequestOption{Include: []string{"request.repository", "request.commit", "request.builds", "request.owner"}}
+	request, res, err := integrationClient.Requests.FindByRepoSlug(context.TODO(), integrationRepoSlug, createdRequest.Id, &opt)
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -62,6 +80,22 @@ func TestRequestsService_Integration_CreateAndFindBySlug(t *testing.T) {
 
 	if request.Id != createdRequest.Id {
 		t.Fatalf("unexpected request is retrieved: got request id: %d, want request id: %d", request.Id, createdRequest.Id)
+	}
+
+	if request.Repository != nil && !request.Repository.IsStandard() {
+		t.Fatal("repository should be in a standard representation")
+	}
+
+	if request.Commit != nil && !request.Commit.IsStandard() {
+		t.Fatal("commit should be in a standard representation")
+	}
+
+	if len(request.Builds) != 0 && !request.Builds[0].IsStandard() {
+		t.Fatal("build should be in a standard representation")
+	}
+
+	if request.Owner != nil && !request.Owner.IsStandard() {
+		t.Fatal("owner should be in a standard representation")
 	}
 }
 
@@ -76,7 +110,7 @@ func TestRequestsService_CreateAndListById(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	requests, res, err := integrationClient.Requests.ListByRepoId(context.TODO(), integrationRepoId, &ListRequestsOption{})
+	requests, res, err := integrationClient.Requests.ListByRepoId(context.TODO(), integrationRepoId, &RequestsOption{})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)
@@ -102,7 +136,7 @@ func TestRequestsService_CreateAndListBySlug(t *testing.T) {
 		t.Fatalf("invalid http status: %s", res.Status)
 	}
 
-	requests, res, err := integrationClient.Requests.ListByRepoSlug(context.TODO(), integrationRepoSlug, &ListRequestsOption{})
+	requests, res, err := integrationClient.Requests.ListByRepoSlug(context.TODO(), integrationRepoSlug, &RequestsOption{})
 
 	if err != nil {
 		t.Fatalf("unexpected error occured: %s", err)

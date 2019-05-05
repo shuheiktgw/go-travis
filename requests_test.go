@@ -21,10 +21,12 @@ func TestRequestsService_FindByRepoId(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/request/%d", testRepoId, testRequestId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "request.repository"})
 		fmt.Fprint(w, `{"id":1,"state":"processed","result":"rejected"}`)
 	})
 
-	repo, _, err := client.Requests.FindByRepoId(context.Background(), testRepoId, testRequestId)
+	opt := RequestOption{Include: []string{"request.repository"}}
+	repo, _, err := client.Requests.FindByRepoId(context.Background(), testRepoId, testRequestId, &opt)
 
 	if err != nil {
 		t.Errorf("RequestService.FindByRepoId returned error: %v", err)
@@ -42,10 +44,12 @@ func TestRequestsService_FindByRepoSlug(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/request/%d", testRepoSlug, testRequestId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
+		testFormValues(t, r, values{"include": "request.repository"})
 		fmt.Fprint(w, `{"id":1,"state":"processed","result":"rejected"}`)
 	})
 
-	repo, _, err := client.Requests.FindByRepoSlug(context.Background(), testRepoSlug, testRequestId)
+	opt := RequestOption{Include: []string{"request.repository"}}
+	repo, _, err := client.Requests.FindByRepoSlug(context.Background(), testRepoSlug, testRequestId, &opt)
 
 	if err != nil {
 		t.Errorf("RequestService.FindByRepoId returned error: %v", err)
@@ -63,11 +67,12 @@ func TestRequestsService_ListByRepoId(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%d/requests", testRepoId), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"limit": "5", "offset": "5"})
+		testFormValues(t, r, values{"limit": "5", "offset": "5", "include": "request.repository"})
 		fmt.Fprint(w, `{"requests": [{"id":1,"state":"processed","result":"rejected"}]}`)
 	})
 
-	repos, _, err := client.Requests.ListByRepoId(context.Background(), testRepoId, &ListRequestsOption{Limit: 5, Offset: 5})
+	opt := RequestsOption{Limit: 5, Offset: 5, Include: []string{"request.repository"}}
+	repos, _, err := client.Requests.ListByRepoId(context.Background(), testRepoId, &opt)
 
 	if err != nil {
 		t.Errorf("RequestsService.FindByRepoId returned error: %v", err)
@@ -85,11 +90,12 @@ func TestRequestsService_ListByRepoSlug(t *testing.T) {
 
 	mux.HandleFunc(fmt.Sprintf("/repo/%s/requests", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testFormValues(t, r, values{"limit": "5", "offset": "5"})
+		testFormValues(t, r, values{"limit": "5", "offset": "5", "include": "request.repository"})
 		fmt.Fprint(w, `{"requests": [{"id":1,"state":"processed","result":"rejected"}]}`)
 	})
 
-	repos, _, err := client.Requests.ListByRepoSlug(context.Background(), testRepoSlug, &ListRequestsOption{Limit: 5, Offset: 5})
+	opt := RequestsOption{Limit: 5, Offset: 5, Include: []string{"request.repository"}}
+	repos, _, err := client.Requests.ListByRepoSlug(context.Background(), testRepoSlug, &opt)
 
 	if err != nil {
 		t.Errorf("RequestsService.FindByRepoSlug returned error: %v", err)
