@@ -149,6 +149,27 @@ func TestRepositoriesService_Deactivate(t *testing.T) {
 	}
 }
 
+func TestRepositoriesService_Migrate(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/repo/%s/migrate", testRepoSlug), func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, http.MethodPost)
+		fmt.Fprint(w, `{"id":1,"name":"go-travis-test","slug":"shuheiktgw/go-travis-test"}`)
+	})
+
+	repo, _, err := client.Repositories.Migrate(context.Background(), testRepoSlug)
+
+	if err != nil {
+		t.Errorf("Repository.Migrate returned error: %v", err)
+	}
+
+	want := &Repository{Id: 1, Name: "go-travis-test", Slug: "shuheiktgw/go-travis-test"}
+	if !reflect.DeepEqual(repo, want) {
+		t.Errorf("Repository.Migrate returned %+v, want %+v", repo, want)
+	}
+}
+
 func TestRepositoriesService_Star(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()

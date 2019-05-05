@@ -226,6 +226,29 @@ func (rs *RepositoriesService) Deactivate(ctx context.Context, slug string) (*Re
 	return &repository, resp, err
 }
 
+// Migrate migrates a repository
+//
+// Travis CI API docs: https://developer.travis-ci.com/resource/repository#migrate
+func (rs *RepositoriesService) Migrate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
+	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/migrate", url.QueryEscape(slug)), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := rs.client.NewRequest(http.MethodPost, u, nil, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var repository Repository
+	resp, err := rs.client.Do(ctx, req, &repository)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return &repository, resp, err
+}
+
 // Star stars a repository based on the currently logged in user
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#star

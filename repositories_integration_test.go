@@ -115,6 +115,19 @@ func TestRepositoriesService_Integration_Activation(t *testing.T) {
 	}
 }
 
+func TestRepositoriesService_Integration_Migrate(t *testing.T) {
+	_, res, err := integrationClient.Repositories.Migrate(context.TODO(), integrationRepoSlug)
+
+	if err != nil {
+		t.Fatalf("unexpected error occured: %s", err)
+	}
+
+	// The repository is not allowed to migrate as of May 5th, 2019
+	if res.StatusCode != http.StatusForbidden {
+		t.Fatalf("invalid http status: %s", res.Status)
+	}
+}
+
 func TestRepositoriesService_Integration_Star(t *testing.T) {
 	repo, res, err := integrationClient.Repositories.Star(context.TODO(), integrationRepoSlug)
 
