@@ -18,6 +18,12 @@ type KeyPairService struct {
 	client *Client
 }
 
+// GeneratedKeyPairService handles communication with the key pair (generated) endpoints
+// of Travis CI API
+type GeneratedKeyPairService struct {
+	client *Client
+}
+
 // KeyPairBody specifies options for
 // creating and updating key pair.
 type KeyPairBody struct {
@@ -222,10 +228,10 @@ func (ks *KeyPairService) DeleteByRepoSlug(ctx context.Context, repoSlug string)
 	return resp, err
 }
 
-// FindGeneratedByRepoId fetches the default key pair based on the given repository id
+// FindByRepoId fetches the default key pair based on the given repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#find
-func (ks *KeyPairService) FindGeneratedByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
+func (ks *GeneratedKeyPairService) FindByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair/generated", repoId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -245,10 +251,10 @@ func (ks *KeyPairService) FindGeneratedByRepoId(ctx context.Context, repoId uint
 	return &keyPair, resp, err
 }
 
-// FindGeneratedByRepoSlug fetches the default key pair based on the given repository slug
+// FindByRepoSlug fetches the default key pair based on the given repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#find
-func (ks *KeyPairService) FindGeneratedByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
+func (ks *GeneratedKeyPairService) FindByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair/generated", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
@@ -268,10 +274,10 @@ func (ks *KeyPairService) FindGeneratedByRepoSlug(ctx context.Context, repoSlug 
 	return &keyPair, resp, err
 }
 
-// CreateGeneratedByRepoId creates the new default key pair based on the given repository id
+// CreateByRepoId creates the new default key pair based on the given repository id
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#create
-func (ks *KeyPairService) CreateGeneratedByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
+func (ks *GeneratedKeyPairService) CreateByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair/generated", repoId), nil)
 	if err != nil {
 		return nil, nil, err
@@ -291,10 +297,10 @@ func (ks *KeyPairService) CreateGeneratedByRepoId(ctx context.Context, repoId ui
 	return &k, resp, err
 }
 
-// CreateGeneratedByRepoSlug creates the new default key pair based on the given repository slug
+// CreateByRepoSlug creates the new default key pair based on the given repository slug
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#create
-func (ks *KeyPairService) CreateGeneratedByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
+func (ks *GeneratedKeyPairService) CreateByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
 	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair/generated", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err

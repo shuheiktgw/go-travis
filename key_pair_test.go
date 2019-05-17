@@ -220,7 +220,7 @@ func TestKeyPairService_DeleteByRepoSlug(t *testing.T) {
 	}
 }
 
-func TestKeyPairService_FindGeneratedByRepoId(t *testing.T) {
+func TestGeneratedKeyPairService_FindByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -230,7 +230,7 @@ func TestKeyPairService_FindGeneratedByRepoId(t *testing.T) {
 			testKeyPairDescription, testKeyPairPublicKey, testKeyPairFingerprint)
 	})
 
-	keyPair, _, err := client.KeyPair.FindGeneratedByRepoId(context.Background(), testRepoId)
+	keyPair, _, err := client.GeneratedKeyPair.FindByRepoId(context.Background(), testRepoId)
 
 	if err != nil {
 		t.Errorf("KeyPair.FindGeneratedByRepoId returned error: %v", err)
@@ -246,7 +246,7 @@ func TestKeyPairService_FindGeneratedByRepoId(t *testing.T) {
 	}
 }
 
-func TestKeyPairService_FindGeneratedByRepoSlug(t *testing.T) {
+func TestGeneratedKeyPairService_FindByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -256,7 +256,7 @@ func TestKeyPairService_FindGeneratedByRepoSlug(t *testing.T) {
 			testKeyPairDescription, testKeyPairPublicKey, testKeyPairFingerprint)
 	})
 
-	keyPair, _, err := client.KeyPair.FindGeneratedByRepoSlug(context.Background(), testRepoSlug)
+	keyPair, _, err := client.GeneratedKeyPair.FindByRepoSlug(context.Background(), testRepoSlug)
 
 	if err != nil {
 		t.Errorf("KeyPair.FindGeneratedByRepoSlug returned error: %v", err)
@@ -272,7 +272,7 @@ func TestKeyPairService_FindGeneratedByRepoSlug(t *testing.T) {
 	}
 }
 
-func TestKeyPairService_CreateGeneratedByRepoId(t *testing.T) {
+func TestGeneratedKeyPair_CreateByRepoId(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -282,7 +282,7 @@ func TestKeyPairService_CreateGeneratedByRepoId(t *testing.T) {
 			testKeyPairDescription, testKeyPairPublicKey, testKeyPairFingerprint)
 	})
 
-	keyPair, _, err := client.KeyPair.CreateGeneratedByRepoId(context.Background(), testRepoId)
+	keyPair, _, err := client.GeneratedKeyPair.CreateByRepoId(context.Background(), testRepoId)
 
 	if err != nil {
 		t.Errorf("KeyPair.CreateGeneratedByRepoId returned error: %v", err)
@@ -298,7 +298,7 @@ func TestKeyPairService_CreateGeneratedByRepoId(t *testing.T) {
 	}
 }
 
-func TestKeyPairService_CreateGeneratedByRepoSlug(t *testing.T) {
+func TestGeneratedKeyPairService_CreateByRepoSlug(t *testing.T) {
 	client, mux, _, teardown := setup()
 	defer teardown()
 
@@ -308,7 +308,7 @@ func TestKeyPairService_CreateGeneratedByRepoSlug(t *testing.T) {
 			testKeyPairDescription, testKeyPairPublicKey, testKeyPairFingerprint)
 	})
 
-	keyPair, _, err := client.KeyPair.CreateGeneratedByRepoSlug(context.Background(), testRepoSlug)
+	keyPair, _, err := client.GeneratedKeyPair.CreateByRepoSlug(context.Background(), testRepoSlug)
 
 	if err != nil {
 		t.Errorf("KeyPair.CreateByRepoSlug returned error: %v", err)
