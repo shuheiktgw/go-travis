@@ -21,7 +21,7 @@ var (
 	integrationRepoSlug           = "shuheiktgwtest/go-travis-test"
 	integrationRepoId        uint = 20783933
 	integrationTravisToken        = os.Getenv("TRAVIS_API_AUTH_TOKEN")
-	integrationUrl                = ApiOrgUrl
+	integrationUrl                = ApiComUrl
 	integrationUserId        uint = 1362503
 )
 
