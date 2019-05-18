@@ -5,4 +5,4 @@
 
 package travis
 
-const version = "0.2.0"
+const version = "0.2.1"
