@@ -38,7 +38,7 @@ type lintResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/lint#lint
 func (es *LintService) Lint(ctx context.Context, yml *TravisYml) ([]*Warning, *http.Response, error) {
-	u, err := urlWithOptions("/lint", nil)
+	u, err := urlWithOptions("lint", nil)
 	if err != nil {
 		return nil, nil, err
 	}

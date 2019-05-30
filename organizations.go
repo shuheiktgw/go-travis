@@ -68,7 +68,7 @@ type organizationsResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/organization#find
 func (os *OrganizationsService) Find(ctx context.Context, id uint, opt *OrganizationOption) (*Organization, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/org/%d", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("org/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -91,7 +91,7 @@ func (os *OrganizationsService) Find(ctx context.Context, id uint, opt *Organiza
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/organizations#for_current_user
 func (os *OrganizationsService) List(ctx context.Context, opt *OrganizationsOption) ([]*Organization, *http.Response, error) {
-	u, err := urlWithOptions("/orgs", opt)
+	u, err := urlWithOptions("orgs", opt)
 	if err != nil {
 		return nil, nil, err
 	}

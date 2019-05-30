@@ -53,7 +53,7 @@ type broadcastsResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/broadcasts#for_current_user
 func (bs *BroadcastsService) List(ctx context.Context, opt *BroadcastsOption) ([]*Broadcast, *http.Response, error) {
-	u, err := urlWithOptions("/broadcasts", opt)
+	u, err := urlWithOptions("broadcasts", opt)
 	if err != nil {
 		return nil, nil, err
 	}

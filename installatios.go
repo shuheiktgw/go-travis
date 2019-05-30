@@ -40,7 +40,7 @@ type InstallationOption struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/installation#find
 func (is *InstallationsService) Find(ctx context.Context, id uint, opt *InstallationOption) (*Installation, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/installation/%d", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("installation/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -45,7 +45,7 @@ type preferencesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/preference#find
 func (ps *PreferencesService) Find(ctx context.Context, name string) (*Preference, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/preference/%s", name), nil)
+	u, err := urlWithOptions(fmt.Sprintf("preference/%s", name), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -68,7 +68,7 @@ func (ps *PreferencesService) Find(ctx context.Context, name string) (*Preferenc
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/preferences#for_user
 func (ps *PreferencesService) List(ctx context.Context) ([]*Preference, *http.Response, error) {
-	u, err := urlWithOptions("/preferences", nil)
+	u, err := urlWithOptions("preferences", nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -92,7 +92,7 @@ func (ps *PreferencesService) List(ctx context.Context) ([]*Preference, *http.Re
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/preference#update
 func (ps *PreferencesService) Update(ctx context.Context, preference *PreferenceBody) (*Preference, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/preference/%s", preference.Name), nil)
+	u, err := urlWithOptions(fmt.Sprintf("preference/%s", preference.Name), nil)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -58,7 +58,7 @@ type betaMigrationRequestsResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_migration_requests#find
 func (bs *BetaMigrationRequestsService) List(ctx context.Context, userId uint, opt *BetaMigrationRequestsOption) ([]*BetaMigrationRequest, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_migration_requests", userId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d/beta_migration_requests", userId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -81,7 +81,7 @@ func (bs *BetaMigrationRequestsService) List(ctx context.Context, userId uint, o
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_migration_request#create
 func (bs *BetaMigrationRequestsService) Create(ctx context.Context, userId uint, request *BetaMigrationRequestBody) (*BetaMigrationRequest, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_migration_request", userId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d/beta_migration_request", userId), nil)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -39,7 +39,7 @@ type LogPart struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/log#find
 func (ls *LogsService) FindByJobId(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d/log", jobId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("job/%d/log", jobId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -62,7 +62,7 @@ func (ls *LogsService) FindByJobId(ctx context.Context, jobId uint) (*Log, *http
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/log#delete
 func (ls *LogsService) DeleteByJobId(ctx context.Context, jobId uint) (*Log, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d/log", jobId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("job/%d/log", jobId), nil)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -60,7 +60,7 @@ const (
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#find
 func (ss *SettingsService) FindByRepoId(ctx context.Context, repoId uint, name string) (*Setting, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/setting/%s", repoId, name), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/setting/%s", repoId, name), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -83,7 +83,7 @@ func (ss *SettingsService) FindByRepoId(ctx context.Context, repoId uint, name s
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#find
 func (ss *SettingsService) FindByRepoSlug(ctx context.Context, repoSlug string, name string) (*Setting, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/setting/%s", url.QueryEscape(repoSlug), name), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/setting/%s", url.QueryEscape(repoSlug), name), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -106,7 +106,7 @@ func (ss *SettingsService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/settings#for_repository
 func (ss *SettingsService) ListByRepoId(ctx context.Context, repoId uint) ([]*Setting, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/settings", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/settings", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -129,7 +129,7 @@ func (ss *SettingsService) ListByRepoId(ctx context.Context, repoId uint) ([]*Se
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/settings#for_repository
 func (ss *SettingsService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]*Setting, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/settings", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/settings", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -152,7 +152,7 @@ func (ss *SettingsService) ListByRepoSlug(ctx context.Context, repoSlug string) 
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#update
 func (ss *SettingsService) UpdateByRepoId(ctx context.Context, repoId uint, setting *SettingBody) (*Setting, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/setting/%s", repoId, setting.Name), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/setting/%s", repoId, setting.Name), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -181,7 +181,7 @@ func (ss *SettingsService) UpdateByRepoId(ctx context.Context, repoId uint, sett
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/setting#update
 func (ss *SettingsService) UpdateByRepoSlug(ctx context.Context, repoSlug string, setting *SettingBody) (*Setting, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/setting/%s", url.QueryEscape(repoSlug), setting.Name), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/setting/%s", url.QueryEscape(repoSlug), setting.Name), nil)
 	if err != nil {
 		return nil, nil, err
 	}

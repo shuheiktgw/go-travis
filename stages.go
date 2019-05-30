@@ -52,7 +52,7 @@ type stagesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/stages#find
 func (ss *StagesService) ListByBuild(ctx context.Context, buildId uint, opt *StagesOption) ([]*Stage, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/build/%d/stages", buildId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("build/%d/stages", buildId), opt)
 	if err != nil {
 		return nil, nil, err
 	}

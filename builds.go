@@ -140,7 +140,7 @@ const (
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/build#find
 func (bs *BuildsService) Find(ctx context.Context, id uint, opt *BuildOption) (*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/build/%d", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("build/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -163,7 +163,7 @@ func (bs *BuildsService) Find(ctx context.Context, id uint, opt *BuildOption) (*
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#for_current_user
 func (bs *BuildsService) List(ctx context.Context, opt *BuildsOption) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions("/builds", opt)
+	u, err := urlWithOptions("builds", opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -186,7 +186,7 @@ func (bs *BuildsService) List(ctx context.Context, opt *BuildsOption) ([]*Build,
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#find
 func (bs *BuildsService) ListByRepoId(ctx context.Context, repoId uint, opt *BuildsByRepoOption) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/builds", repoId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/builds", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -209,7 +209,7 @@ func (bs *BuildsService) ListByRepoId(ctx context.Context, repoId uint, opt *Bui
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/builds#find
 func (bs *BuildsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *BuildsByRepoOption) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/builds", url.QueryEscape(repoSlug)), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/builds", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -232,7 +232,7 @@ func (bs *BuildsService) ListByRepoSlug(ctx context.Context, repoSlug string, op
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/build#cancel
 func (bs *BuildsService) Cancel(ctx context.Context, id uint) (*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/build/%d/cancel", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("build/%d/cancel", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -255,7 +255,7 @@ func (bs *BuildsService) Cancel(ctx context.Context, id uint) (*Build, *http.Res
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/build#restart
 func (bs *BuildsService) Restart(ctx context.Context, id uint) (*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/build/%d/restart", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("build/%d/restart", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}

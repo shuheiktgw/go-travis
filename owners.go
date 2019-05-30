@@ -51,7 +51,7 @@ type OwnerOption struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/owner#find
 func (os *OwnerService) FindByLogin(ctx context.Context, login string, opt *OwnerOption) (*Owner, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/%s", login), opt)
+	u, err := urlWithOptions(fmt.Sprintf("owner/%s", login), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -74,7 +74,7 @@ func (os *OwnerService) FindByLogin(ctx context.Context, login string, opt *Owne
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/owner#find
 func (os *OwnerService) FindByGitHubId(ctx context.Context, githubId uint, opt *OwnerOption) (*Owner, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/github_id/%d", githubId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("owner/github_id/%d", githubId), opt)
 	if err != nil {
 		return nil, nil, err
 	}

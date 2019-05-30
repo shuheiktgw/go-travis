@@ -54,7 +54,7 @@ type envVarsResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#find
 func (es *EnvVarsService) FindByRepoId(ctx context.Context, repoId uint, id string) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_var/%s", repoId, id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/env_var/%s", repoId, id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -77,7 +77,7 @@ func (es *EnvVarsService) FindByRepoId(ctx context.Context, repoId uint, id stri
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#find
 func (es *EnvVarsService) FindByRepoSlug(ctx context.Context, repoSlug string, id string) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -100,7 +100,7 @@ func (es *EnvVarsService) FindByRepoSlug(ctx context.Context, repoSlug string, i
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_vars#for_repository
 func (es *EnvVarsService) ListByRepoId(ctx context.Context, repoId uint) ([]*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_vars", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/env_vars", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -123,7 +123,7 @@ func (es *EnvVarsService) ListByRepoId(ctx context.Context, repoId uint) ([]*Env
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_vars#for_repository
 func (es *EnvVarsService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_vars", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/env_vars", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -146,7 +146,7 @@ func (es *EnvVarsService) ListByRepoSlug(ctx context.Context, repoSlug string) (
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_vars#create
 func (es *EnvVarsService) CreateByRepoId(ctx context.Context, repoId uint, envVar *EnvVarBody) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_vars", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/env_vars", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -169,7 +169,7 @@ func (es *EnvVarsService) CreateByRepoId(ctx context.Context, repoId uint, envVa
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_vars#create
 func (es *EnvVarsService) CreateByRepoSlug(ctx context.Context, repoSlug string, envVar *EnvVarBody) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_vars", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/env_vars", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -192,7 +192,7 @@ func (es *EnvVarsService) CreateByRepoSlug(ctx context.Context, repoSlug string,
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#update
 func (es *EnvVarsService) UpdateByRepoId(ctx context.Context, repoId uint, id string, envVar *EnvVarBody) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_var/%s", repoId, id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/env_var/%s", repoId, id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -215,7 +215,7 @@ func (es *EnvVarsService) UpdateByRepoId(ctx context.Context, repoId uint, id st
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#update
 func (es *EnvVarsService) UpdateByRepoSlug(ctx context.Context, repoSlug string, id string, envVar *EnvVarBody) (*EnvVar, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -238,7 +238,7 @@ func (es *EnvVarsService) UpdateByRepoSlug(ctx context.Context, repoSlug string,
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#delete
 func (es *EnvVarsService) DeleteByRepoId(ctx context.Context, repoId uint, id string) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/env_var/%s", repoId, id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/env_var/%s", repoId, id), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ func (es *EnvVarsService) DeleteByRepoId(ctx context.Context, repoId uint, id st
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/env_var#delete
 func (es *EnvVarsService) DeleteByRepoSlug(ctx context.Context, repoSlug string, id string) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/env_var/%s", url.QueryEscape(repoSlug), id), nil)
 	if err != nil {
 		return nil, err
 	}

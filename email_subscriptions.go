@@ -22,7 +22,7 @@ type EmailSubscriptionsService struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#resubscribe
 func (es *EmailSubscriptionsService) SubscribeByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/email_subscription", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/email_subscription", repoId), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func (es *EmailSubscriptionsService) SubscribeByRepoId(ctx context.Context, repo
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#resubscribe
 func (es *EmailSubscriptionsService) SubscribeByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/email_subscription", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/email_subscription", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (es *EmailSubscriptionsService) SubscribeByRepoSlug(ctx context.Context, re
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#unsubscribe
 func (es *EmailSubscriptionsService) UnsubscribeByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/email_subscription", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/email_subscription", repoId), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (es *EmailSubscriptionsService) UnsubscribeByRepoId(ctx context.Context, re
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/email_subscription#unsubscribe
 func (es *EmailSubscriptionsService) UnsubscribeByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/email_subscription", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/email_subscription", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, err
 	}
