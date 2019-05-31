@@ -26,7 +26,7 @@ func TestOwnerService_Integration_FindByLogin(t *testing.T) {
 	}
 
 	if *owner.Login != integrationGitHubOwner {
-		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, owner.Login)
+		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, *owner.Login)
 	}
 
 	if len(owner.Repositories) == 0 {
@@ -51,6 +51,6 @@ func TestOwnerService_Integration_FindByGitHubId(t *testing.T) {
 	}
 
 	if *owner.GitHubId != integrationGitHubOwnerId {
-		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, owner.Login)
+		t.Fatalf("unexpected owner returned: want %s: got %s", integrationGitHubOwner, *owner.Login)
 	}
 }

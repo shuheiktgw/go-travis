@@ -28,7 +28,7 @@ func TestBranchesService_Integration_FindByRepoId(t *testing.T) {
 	}
 
 	if *branch.Name != "master" {
-		t.Fatalf("unexpected branch returned: want %s: got %s", "master", branch.Name)
+		t.Fatalf("unexpected branch returned: want %s: got %s", "master", *branch.Name)
 	}
 
 	if *branch.Repository.Id != integrationRepoId {
@@ -54,11 +54,11 @@ func TestBranchesService_Integration_FindByRepoSlug(t *testing.T) {
 	}
 
 	if *branch.Name != "master" {
-		t.Fatalf("unexpected branch returned: want %s: got %s", "master", branch.Name)
+		t.Fatalf("unexpected branch returned: want %s: got %s", "master", *branch.Name)
 	}
 
 	if *branch.Repository.Slug != integrationRepoSlug {
-		t.Fatalf("unexpected branch returned: want %s: got %s", integrationRepoSlug, branch.Repository.Slug)
+		t.Fatalf("unexpected branch returned: want %s: got %s", integrationRepoSlug, *branch.Repository.Slug)
 	}
 
 	if branch.Repository == nil {
