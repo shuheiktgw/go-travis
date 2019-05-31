@@ -97,7 +97,7 @@ func TestRepositoriesService_Integration_Activation(t *testing.T) {
 	}
 
 	if *repo.Slug != integrationRepoSlug {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, *repo.Slug)
 	}
 
 	repo, res, err = integrationClient.Repositories.Activate(context.TODO(), integrationRepoSlug)
@@ -111,7 +111,7 @@ func TestRepositoriesService_Integration_Activation(t *testing.T) {
 	}
 
 	if *repo.Slug != integrationRepoSlug {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, *repo.Slug)
 	}
 }
 
@@ -136,7 +136,7 @@ func TestRepositoriesService_Integration_Star(t *testing.T) {
 	}
 
 	if *repo.Slug != integrationRepoSlug {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, *repo.Slug)
 	}
 
 	repo, res, err = integrationClient.Repositories.Unstar(context.TODO(), integrationRepoSlug)
@@ -150,6 +150,6 @@ func TestRepositoriesService_Integration_Star(t *testing.T) {
 	}
 
 	if *repo.Slug != integrationRepoSlug {
-		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, repo.Slug)
+		t.Fatalf("unexpected repository returned: want %s: got %s", integrationRepoSlug, *repo.Slug)
 	}
 }

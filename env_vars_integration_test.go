@@ -28,7 +28,7 @@ func TestEnvVarsService_Integration_FindByRepoId(t *testing.T) {
 	}
 
 	if *envVar.Id != integrationEnvVarId {
-		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, envVar.Id)
+		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, *envVar.Id)
 	}
 }
 
@@ -44,7 +44,7 @@ func TestEnvVarsService_Integration_FindByRepoSlug(t *testing.T) {
 	}
 
 	if *envVar.Id != integrationEnvVarId {
-		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, envVar.Id)
+		t.Fatalf("unexpected env var id returned: want %s got %s", integrationEnvVarId, *envVar.Id)
 	}
 }
 
