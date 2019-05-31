@@ -39,7 +39,7 @@ type cachesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#find
 func (cs *CachesService) ListByRepoId(ctx context.Context, repoId uint) ([]*Cache, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/caches", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/caches", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -62,7 +62,7 @@ func (cs *CachesService) ListByRepoId(ctx context.Context, repoId uint) ([]*Cach
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#find
 func (cs *CachesService) ListByRepoSlug(ctx context.Context, repoSlug string) ([]*Cache, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/caches", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/caches", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -85,7 +85,7 @@ func (cs *CachesService) ListByRepoSlug(ctx context.Context, repoSlug string) ([
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#delete
 func (cs *CachesService) DeleteByRepoId(ctx context.Context, repoId uint) ([]*Cache, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/caches", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/caches", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -108,7 +108,7 @@ func (cs *CachesService) DeleteByRepoId(ctx context.Context, repoId uint) ([]*Ca
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/caches#delete
 func (cs *CachesService) DeleteByRepoSlug(ctx context.Context, repoSlug string) ([]*Cache, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/caches", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/caches", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}

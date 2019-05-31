@@ -65,7 +65,7 @@ type branchesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branch#find
 func (bs *BranchesService) FindByRepoId(ctx context.Context, repoId uint, branchName string, opt *BranchOption) (*Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branch/%s", repoId, branchName), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/branch/%s", repoId, branchName), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -88,7 +88,7 @@ func (bs *BranchesService) FindByRepoId(ctx context.Context, repoId uint, branch
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branch#find
 func (bs *BranchesService) FindByRepoSlug(ctx context.Context, repoSlug string, branchName string, opt *BranchOption) (*Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branch/%s", url.QueryEscape(repoSlug), branchName), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/branch/%s", url.QueryEscape(repoSlug), branchName), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -111,7 +111,7 @@ func (bs *BranchesService) FindByRepoSlug(ctx context.Context, repoSlug string, 
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branches#find
 func (bs *BranchesService) ListByRepoId(ctx context.Context, repoId uint, opt *BranchesOption) ([]*Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branches", repoId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/branches", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -134,7 +134,7 @@ func (bs *BranchesService) ListByRepoId(ctx context.Context, repoId uint, opt *B
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/branches#find
 func (bs *BranchesService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *BranchesOption) ([]*Branch, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branches", url.QueryEscape(repoSlug)), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/branches", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}

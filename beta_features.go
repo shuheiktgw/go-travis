@@ -44,7 +44,7 @@ type betaFeaturesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_features#find
 func (bs *BetaFeaturesService) List(ctx context.Context, userId uint) ([]*BetaFeature, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_features", userId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d/beta_features", userId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -67,7 +67,7 @@ func (bs *BetaFeaturesService) List(ctx context.Context, userId uint) ([]*BetaFe
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_feature#update
 func (bs *BetaFeaturesService) Update(ctx context.Context, userId uint, id uint, enabled bool) (*BetaFeature, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_feature/%d", userId, id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d/beta_feature/%d", userId, id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -90,7 +90,7 @@ func (bs *BetaFeaturesService) Update(ctx context.Context, userId uint, id uint,
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/beta_feature#delete
 func (bs *BetaFeaturesService) Delete(ctx context.Context, userId uint, id uint) (*BetaFeature, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/beta_feature/%d", userId, id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d/beta_feature/%d", userId, id), nil)
 	if err != nil {
 		return nil, nil, err
 	}

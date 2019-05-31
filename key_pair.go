@@ -50,7 +50,7 @@ type KeyPair struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#find
 func (ks *KeyPairService) FindByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/key_pair", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -73,7 +73,7 @@ func (ks *KeyPairService) FindByRepoId(ctx context.Context, repoId uint) (*KeyPa
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#find
 func (ks *KeyPairService) FindByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -96,7 +96,7 @@ func (ks *KeyPairService) FindByRepoSlug(ctx context.Context, repoSlug string) (
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#create
 func (ks *KeyPairService) CreateByRepoId(ctx context.Context, repoId uint, keyPair *KeyPairBody) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/key_pair", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -119,7 +119,7 @@ func (ks *KeyPairService) CreateByRepoId(ctx context.Context, repoId uint, keyPa
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#create
 func (ks *KeyPairService) CreateByRepoSlug(ctx context.Context, repoSlug string, keyPair *KeyPairBody) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -142,7 +142,7 @@ func (ks *KeyPairService) CreateByRepoSlug(ctx context.Context, repoSlug string,
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#update
 func (ks *KeyPairService) UpdateByRepoId(ctx context.Context, repoId uint, keyPair *KeyPairBody) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/key_pair", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -165,7 +165,7 @@ func (ks *KeyPairService) UpdateByRepoId(ctx context.Context, repoId uint, keyPa
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#update
 func (ks *KeyPairService) UpdateByRepoSlug(ctx context.Context, repoSlug string, keyPair *KeyPairBody) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -188,7 +188,7 @@ func (ks *KeyPairService) UpdateByRepoSlug(ctx context.Context, repoSlug string,
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#delete
 func (ks *KeyPairService) DeleteByRepoId(ctx context.Context, repoId uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/key_pair", repoId), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +210,7 @@ func (ks *KeyPairService) DeleteByRepoId(ctx context.Context, repoId uint) (*htt
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair#delete
 func (ks *KeyPairService) DeleteByRepoSlug(ctx context.Context, repoSlug string) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/key_pair", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (ks *KeyPairService) DeleteByRepoSlug(ctx context.Context, repoSlug string)
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#find
 func (ks *GeneratedKeyPairService) FindByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair/generated", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/key_pair/generated", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -255,7 +255,7 @@ func (ks *GeneratedKeyPairService) FindByRepoId(ctx context.Context, repoId uint
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#find
 func (ks *GeneratedKeyPairService) FindByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair/generated", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/key_pair/generated", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -278,7 +278,7 @@ func (ks *GeneratedKeyPairService) FindByRepoSlug(ctx context.Context, repoSlug 
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#create
 func (ks *GeneratedKeyPairService) CreateByRepoId(ctx context.Context, repoId uint) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/key_pair/generated", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/key_pair/generated", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -301,7 +301,7 @@ func (ks *GeneratedKeyPairService) CreateByRepoId(ctx context.Context, repoId ui
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/key_pair_generated#create
 func (ks *GeneratedKeyPairService) CreateByRepoSlug(ctx context.Context, repoSlug string) (*KeyPair, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/key_pair/generated", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/key_pair/generated", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}

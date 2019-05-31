@@ -92,7 +92,7 @@ type repositoriesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repositories#for_current_user
 func (rs *RepositoriesService) List(ctx context.Context, opt *RepositoriesOption) ([]*Repository, *http.Response, error) {
-	u, err := urlWithOptions("/repos", opt)
+	u, err := urlWithOptions("repos", opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -115,7 +115,7 @@ func (rs *RepositoriesService) List(ctx context.Context, opt *RepositoriesOption
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repositories#for_owner
 func (rs *RepositoriesService) ListByOwner(ctx context.Context, owner string, opt *RepositoriesOption) ([]*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/%s/repos", owner), opt)
+	u, err := urlWithOptions(fmt.Sprintf("owner/%s/repos", owner), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -138,7 +138,7 @@ func (rs *RepositoriesService) ListByOwner(ctx context.Context, owner string, op
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repositories#for_owner
 func (rs *RepositoriesService) ListByGitHubId(ctx context.Context, id uint, opt *RepositoriesOption) ([]*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/github_id/%d/repos", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("owner/github_id/%d/repos", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -161,7 +161,7 @@ func (rs *RepositoriesService) ListByGitHubId(ctx context.Context, id uint, opt 
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#find
 func (rs *RepositoriesService) Find(ctx context.Context, slug string, opt *RepositoryOption) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s", url.QueryEscape(slug)), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s", url.QueryEscape(slug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -184,7 +184,7 @@ func (rs *RepositoriesService) Find(ctx context.Context, slug string, opt *Repos
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#activate
 func (rs *RepositoriesService) Activate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/activate", url.QueryEscape(slug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/activate", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -207,7 +207,7 @@ func (rs *RepositoriesService) Activate(ctx context.Context, slug string) (*Repo
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#deactivate
 func (rs *RepositoriesService) Deactivate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/deactivate", url.QueryEscape(slug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/deactivate", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -230,7 +230,7 @@ func (rs *RepositoriesService) Deactivate(ctx context.Context, slug string) (*Re
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#migrate
 func (rs *RepositoriesService) Migrate(ctx context.Context, slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/migrate", url.QueryEscape(slug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/migrate", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -253,7 +253,7 @@ func (rs *RepositoriesService) Migrate(ctx context.Context, slug string) (*Repos
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#star
 func (rs *RepositoriesService) Star(ctx context.Context, slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/star", url.QueryEscape(slug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/star", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -276,7 +276,7 @@ func (rs *RepositoriesService) Star(ctx context.Context, slug string) (*Reposito
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/repository#unstar
 func (rs *RepositoriesService) Unstar(ctx context.Context, slug string) (*Repository, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/unstar", url.QueryEscape(slug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/unstar", url.QueryEscape(slug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}

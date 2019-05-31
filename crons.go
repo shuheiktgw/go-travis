@@ -86,7 +86,7 @@ const (
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#find
 func (cs *CronsService) Find(ctx context.Context, id uint, opt *CronOption) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/cron/%d", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("cron/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -109,7 +109,7 @@ func (cs *CronsService) Find(ctx context.Context, id uint, opt *CronOption) (*Cr
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#for_branch
 func (cs *CronsService) FindByRepoId(ctx context.Context, repoId uint, branch string, opt *CronOption) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branch/%s/cron", repoId, branch), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/branch/%s/cron", repoId, branch), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -132,7 +132,7 @@ func (cs *CronsService) FindByRepoId(ctx context.Context, repoId uint, branch st
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#for_branch
 func (cs *CronsService) FindByRepoSlug(ctx context.Context, repoSlug string, branch string, opt *CronOption) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branch), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branch), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -155,7 +155,7 @@ func (cs *CronsService) FindByRepoSlug(ctx context.Context, repoSlug string, bra
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/crons#for_repository
 func (cs *CronsService) ListByRepoId(ctx context.Context, repoId uint, opt *CronsOption) ([]*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/crons", repoId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/crons", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -178,7 +178,7 @@ func (cs *CronsService) ListByRepoId(ctx context.Context, repoId uint, opt *Cron
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/crons#for_repository
 func (cs *CronsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *CronsOption) ([]*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/crons", url.QueryEscape(repoSlug)), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/crons", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -201,7 +201,7 @@ func (cs *CronsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#create
 func (cs *CronsService) CreateByRepoId(ctx context.Context, repoId uint, branchName string, cron *CronBody) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/branch/%s/cron", repoId, branchName), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/branch/%s/cron", repoId, branchName), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -224,7 +224,7 @@ func (cs *CronsService) CreateByRepoId(ctx context.Context, repoId uint, branchN
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#create
 func (cs *CronsService) CreateByRepoSlug(ctx context.Context, repoSlug string, branchName string, cron *CronBody) (*Cron, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branchName), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/branch/%s/cron", url.QueryEscape(repoSlug), branchName), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -247,7 +247,7 @@ func (cs *CronsService) CreateByRepoSlug(ctx context.Context, repoSlug string, b
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/cron#delete
 func (cs *CronsService) Delete(ctx context.Context, id uint) (*http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/cron/%d", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("cron/%d", id), nil)
 	if err != nil {
 		return nil, err
 	}

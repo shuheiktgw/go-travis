@@ -54,7 +54,7 @@ type messagesResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/messages#for_request
 func (ms *MessagesService) ListByRepoId(ctx context.Context, repoId uint, requestId uint, opt *MessagesOption) ([]*Message, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/request/%d/messages", repoId, requestId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/request/%d/messages", repoId, requestId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -77,7 +77,7 @@ func (ms *MessagesService) ListByRepoId(ctx context.Context, repoId uint, reques
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/messages#for_request
 func (ms *MessagesService) ListByRepoSlug(ctx context.Context, repoSlug string, requestId uint, opt *MessagesOption) ([]*Message, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/request/%d/messages", url.QueryEscape(repoSlug), requestId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/request/%d/messages", url.QueryEscape(repoSlug), requestId), opt)
 	if err != nil {
 		return nil, nil, err
 	}

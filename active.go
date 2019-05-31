@@ -33,7 +33,7 @@ type ActiveOption struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/active#for_owner
 func (as *ActiveService) FindByOwner(ctx context.Context, owner string, opt *ActiveOption) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/%s/active", owner), opt)
+	u, err := urlWithOptions(fmt.Sprintf("owner/%s/active", owner), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -56,7 +56,7 @@ func (as *ActiveService) FindByOwner(ctx context.Context, owner string, opt *Act
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/active#for_owner
 func (as *ActiveService) FindByGitHubId(ctx context.Context, githubId uint, opt *ActiveOption) ([]*Build, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/owner/github_id/%d/active", githubId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("owner/github_id/%d/active", githubId), opt)
 	if err != nil {
 		return nil, nil, err
 	}

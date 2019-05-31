@@ -56,7 +56,7 @@ type UserOption struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#current
 func (us *UserService) Current(ctx context.Context, opt *UserOption) (*User, *http.Response, error) {
-	u, err := urlWithOptions("/user", opt)
+	u, err := urlWithOptions("user", opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -79,7 +79,7 @@ func (us *UserService) Current(ctx context.Context, opt *UserOption) (*User, *ht
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#find
 func (us *UserService) Find(ctx context.Context, id uint, opt *UserOption) (*User, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -103,7 +103,7 @@ func (us *UserService) Find(ctx context.Context, id uint, opt *UserOption) (*Use
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/user#sync
 func (us *UserService) Sync(ctx context.Context, id uint) (*User, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/user/%d/sync", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("user/%d/sync", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}

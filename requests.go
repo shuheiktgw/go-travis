@@ -91,7 +91,7 @@ type requestsResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/request#find
 func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, id uint, opt *RequestOption) (*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/request/%d", repoId, id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/request/%d", repoId, id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -114,7 +114,7 @@ func (rs *RequestsService) FindByRepoId(ctx context.Context, repoId uint, id uin
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/request#find
 func (rs *RequestsService) FindByRepoSlug(ctx context.Context, repoSlug string, id uint, opt *RequestOption) (*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/request/%d", url.QueryEscape(repoSlug), id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/request/%d", url.QueryEscape(repoSlug), id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -173,7 +173,7 @@ type createRequestResponse struct {
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#find
 func (rs *RequestsService) ListByRepoId(ctx context.Context, repoId uint, opt *RequestsOption) ([]*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/requests", repoId), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -196,7 +196,7 @@ func (rs *RequestsService) ListByRepoId(ctx context.Context, repoId uint, opt *R
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#find
 func (rs *RequestsService) ListByRepoSlug(ctx context.Context, repoSlug string, opt *RequestsOption) ([]*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), opt)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/requests", url.QueryEscape(repoSlug)), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -219,7 +219,7 @@ func (rs *RequestsService) ListByRepoSlug(ctx context.Context, repoSlug string, 
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
 func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, request *RequestBody) (*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%d/requests", repoId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%d/requests", repoId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -242,7 +242,7 @@ func (rs *RequestsService) CreateByRepoId(ctx context.Context, repoId uint, requ
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/requests#create
 func (rs *RequestsService) CreateByRepoSlug(ctx context.Context, repoSlug string, request *RequestBody) (*Request, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/repo/%s/requests", url.QueryEscape(repoSlug)), nil)
+	u, err := urlWithOptions(fmt.Sprintf("repo/%s/requests", url.QueryEscape(repoSlug)), nil)
 	if err != nil {
 		return nil, nil, err
 	}

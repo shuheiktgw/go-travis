@@ -102,7 +102,7 @@ const (
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#find
 func (js *JobsService) Find(ctx context.Context, id uint, opt *JobOption) (*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d", id), opt)
+	u, err := urlWithOptions(fmt.Sprintf("job/%d", id), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -125,7 +125,7 @@ func (js *JobsService) Find(ctx context.Context, id uint, opt *JobOption) (*Job,
 //
 // Travis CI API docs: https://developer.travis-ci.csom/resource/jobs#find
 func (js *JobsService) ListByBuild(ctx context.Context, buildId uint) ([]*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/build/%d/jobs", buildId), nil)
+	u, err := urlWithOptions(fmt.Sprintf("build/%d/jobs", buildId), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -150,7 +150,7 @@ func (js *JobsService) ListByBuild(ctx context.Context, buildId uint) ([]*Job, *
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/jobs#find
 func (js *JobsService) List(ctx context.Context, opt *JobsOption) ([]*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/jobs"), opt)
+	u, err := urlWithOptions(fmt.Sprintf("jobs"), opt)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -173,7 +173,7 @@ func (js *JobsService) List(ctx context.Context, opt *JobsOption) ([]*Job, *http
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#cancel
 func (js *JobsService) Cancel(ctx context.Context, id uint) (*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d/cancel", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("job/%d/cancel", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -196,7 +196,7 @@ func (js *JobsService) Cancel(ctx context.Context, id uint) (*Job, *http.Respons
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#restart
 func (js *JobsService) Restart(ctx context.Context, id uint) (*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d/restart", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("job/%d/restart", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -221,7 +221,7 @@ func (js *JobsService) Restart(ctx context.Context, id uint) (*Job, *http.Respon
 //
 // Travis CI API docs: https://developer.travis-ci.com/resource/job#debug
 func (js *JobsService) Debug(ctx context.Context, id uint) (*Job, *http.Response, error) {
-	u, err := urlWithOptions(fmt.Sprintf("/job/%d/debug", id), nil)
+	u, err := urlWithOptions(fmt.Sprintf("job/%d/debug", id), nil)
 	if err != nil {
 		return nil, nil, err
 	}
