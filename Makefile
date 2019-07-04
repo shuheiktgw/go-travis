@@ -1,4 +1,4 @@
-PHONY: help test
+PHONY: help install test
 
 export GO111MODULE=on
 
