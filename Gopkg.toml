@@ -1,7 +1,0 @@
-[[constraint]]
-  branch = "master"
-  name = "github.com/google/go-querystring"
-
-[prune]
-  go-tests = true
-  unused-packages = true
