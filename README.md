@@ -111,10 +111,10 @@ There are several breaking changes between v0.1.9 and v0.2.0 mainly to support e
 Contributions are of course always welcome!
 
 1. Fork shuheiktgw/go-travis (https://github.com/shuheiktgw/go-travis/fork)
-2. Run `dep ensure` to install dependencies
+2. Run `make install` to install dependencies
 3. Create a feature branch
 4. Commit your changes
-5. Run test using `go test`
+5. Run test using `make test`
 6. Create a Pull Request
 
 See [`CONTRIBUTING.md`](https://github.com/shuheiktgw/go-travis/blob/master/CONTRIBUTING.md) for details.
