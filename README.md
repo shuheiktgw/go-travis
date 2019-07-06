@@ -12,7 +12,6 @@ go-travis is a Go client library to interact with the [Travis CI API V3](https:/
 
 ```bash
 $ go get github.com/shuheiktgw/go-travis
-$ make install
 ```
 
 ## Usage

@@ -11,4 +11,4 @@ install: ## Install dependencies
 	@go mod download
 
 test: ## Execute all tests
-	@go test -v
+	@go test -v ./...
