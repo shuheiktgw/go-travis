@@ -24,7 +24,7 @@ import "github.com/shuheiktgw/go-travis"
 client := travis.NewClient(travis.ApiOrgUrl, "TravisApiToken")
 
 // List all the builds which belongs to the current user
-builds, res, err := client.Builds.Find(context.Background(), nil)
+builds, res, err := client.Builds.List(context.Background(), nil)
 ```
 
 ### URL
@@ -51,7 +51,7 @@ There two ways to authenticator your Travis CI client.
 client := travis.NewClient(travis.ApiOrgUrl, "TravisApiToken")
 
 // Jobs.Cancel will success
-_, err := client.Jobs.Cancel(context.Background(), 12345)
+_, _, err := client.Jobs.Cancel(context.Background(), 12345)
 ```
 
 You can issue Travis API token and hand it in to `NewClient` method directly. You can issue your token by visiting your Travis CI [Profile page](https://travis-ci.com/profile) or using Travis CI [command line tool](https://github.com/travis-ci/travis.rb#readme). 
@@ -66,10 +66,10 @@ Authentication with a Github personal access token will require some extra steps
 ```go
 client := travis.NewClient(travis.ApiOrgUrl, "")
 
-err := client.Authentication.UsingGithubToken("GitHubToken")
+_, _, err := client.Authentication.UsingGithubToken(context.Background(), "GitHubToken")
 
 // Jobs.Cancel will success
-_, err := client.Jobs.Cancel(context.Background(), 12345)
+_, _, err = client.Jobs.Cancel(context.Background(), 12345)
 ```
 
 #### Unauthenticated client
@@ -79,11 +79,11 @@ It is possible to interact with the API without authentication. However some res
 ```go
 client := travis.NewClient(travis.ApiOrgUrl, "")
 
-// Builds.FindByRepoSlug is available without authentication
-builds, resp, err := client.Builds.FindByRepoSlug(context.Background(), "shuheiktgw/go-travis", nil)
+// Builds.ListByRepoSlug is available without authentication
+builds, resp, err := client.Builds.ListByRepoSlug(context.Background(), "shuheiktgw/go-travis", nil)
 
 // Jobs.Cancel is unavailable without authentication
-_, err := client.Jobs.Cancel(context.Background(), 12345)
+_, _, err = client.Jobs.Cancel(context.Background(), 12345)
 ```
 
 ## Standard Representation / Minimal Representation 
