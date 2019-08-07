@@ -30,6 +30,8 @@ type EnvVar struct {
 	Value *string `json:"value,omitempty"`
 	// Whether this environment variable should be publicly visible or not
 	Public *bool `json:"public,omitempty"`
+	// The env_var's branch.
+	Branch *string `json:"branch,omitempty"`
 	*Metadata
 }
 
@@ -42,6 +44,8 @@ type EnvVarBody struct {
 	Value string `json:"env_var.value,omitempty"`
 	// Whether this environment variable should be publicly visible or not
 	Public bool `json:"env_var.public"`
+	// The env_var's branch.
+	Branch string `json:"env_var.branch,omitempty"`
 }
 
 // envVarsResponse represents the response of a call
