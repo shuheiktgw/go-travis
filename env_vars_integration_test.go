@@ -82,7 +82,7 @@ func TestEnvVarsService_Integration_ListByRepoSlug(t *testing.T) {
 
 func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *testing.T) {
 	// Create
-	body := EnvVarBody{Name: "TEST", Value: "test", Public: true}
+	body := EnvVarBody{Name: "TEST", Value: "test", Public: true, Branch: "foo"}
 	envVar, res, err := integrationClient.EnvVars.CreateByRepoId(context.TODO(), integrationRepoId, &body)
 
 	if err != nil {
@@ -93,7 +93,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		t.Fatalf("EnvVars.CreateByRepoId returned invalid http status: %s", res.Status)
 	}
 
-	if *envVar.Name != body.Name || *envVar.Value != body.Value || *envVar.Public != body.Public {
+	if *envVar.Name != body.Name || *envVar.Value != body.Value || *envVar.Public != body.Public || *envVar.Branch != body.Branch {
 		t.Fatalf("EnvVars.CreateByRepoId returned invalid EnvVar: %v", envVar)
 	}
 
@@ -101,7 +101,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 	time.Sleep(2 * time.Second)
 
 	// Update
-	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
+	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false, Branch: "bar"}
 	envVar, res, err = integrationClient.EnvVars.UpdateByRepoId(context.TODO(), integrationRepoId, *envVar.Id, &body)
 
 	if err != nil {
@@ -112,7 +112,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 		t.Fatalf("EnvVars.UpdateByRepoId returned invalid http status: %s", res.Status)
 	}
 
-	if *envVar.Name != body.Name || envVar.Value != nil || *envVar.Public != body.Public {
+	if *envVar.Name != body.Name || envVar.Value != nil || *envVar.Public != body.Public || *envVar.Branch != body.Branch {
 		t.Fatalf("EnvVars.UpdateByRepoId returned invalid EnvVar: %v", envVar)
 	}
 
@@ -133,7 +133,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoId(t *te
 
 func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *testing.T) {
 	// Create
-	body := EnvVarBody{Name: "TEST", Value: "test", Public: true}
+	body := EnvVarBody{Name: "TEST", Value: "test", Public: true, Branch: "foo"}
 	envVar, res, err := integrationClient.EnvVars.CreateByRepoSlug(context.TODO(), integrationRepoSlug, &body)
 
 	if err != nil {
@@ -144,7 +144,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		t.Fatalf("EnvVars.CreateByRepoSlug returned invalid http status: %s", res.Status)
 	}
 
-	if *envVar.Name != body.Name || *envVar.Value != body.Value || *envVar.Public != body.Public {
+	if *envVar.Name != body.Name || *envVar.Value != body.Value || *envVar.Public != body.Public || *envVar.Branch != body.Branch {
 		t.Fatalf("EnvVars.CreateByRepoSlug returned invalid EnvVar: %v", envVar)
 	}
 
@@ -152,7 +152,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 	time.Sleep(2 * time.Second)
 
 	// Update
-	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false}
+	body = EnvVarBody{Name: "NEW_TEST", Value: "new_test", Public: false, Branch: "bar"}
 	envVar, res, err = integrationClient.EnvVars.UpdateByRepoSlug(context.TODO(), integrationRepoSlug, *envVar.Id, &body)
 
 	if err != nil {
@@ -163,7 +163,7 @@ func TestEnvVarsService_Integration_CreateAndUpdateAndDeleteEnvVarByRepoSlug(t *
 		t.Fatalf("EnvVar.UpdateByRepoSlug returned invalid http status: %s", res.Status)
 	}
 
-	if *envVar.Name != body.Name || envVar.Value != nil || *envVar.Public != body.Public {
+	if *envVar.Name != body.Name || envVar.Value != nil || *envVar.Public != body.Public || *envVar.Branch != body.Branch {
 		t.Fatalf("EnvVars.UpdateByRepoSlug returned invalid EnvVar: %v", envVar)
 	}
 
