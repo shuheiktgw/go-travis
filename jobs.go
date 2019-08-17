@@ -51,6 +51,8 @@ type Job struct {
 	UpdatedAt *string `json:"updated_at,omitempty"`
 	// Whether or not the job is private
 	Private *bool `json:"private,omitempty"`
+	// The job's config
+	Config *Config `json:"config,omitempty"`
 	*Metadata
 }
 

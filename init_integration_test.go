@@ -17,7 +17,7 @@ var (
 	integrationGitHubOwner        = "shuheiktgwtest"
 	integrationGitHubOwnerId uint = 41975784
 	integrationGitHubToken        = os.Getenv("TRAVIS_GITHUB_PERSONAL_ACCESS_TOKEN")
-	integrationJobId         uint = 426024084
+	integrationJobId         uint = 218491904
 	integrationRepoSlug           = "shuheiktgwtest/go-travis-test"
 	integrationRepoId        uint = 20783933
 	integrationTravisToken        = os.Getenv("TRAVIS_API_AUTH_TOKEN")

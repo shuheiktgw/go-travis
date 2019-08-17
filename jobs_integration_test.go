@@ -17,7 +17,7 @@ import (
 const buildId = 420907933
 
 func TestJobsService_Integration_Find(t *testing.T) {
-	opt := JobOption{Include: []string{"job.repository"}}
+	opt := JobOption{Include: []string{"job.repository", "job.config"}}
 	job, res, err := integrationClient.Jobs.Find(context.TODO(), integrationJobId, &opt)
 
 	if err != nil {
