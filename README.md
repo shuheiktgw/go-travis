@@ -2,7 +2,7 @@ go-travis
 ====
 
 [![GitHub release](http://img.shields.io/github/release/shuheiktgw/go-travis.svg?style=flat-square)](https://github.com/shuheiktgw/go-travis/releases/latest)
-[![Build Status](https://travis-ci.org/shuheiktgw/go-travis.svg?branch=master)](https://travis-ci.org/shuheiktgw/go-travis)
+[![Actions Status](https://github.com/shuheiktgw/go-travis/workflows/Test/badge.svg)](https://github.com/shuheiktgw/go-travis/actions)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![GoDoc](https://godoc.org/github.com/shuheiktgw/go-travis?status.svg)](https://godoc.org/github.com/shuheiktgw/go-travis)
 
