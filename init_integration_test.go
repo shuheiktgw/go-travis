@@ -9,10 +9,11 @@ package travis
 
 import (
 	"os"
+	"strconv"
 )
 
 var (
-	integrationBuildId       uint = 426024083
+	integrationBuildId       uint
 	integrationClient        *Client
 	integrationGitHubOwner        = "shuheiktgwtest"
 	integrationGitHubOwnerId uint = 41975784
@@ -32,4 +33,14 @@ func init() {
 	}
 
 	integrationClient = NewClient(integrationUrl, integrationTravisToken)
+	integrationBuildId = toUint(os.Getenv("TRAVIS_INTEGRATION_BUILD_ID"))
+}
+
+func toUint(s string) uint {
+	i ,err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
+
+	return uint(i)
 }
