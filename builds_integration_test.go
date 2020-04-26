@@ -26,7 +26,7 @@ func TestBuildService_Integration_Find(t *testing.T) {
 	}
 
 	if *build.Id != integrationBuildId {
-		t.Fatalf("unexpected job returned: want job id %d: got job id %d", integrationBuildId, build.Id)
+		t.Fatalf("unexpected build returned: want build id %d: got build id %d", integrationBuildId, build.Id)
 	}
 }
 

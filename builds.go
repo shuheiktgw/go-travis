@@ -29,7 +29,7 @@ type Build struct {
 	// Current state of the build
 	State *string `json:"state,omitempty"`
 	// Wall clock time in seconds
-	Duration *uint `json:"duration,omitempty"`
+	Duration *int64 `json:"duration,omitempty"`
 	// Event that triggered the build
 	EventType *string `json:"event_type,omitempty"`
 	// State of the previous build (useful to see if state changed)
