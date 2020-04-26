@@ -4,7 +4,7 @@ echo current version: $(gobump show -r)
 read -p "input next version: " next_version
 
 gobump set $next_version -w
-git pull --tag
+git pull origin master --tag
 git tag v$next_version
 git-chglog -o CHANGELOG.md
 
