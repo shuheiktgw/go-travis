@@ -52,7 +52,6 @@ type Client struct {
 
 	// Services used to manipulate API entities
 	Active                *ActiveService
-	Authentication        *AuthenticationService
 	BetaFeatures          *BetaFeaturesService
 	BetaMigrationRequests *BetaMigrationRequestsService
 	Branches              *BranchesService
@@ -99,7 +98,6 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	}
 
 	c.Active = &ActiveService{client: c}
-	c.Authentication = &AuthenticationService{client: c}
 	c.BetaFeatures = &BetaFeaturesService{client: c}
 	c.BetaMigrationRequests = &BetaMigrationRequestsService{client: c}
 	c.Branches = &BranchesService{client: c}
@@ -126,7 +124,7 @@ func NewClient(baseUrl string, travisToken string) *Client {
 	c.User = &UserService{client: c}
 
 	if travisToken != "" {
-		c.Authentication.UsingTravisToken(travisToken)
+		c.SetToken(travisToken)
 	}
 
 	return c
@@ -224,6 +222,12 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*htt
 	}
 
 	return resp, err
+}
+
+// SetToken formats and writes provided
+// Travis API token in the client's headers.
+func (c *Client) SetToken(token string) {
+	c.Headers["Authorization"] = "token " + token
 }
 
 // IsAuthenticated indicates if Authorization headers were

@@ -40,13 +40,6 @@ Travis CI is migrating projects in `https://api.travis-ci.org/` to `https://api.
 
 ### Authentication
 
-There two ways to authenticator your Travis CI client.
-
-- Authentication with Travis API token
-- Authentication with GitHub personal access token
-
-##### Authentication with Travis API token
-
 ```go
 client := travis.NewClient(travis.ApiOrgUrl, "TravisApiToken")
 
@@ -58,23 +51,9 @@ You can issue Travis API token and hand it in to `NewClient` method directly. Yo
 
 For more information on how to issue Travis CI API token, please visit [their documentation](https://docs.travis-ci.com/user/triggering-builds/).
 
+### Unauthenticated client
 
-
-##### Authentication with GitHub personal access token
-Authentication with a Github personal access token will require some extra steps. [This GitHub help page](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) guides you thorough how to create one. 
-
-```go
-client := travis.NewClient(travis.ApiOrgUrl, "")
-
-_, _, err := client.Authentication.UsingGithubToken(context.Background(), "GitHubToken")
-
-// Jobs.Cancel will success
-_, _, err = client.Jobs.Cancel(context.Background(), 12345)
-```
-
-#### Unauthenticated client
-
-It is possible to interact with the API without authentication. However some resources are not accessible.
+It is possible to interact with the API without authentication. However, most resources are not accessible.
 
 ```go
 client := travis.NewClient(travis.ApiOrgUrl, "")
@@ -99,13 +78,6 @@ For example, to eager load `repository` and `commits` when fetching a build, one
 opt := BuildOption{Include: []string{"build.repository", "build.commits"}}
 build, _, err := client.Builds.Find(context.Background(), 123, &opt)
 ```  
-
-## Important Note 
-
-There are several breaking changes between v0.1.9 and v0.2.0 mainly to support eager loading. If you have never used go-travis, please select v0.2.0 or above. If you have used go-travis v0.1.9 or below, and consider updating it, please be aware those two changes:
-
-- Almost all the struct fields are pointer.
-- Almost all the methods interacting with the API takes an option parameter to support eager loading. 
 
 ## Contribution
 Contributions are of course always welcome!

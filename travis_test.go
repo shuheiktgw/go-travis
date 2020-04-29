@@ -6,6 +6,7 @@
 package travis
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -210,5 +211,16 @@ func TestClient_NewRequest_with_overriding_userAgent(t *testing.T) {
 
 	if got, want := req.Header.Get("User-Agent"), "Test-User-Agent"; got != want {
 		t.Fatalf("Wrong User-Agent: got: %s, want: %s", got, want)
+	}
+}
+
+func TestClient_SetToken(t *testing.T) {
+	token := "abc123"
+
+	c := NewClient(ApiOrgUrl, "")
+	c.SetToken(token)
+
+	if h := c.Headers["Authorization"]; h != fmt.Sprintf("token %s", token) {
+		t.Fatalf("Client.SetToken: unexpected Authorization %s; expected %s", h, token)
 	}
 }
